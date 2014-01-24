@@ -7,7 +7,7 @@
 // http://opensource.org/licenses/MIT
 //
 // application entry point
-#include "GDProto.pch.h"
+#include "EvoShooter.pch.h"
 #include "Application.h"
 
 using namespace std;

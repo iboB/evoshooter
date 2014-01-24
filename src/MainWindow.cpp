@@ -7,7 +7,7 @@
 // http://opensource.org/licenses/MIT
 //
 // the main window class definition
-#include "GDProto.pch.h"
+#include "EvoShooter.pch.h"
 #include "MainWindow.h"
 
 using namespace mathgp;

@@ -7,7 +7,7 @@
 // http://opensource.org/licenses/MIT
 //
 // the basic texture class
-#include "GDProto.pch.h"
+#include "EvoShooter.pch.h"
 #include "Texture.h"
 
 using namespace std;

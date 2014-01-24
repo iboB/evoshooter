@@ -7,7 +7,7 @@
 // http://opensource.org/licenses/MIT
 //
 // main application class definition
-#include "GDProto.pch.h"
+#include "EvoShooter.pch.h"
 #include "Application.h"
 #include "MainWindow.h"
 
