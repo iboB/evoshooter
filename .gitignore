@@ -1,0 +1,14 @@
+# Windows and VC specific
+
+*.exe
+*.dll
+*.ilk
+*.pdb
+
+*.opensdf
+*.sdf
+*.suo
+
+ipch/
+
+Debug/

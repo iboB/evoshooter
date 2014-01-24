@@ -1,0 +1,5 @@
+# Windows libraries
+
+lib/SDL2-2.0.1
+lib/glew-1.10.0
+lib/boost_1_54_0
