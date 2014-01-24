@@ -87,6 +87,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\src\ColliderGrid.h" />
     <ClInclude Include="..\..\..\src\ExplicitSingleton.h" />
     <ClInclude Include="..\..\..\src\Application.h" />
     <ClInclude Include="..\..\..\src\EvoShooter.pch.h" />
@@ -100,11 +101,14 @@
     <ClInclude Include="..\..\..\src\Macros.h" />
     <ClInclude Include="..\..\..\src\MainWindow.h" />
     <ClInclude Include="..\..\..\src\Memory.h" />
+    <ClInclude Include="..\..\..\src\Object.h" />
     <ClInclude Include="..\..\..\src\Platform.h" />
     <ClInclude Include="..\..\..\src\Texture.h" />
     <ClInclude Include="..\..\..\src\VersionInfo.h" />
+    <ClInclude Include="..\..\..\src\World.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\src\ColliderGrid.cpp" />
     <ClCompile Include="..\..\..\src\EntryPoint.cpp" />
     <ClCompile Include="..\..\..\src\Application.cpp" />
     <ClCompile Include="..\..\..\src\EvoShooter.pch.cpp">
@@ -115,7 +119,9 @@
     <ClCompile Include="..\..\..\src\GUIRenderInterface.cpp" />
     <ClCompile Include="..\..\..\src\GUISystemInterface.cpp" />
     <ClCompile Include="..\..\..\src\MainWindow.cpp" />
+    <ClCompile Include="..\..\..\src\Object.cpp" />
     <ClCompile Include="..\..\..\src\Texture.cpp" />
+    <ClCompile Include="..\..\..\src\World.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
