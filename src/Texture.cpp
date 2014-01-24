@@ -13,7 +13,10 @@
 using namespace std;
 
 Texture::Texture()
+: m_Width(0)
+, m_Height(0)
 {
+    m_Name = "EMPTY_SHITE_OR_LOADED_FROM_DATA_ONLY";
     glGenTextures(1, &m_glHandle);
 }
 
@@ -39,6 +42,7 @@ void Texture::loadFromFile(const char* filename)
     switch (sdlFormat)
     {
     case SDL_PIXELFORMAT_RGB888:
+    case SDL_PIXELFORMAT_ABGR8888:
         internalFormat = GL_RGB8;
         glFormat = GL_RGB;
         break;
@@ -57,10 +61,15 @@ void Texture::loadFromFile(const char* filename)
     loadFromData(internalFormat, image->w, image->h, glFormat, GL_UNSIGNED_BYTE, image->pixels);
 
     SDL_FreeSurface(image);
+
+	m_Name = filename;
 }
 
 void Texture::loadFromData(GLint internalFormat, GLsizei width, GLsizei height, GLenum format, GLenum type, const void* data)
 {
+    m_Width = width;
+    m_Height = height;
+
     glBindTexture(GL_TEXTURE_2D, m_glHandle);
     glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR);

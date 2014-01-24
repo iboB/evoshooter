@@ -101,6 +101,8 @@
     <ClInclude Include="..\..\..\src\MainWindow.h" />
     <ClInclude Include="..\..\..\src\Memory.h" />
     <ClInclude Include="..\..\..\src\Platform.h" />
+    <ClInclude Include="..\..\..\src\ResourceManager.h" />
+    <ClInclude Include="..\..\..\src\Sprite.h" />
     <ClInclude Include="..\..\..\src\Texture.h" />
     <ClInclude Include="..\..\..\src\VersionInfo.h" />
   </ItemGroup>
@@ -115,6 +117,8 @@
     <ClCompile Include="..\..\..\src\GUIRenderInterface.cpp" />
     <ClCompile Include="..\..\..\src\GUISystemInterface.cpp" />
     <ClCompile Include="..\..\..\src\MainWindow.cpp" />
+    <ClCompile Include="..\..\..\src\ResourceManager.cpp" />
+    <ClCompile Include="..\..\..\src\Sprite.cpp" />
     <ClCompile Include="..\..\..\src\Texture.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
