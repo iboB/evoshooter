@@ -49,6 +49,24 @@
     <ClInclude Include="..\..\..\src\Macros.h">
       <Filter>Core</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\GameState.h">
+      <Filter>GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\InGameState.h">
+      <Filter>GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\MainMenuState.h">
+      <Filter>GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Effect.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\NonCopyable.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Util.h">
+      <Filter>Core</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\src\Object.h">
       <Filter>Core</Filter>
     </ClInclude>
@@ -87,6 +105,21 @@
     <ClCompile Include="..\..\..\src\GUILayer.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\GameState.cpp">
+      <Filter>GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\InGameState.cpp">
+      <Filter>GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\MainMenuState.cpp">
+      <Filter>GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Effect.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Util.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\src\Object.cpp">
       <Filter>Core</Filter>
     </ClCompile>
@@ -106,6 +139,9 @@
     </Filter>
     <Filter Include="Core\PrecompiledHeader">
       <UniqueIdentifier>{07404084-7c73-4202-8052-7e98740befcb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameStates">
+      <UniqueIdentifier>{896bed60-59d8-4a94-8c54-e68a04b68b42}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
