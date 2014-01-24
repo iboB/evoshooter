@@ -87,6 +87,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\src\Effect.h" />
     <ClInclude Include="..\..\..\src\ExplicitSingleton.h" />
     <ClInclude Include="..\..\..\src\Application.h" />
     <ClInclude Include="..\..\..\src\EvoShooter.pch.h" />
@@ -103,11 +104,14 @@
     <ClInclude Include="..\..\..\src\MainMenuState.h" />
     <ClInclude Include="..\..\..\src\MainWindow.h" />
     <ClInclude Include="..\..\..\src\Memory.h" />
+    <ClInclude Include="..\..\..\src\NonCopyable.h" />
     <ClInclude Include="..\..\..\src\Platform.h" />
     <ClInclude Include="..\..\..\src\Texture.h" />
+    <ClInclude Include="..\..\..\src\Util.h" />
     <ClInclude Include="..\..\..\src\VersionInfo.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\src\Effect.cpp" />
     <ClCompile Include="..\..\..\src\EntryPoint.cpp" />
     <ClCompile Include="..\..\..\src\Application.cpp" />
     <ClCompile Include="..\..\..\src\EvoShooter.pch.cpp">
@@ -122,6 +126,7 @@
     <ClCompile Include="..\..\..\src\MainMenuState.cpp" />
     <ClCompile Include="..\..\..\src\MainWindow.cpp" />
     <ClCompile Include="..\..\..\src\Texture.cpp" />
+    <ClCompile Include="..\..\..\src\Util.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

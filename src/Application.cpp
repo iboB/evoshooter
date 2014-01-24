@@ -15,7 +15,7 @@
 
 #include "GUI.h"
 
-#include "MainMenuState.h"
+#include "InGameState.h"
 
 using namespace std;
 using namespace mathgp;
@@ -77,7 +77,7 @@ void Application::initialize()
     }
 
     MainWindow::CreationParameters mwc;
-    mwc.clientAreaSize = v(1024u, 768u);
+    mwc.clientAreaSize = v(1024u, 600u);
     mwc.isFullScreen = false;
     mwc.title = APP_NAME;
     m_mainWindow = new MainWindow(mwc);
@@ -106,7 +106,7 @@ void Application::initialize()
 
     //////////////////////////////////////
     // state
-    m_baseState = new MainMenuState;
+    m_baseState = new InGameState;
     m_baseState->initialize();
 }
 

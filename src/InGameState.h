@@ -11,8 +11,12 @@
 #pragma once
 #include "GameState.h"
 
+class Effect;
+class Texture;
+
 class InGameState : public GameState
 {
+public:
     InGameState();
 
     void initialize() override;
@@ -21,5 +25,7 @@ class InGameState : public GameState
     void handleEvent(const SDL_Event& event) override;
     void update() override;
     void draw() override;
-
+private:
+    Effect* m_effect;
+    Texture* m_texture;
 };
