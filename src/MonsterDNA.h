@@ -10,6 +10,44 @@
 //
 #pragma once
 
+enum GeneType
+{
+    G_DesiredAttackRange_RangedEnemy, // 1 next to the player - 0 max far away
+    G_DesiredAttackRange_MeleeEnemy, // 
+    G_MovementPrecision_RangedEnemy, // 1 aims for attack range - 0 total randomness
+    G_MovementPrecision_MeleeEnemy,
+    G_AttackDesire, // 1 only when player is in range - 0 total randomness
+    G_Aim, // 1 shoots for player, 0.5 interpolates player position, 1 extrapolates player position
+    G_Precision, // 1 exactly as needed, 0 - wide range
+    G_HP, // percent of max - guideline
+    G_Speed, // percent of max - guideline
+    G_Size, // percent of max - NO guideline
+    G_Stamina, // percent of max - guideline
+    // PanicThreshold, // what percentage of HP will panic and go total random
+
+    /// Attacks
+    G_UseSpitter,
+    G_UseGrapple,
+    G_UseClaws,
+    G_UseThorns,
+
+    G_SpitterPower,
+    G_GrapplePower,
+    G_ClawsPower,
+    G_ThornsPower,
+
+    /// Defenses
+    G_NoDefense,
+    G_Fatness,
+    G_Scales,
+    
+    G_FatnessPower,
+    G_ScalesPower,
+    
+    ///
+    Num_Genes
+};
+
 class Gene
 {
 public:
@@ -56,42 +94,7 @@ public:
 
 //private:
 
-    enum Genes
-    {
-        DesiredAttackRange_RangedEnemy, // 1 next to the player - 0 max far away
-        DesiredAttackRange_MeleeEnemy, // 
-        MovementPrecision_RangedEnemy, // 1 aims for attack range - 0 total randomness
-        MovementPrecision_MeleeEnemy,
-        AttackDesire, // 1 only when player is in range - 0 total randomness
-        Aim, // 1 shoots for player, 0.5 interpolates player position, 1 extrapolates player position
-        Precision, // 1 exactly as needed, 0 - wide range
-        HP, // percent of max - guideline
-        Speed, // percent of max - guideline
-        Size, // percent of max - guideline
-        // PanicThreshold, // what percentage of HP will panic and go total random
-
-        /// Attacks
-        UseSpitter,
-        UseGrapple,
-        UseClaws,
-        UseThorns,
-
-        SpitterPower,
-        GrapplePower,
-        ClawsPower,
-        ThornsPower,
-
-        /// Defenses
-        NoDefense,
-        Fatness,
-        Scales,
-
-        FatnessPower,
-        ScalesPower,
-
-        ///
-        Num_Genes
-    };
+    float operator()(GeneType g) const;
 
     std::vector<Gene> m;
 

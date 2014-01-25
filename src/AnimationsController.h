@@ -49,13 +49,13 @@ private:
 
     struct AnimWithOffset
     {
-        mathgp::vector3 Offset;
+        mathgp::vector3 Offsets[MA_Count];
         SpritePtr Animation[MA_Count];
     };
 
     struct AnimWithOffsetAndTwoStates
     {
-        mathgp::vector3 Offset;
+        mathgp::vector3 Offsets[MA_Count];
         SpritePtr Animation[2][MA_Count];
     };
 

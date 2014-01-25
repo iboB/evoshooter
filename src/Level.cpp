@@ -23,7 +23,7 @@ Level::Level()
     const point3 zero = point3::zero();
 
     float minx = 0, miny = 0, minz = 0;
-    float maxx = 50, maxy = 50, maxz = 50;
+    float maxx = 40, maxy = 40, maxz = 10;
 
     std::ifstream fin("world_size.txt");
     //fin >> maxx >> maxy >> maxz;

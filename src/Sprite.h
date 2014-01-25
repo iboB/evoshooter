@@ -28,12 +28,19 @@ public:
 	void stopRendering();
 
     int currentFrame() { return m_CurrentFrame; }
+    const mathgp::vector3 lastPosition() const { return m_Position; }
 
     void setLoop(bool loop) { m_Loop = loop; }
 
     void setScale(float scale);
 
+    float scaledFrameWidth() const { return m_ScaledFrameWidth; }
+    float scaledFrameHeight() const { return m_ScaledFrameHeight; }
+
     void setFlipX(bool flip) { m_FlipX = flip; }
+
+    void setSortingYOffset(float offset);
+    float getSortingY() const;
 
     void update(const mathgp::vector3& position, const mathgp::vector3& camDir);
     void render(const mathgp::matrix4& viewProj);
@@ -85,6 +92,8 @@ private:
 
     SpriteVertex m_Vertices[4];
     static unsigned sm_Indices[6];
+
+    float m_SortingYOffset;
 };
 
 typedef std::shared_ptr<Sprite> SpritePtr;

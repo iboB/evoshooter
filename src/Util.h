@@ -23,4 +23,16 @@ namespace Util
 
 	// returns false if there are no real roots
 	bool SolveQuadraticEquation(float a, float b, float c, float& outX1, float& outX2);
+
+}
+
+namespace mathgp
+{
+    // should be there anyway
+    inline float clamp(float v, float min, float max)
+    {
+        if (v < min) return min;
+        if (v > max) return max;
+        return v;
+    }
 }

@@ -39,6 +39,7 @@ Sprite::Sprite()
 , m_CellWidth(0)
 , m_CellHeight(0)
 , m_FlipX(false)
+, m_SortingYOffset(0.f)
 {}
 
 Sprite::~Sprite()
@@ -131,8 +132,20 @@ void Sprite::setScale(float scale)
     m_ScaledFrameHeight = float(m_CellHeight) * scale;
 }
 
+void Sprite::setSortingYOffset(float offset)
+{
+    m_SortingYOffset = offset;
+}
+
+float Sprite::getSortingY() const
+{
+    return m_Position.y() + m_SortingYOffset;
+}
+
 void Sprite::update(const mathgp::vector3& position, const mathgp::vector3& camDir)
 {
+    m_Position = position;
+
     Uint32 x(0), y(0);
 
     getCurrentFrame(x, y);
@@ -169,6 +182,7 @@ void Sprite::render(const mathgp::matrix4& viewProj)
         return;
 
     glEnable(GL_BLEND);
+    glDisable(GL_DEPTH_TEST);
 
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 

@@ -5,11 +5,9 @@
     <ClCompile Include="..\..\..\src\Camera.cpp" />
     <ClCompile Include="..\..\..\src\Character.cpp" />
     <ClCompile Include="..\..\..\src\Constants.cpp" />
-    <ClCompile Include="..\..\..\src\Effect.cpp" />
     <ClCompile Include="..\..\..\src\ColliderGrid.cpp" />
     <ClCompile Include="..\..\..\src\EntryPoint.cpp" />
     <ClCompile Include="..\..\..\src\Application.cpp" />
-    <ClCompile Include="..\..\..\src\EvoShooter.pch.cpp" />
     <ClCompile Include="..\..\..\src\ExperimentState.cpp" />
     <ClCompile Include="..\..\..\src\GameState.cpp" />
     <ClCompile Include="..\..\..\src\GUI.cpp" />
@@ -24,8 +22,6 @@
     <ClCompile Include="..\..\..\src\MonsterCharacter.cpp" />
     <ClCompile Include="..\..\..\src\Overlay.cpp" />
     <ClCompile Include="..\..\..\src\RenderManager.cpp" />
-    <ClCompile Include="..\..\..\src\Monster.cpp" />
-    <ClCompile Include="..\..\..\src\MonsterDNA.cpp" />
     <ClCompile Include="..\..\..\src\ResourceManager.cpp" />
     <ClCompile Include="..\..\..\src\SoundManager.cpp" />
     <ClCompile Include="..\..\..\src\Sprite.cpp" />
@@ -35,18 +31,29 @@
     <ClCompile Include="..\..\..\src\World.cpp" />
     <ClCompile Include="..\..\..\src\AboutState.cpp" />
     <ClCompile Include="..\..\..\src\ShadowManager.cpp" />
+    <ClCompile Include="..\..\..\src\AboutState.cpp" />
+    <ClCompile Include="..\..\..\src\Effect.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\EvoShooter.pch.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Monster.cpp">
+      <Filter>Evo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\MonsterDNA.cpp">
+      <Filter>Evo</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\AnimationsController.h" />
     <ClInclude Include="..\..\..\src\Camera.h" />
     <ClInclude Include="..\..\..\src\Character.h" />
     <ClInclude Include="..\..\..\src\Constants.h" />
-    <ClInclude Include="..\..\..\src\Effect.h" />
     <ClInclude Include="..\..\..\src\ColliderGrid.h" />
     <ClInclude Include="..\..\..\src\ExperimentState.h" />
     <ClInclude Include="..\..\..\src\ExplicitSingleton.h" />
     <ClInclude Include="..\..\..\src\Application.h" />
-    <ClInclude Include="..\..\..\src\EvoShooter.pch.h" />
     <ClInclude Include="..\..\..\src\GameState.h" />
     <ClInclude Include="..\..\..\src\GLExtensions.h" />
     <ClInclude Include="..\..\..\src\GLSentries.h" />
@@ -63,9 +70,7 @@
     <ClInclude Include="..\..\..\src\MainMenuState.h" />
     <ClInclude Include="..\..\..\src\MainWindow.h" />
     <ClInclude Include="..\..\..\src\Memory.h" />
-    <ClInclude Include="..\..\..\src\Monster.h" />
     <ClInclude Include="..\..\..\src\MonsterCharacter.h" />
-    <ClInclude Include="..\..\..\src\MonsterDNA.h" />
     <ClInclude Include="..\..\..\src\NonCopyable.h" />
     <ClInclude Include="..\..\..\src\Object.h" />
     <ClInclude Include="..\..\..\src\Overlay.h" />
@@ -80,5 +85,26 @@
     <ClInclude Include="..\..\..\src\World.h" />
     <ClInclude Include="..\..\..\src\AboutState.h" />
     <ClInclude Include="..\..\..\src\ShadowManager.h" />
+    <ClInclude Include="..\..\..\src\AboutState.h" />
+    <ClInclude Include="..\..\..\src\Effect.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\EvoShooter.pch.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Monster.h">
+      <Filter>Evo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\MonsterDNA.h">
+      <Filter>Evo</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Core">
+      <UniqueIdentifier>{51748ce6-20ed-43da-879b-a8e4c88c4d68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Evo">
+      <UniqueIdentifier>{ea89ab27-c3aa-469f-b6d5-00ab86abbba8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

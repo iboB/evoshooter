@@ -34,7 +34,7 @@ Object::~Object()
 {
 }
 
-mathgp::vector3 Object::position()
+mathgp::vector3 Object::position() const
 {
 	return m_pos;
 }
