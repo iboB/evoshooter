@@ -28,6 +28,9 @@
 #include "SoundManager.h"
 #include "World.h"
 #include "ColliderGrid.h"
+#include "SoundManager.h"
+#include "AboutState.h"
+#include <iostream>
 
 #include <Rocket/Core/Element.h>
 
@@ -183,6 +186,12 @@ void ExperimentState::handleEvent(const SDL_Event& event)
             break;
         case SDLK_l:
             World::instance().mainCharacter()->GetDamage();
+            break;
+        case SDLK_F1:
+            {
+                GameState* state = new AboutState;
+                Application::instance().pushState(state);
+            }
             break;
         default:
             return;

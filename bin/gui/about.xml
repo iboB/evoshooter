@@ -1,0 +1,34 @@
+<!-- named xml so it would get basic syntax highlighting from popular editors -->
+<rml>
+<head>
+    <title>Main Menu</title>
+    <link type="text/rcss" href="about.css"/>
+    <style>
+        body
+        {
+            width: 100%;
+            height: 100%;
+            margin: 0px;
+        }
+    </style>
+</head>
+<body class="menu">
+    <div id="menu">
+      <div id="content">        
+		<p>evoshooter</p>
+		<br/>
+		<p>Copyright (c) 2014 </p>
+		<br/>
+		Borislav Stanimirov, Filip Chorbadzhiev, Nikolay Dimitrov
+		<br/>
+		Assen Kanev, Jem Kerim, Stefan Ivanov
+		<br/>
+		<br/>
+		<p>Distributed under the MIT Software License</p>
+		<br/>
+		<p>See accompanying file LICENSE.txt or copy at http://opensource.org/licenses/MIT</p>
+		
+      </div>
+    </div>
+</body>
+</rml>
