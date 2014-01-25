@@ -39,4 +39,19 @@ struct GLDisableSentry
 	const GLenum operation;
 };
 
+struct GLEnableAttribSentry
+{
+    GLEnableAttribSentry(int i) : index(i)
+    {
+        glEnableVertexAttribArray(index);
+    }
+
+    ~GLEnableAttribSentry()
+    {
+        glDisableVertexAttribArray(index);
+    }
+
+    const int index;
+};
+
 #define SENTRY(sentry, op) sentry PP_CAT(sentry, __LINE__)(op)
