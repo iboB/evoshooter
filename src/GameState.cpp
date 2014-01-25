@@ -15,10 +15,10 @@ GameState::GameState()
 {
 }
 
-void GameState::update()
+void GameState::update(int dt)
 {
     if (m_nextState)
-        m_nextState->update();
+        m_nextState->update(dt);
 }
 
 void GameState::draw()

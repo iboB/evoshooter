@@ -73,6 +73,28 @@ unsigned int World::spawnMonster(float x, float y, float r, const std::string& n
     return id;
 }
 
+unsigned int World::spawnPlayer(float x, float y, float r)
+{
+    mathgp::vector3 pos = mathgp::v(x, y, 0.0f);
+    unsigned int id = m_firstFreeId;
+    MainCharacter* player = new MainCharacter(pos);
+    player->Move(pos);
+
+    m_objects[id] = std::shared_ptr<Object>(player);
+    ColliderGrid::instance().onObjectCreated(m_objects[id]);
+
+    m_mainCharacter = player;
+
+    ++m_firstFreeId;
+
+    if (m_firstFreeId >= INT_MAX)
+    {
+        m_firstFreeId = 0; //hopefully his dead;
+    }
+
+    return id;
+}
+
 void World::destroyObject(unsigned int id)
 {
     ColliderGrid::instance().onObjectDestroyed(object(id));
@@ -83,3 +105,12 @@ objectsContainer& World::objects()
 {
     return m_objects;
 }
+
+void World::update(int dt)
+{
+    for (auto it = m_objects.begin(); it != m_objects.end(); ++it)
+    {
+        it->second->update(dt);
+    }
+}
+

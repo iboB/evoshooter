@@ -37,6 +37,8 @@ void Camera::setDirectionAndDistance(const mathgp::vector3& direction, float dis
 {
     m_position = m_point + normalized(direction) * distance;
 
+    m_direction = direction;
+
     m_view = matrix::look_at_rh(m_position, m_point, Vec::up);
     m_projectionView = m_projection * m_view;
 }

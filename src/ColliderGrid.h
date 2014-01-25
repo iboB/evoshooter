@@ -23,9 +23,9 @@ public:
 	~ColliderGrid();
 
 	//returns null if move possible, else returns first collider
-	std::shared_ptr<Object> requestMoveTo(std::shared_ptr<Object> obj, const mathgp::vector2& pos);
-	std::shared_ptr<Object> requestMoveTo(std::shared_ptr<Object> obj, const mathgp::vector3& pos);
-	std::shared_ptr<Object> requestMoveTo(std::shared_ptr<Object> obj, float x, float y);
+	std::shared_ptr<Object> requestMoveTo(Object* obj, const mathgp::vector2& pos);
+    std::shared_ptr<Object> requestMoveTo(Object* obj, const mathgp::vector3& pos);
+    std::shared_ptr<Object> requestMoveTo(Object* obj, float x, float y);
 	
 	void					onObjectCreated(std::shared_ptr<Object> obj);
 	void					onObjectDestroyed(std::shared_ptr<Object> obj);
@@ -37,7 +37,7 @@ public:
     std::vector<std::shared_ptr<Object> > collideWithQuadsOnClick(const mathgp::uvector2& screenPos, const mathgp::vector3& worldPoint);
     //bool                     collideAABBWith3dRay(const std::shared_ptr<Object> obj, const mathgp::vector3& rayStart, const mathgp::vector3& rayDir);
 private:
-	mathgp::uvector2		getObjectCell(std::shared_ptr<Object> obj);
+    mathgp::uvector2		getObjectCell(Object* obj);
     mathgp::uvector2		getObjectCell(float x, float y);
     mathgp::uvector2&       cullIdToBounds(mathgp::uvector2& id);
 

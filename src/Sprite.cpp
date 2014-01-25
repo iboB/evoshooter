@@ -148,10 +148,10 @@ void Sprite::update(const mathgp::vector3& position, const mathgp::vector3& camD
         std::swap(u0, u1);
     }
 
-    m_Vertices[0] = { position, mathgp::vc(u0, v1) };
-    m_Vertices[1] = { mathgp::vc(position.x() + m_ScaledFrameWidth, position.z(), position.y()), mathgp::vc(u1, v1) };
-    m_Vertices[2] = { mathgp::vc(position.x(), position.z(), position.y() + m_ScaledFrameHeight), mathgp::vc(u0, v0) };
-    m_Vertices[3] = { mathgp::vc(position.x() + m_ScaledFrameWidth, position.z(), position.y() + m_ScaledFrameHeight), mathgp::vc(u1, v0) };
+    m_Vertices[0] = { Vec::zero, mathgp::vc(u0, v1) };
+    m_Vertices[1] = { mathgp::vc(m_ScaledFrameWidth, 0, 0), mathgp::vc(u1, v1) };
+    m_Vertices[2] = { mathgp::vc(0, 0, m_ScaledFrameHeight), mathgp::vc(u0, v0) };
+    m_Vertices[3] = { mathgp::vc(m_ScaledFrameWidth, 0, m_ScaledFrameHeight), mathgp::vc(u1, v0) };
 
     float camAngle = acos(abs(camDir.y()));
     mathgp::matrix camAlign = mathgp::matrix::rotation_x(-camAngle);

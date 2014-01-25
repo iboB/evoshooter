@@ -11,6 +11,10 @@
 #include "EvoShooter.pch.h"
 
 #include "Character.h"
+#include "ColliderGrid.h"
+#include "Application.h"
+#include "GameState.h"
+#include "Camera.h"
 
 Character::Character(const mathgp::vector3& position, const std::string& name)
 : Object(position, 0.3f)
@@ -22,7 +26,16 @@ Character::Character(const mathgp::vector3& position, const std::string& name)
 
 void Character::Move(const mathgp::vector3& position)
 {
-    if (position.x() >= m_pos.x())
+    const mathgp::vector3 oldPosition = m_pos;
+
+    std::shared_ptr<Object> collision = ColliderGrid::instance().requestMoveTo(this, position);
+
+    if (collision)
+    {
+        return;
+    }
+
+    if (m_pos.x() >= oldPosition.x())
     {
         m_AnimationsController.SetMove(MA_Right);
     }
@@ -30,8 +43,6 @@ void Character::Move(const mathgp::vector3& position)
     {
         m_AnimationsController.SetMove(MA_Left);
     }
-
-    m_pos = position;
 }
 
 void Character::Die()
@@ -44,7 +55,7 @@ void Character::GetDamage()
     m_AnimationsController.GetDamage();
 }
 
-void Character::Update(const mathgp::vector3& camDir)
+void Character::update(int dt)
 {
-    m_AnimationsController.update(m_pos, camDir);
+    m_AnimationsController.update(m_pos, Application::instance().currentState()->camera()->direction());
 }

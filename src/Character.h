@@ -19,11 +19,11 @@ class Character : public Object
 public:
     Character(const mathgp::vector3& position, const std::string& name);
 
-    void Move(const mathgp::vector3& position);
-    void Die();
-    void GetDamage();
+    virtual void Move(const mathgp::vector3& position);
+    virtual void Die();
+    virtual void GetDamage();
 
-    void Update(const mathgp::vector3& camDir);
+    virtual void update(int dt);
 
 protected:
     AnimationsController m_AnimationsController;

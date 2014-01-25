@@ -17,5 +17,12 @@ class MonsterCharacter : public Character
 public:
     MonsterCharacter(const mathgp::vector3& position, const std::string& name);
 
+    void SetMoveDirection(const mathgp::vector3& dir);
+    void SetMoveSpeed(float speed);
+
+    virtual void update(int dt);
+
 private:
+    mathgp::vector3 m_MoveDirection;
+    float m_Speed;// m/s
 };

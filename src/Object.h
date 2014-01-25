@@ -15,7 +15,7 @@ class Object
 public:
 	Object();
 	Object(const mathgp::vector3& pos, float bc);
-	~Object();
+	virtual ~Object();
 
 	mathgp::vector3 position();
 	float boundingCircle();
@@ -27,6 +27,9 @@ public:
     bool collidesWith(std::shared_ptr<Object> otherGuy);
     float bb_w();
     float bb_h();
+
+    virtual void update(int dt){}
+
 protected:
 
 	mathgp::vector3 m_pos;

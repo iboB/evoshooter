@@ -40,7 +40,7 @@ void MainMenuState::handleEvent(const SDL_Event& event)
     }
 }
 
-void MainMenuState::update()
+void MainMenuState::update(int dt)
 {
     m_guiLayer->update();
 }
