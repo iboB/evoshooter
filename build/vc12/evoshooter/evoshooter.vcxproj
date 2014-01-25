@@ -87,12 +87,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\src\Camera.h" />
+    <ClInclude Include="..\..\..\src\Constants.h" />
     <ClInclude Include="..\..\..\src\Effect.h" />
     <ClInclude Include="..\..\..\src\ColliderGrid.h" />
+    <ClInclude Include="..\..\..\src\ExperimentState.h" />
     <ClInclude Include="..\..\..\src\ExplicitSingleton.h" />
     <ClInclude Include="..\..\..\src\Application.h" />
     <ClInclude Include="..\..\..\src\EvoShooter.pch.h" />
     <ClInclude Include="..\..\..\src\GameState.h" />
+    <ClInclude Include="..\..\..\src\GLExtensions.h" />
     <ClInclude Include="..\..\..\src\GLSentries.h" />
     <ClInclude Include="..\..\..\src\GUI.h" />
     <ClInclude Include="..\..\..\src\GUIAttribs.h" />
@@ -101,6 +105,7 @@
     <ClInclude Include="..\..\..\src\GUISystemInterface.h" />
     <ClInclude Include="..\..\..\src\ImplicitSingleton.h" />
     <ClInclude Include="..\..\..\src\InGameState.h" />
+    <ClInclude Include="..\..\..\src\Level.h" />
     <ClInclude Include="..\..\..\src\Macros.h" />
     <ClInclude Include="..\..\..\src\MainMenuState.h" />
     <ClInclude Include="..\..\..\src\MainWindow.h" />
@@ -114,19 +119,24 @@
     <ClInclude Include="..\..\..\src\World.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\src\Camera.cpp" />
+    <ClCompile Include="..\..\..\src\Constants.cpp" />
     <ClCompile Include="..\..\..\src\Effect.cpp" />
     <ClCompile Include="..\..\..\src\ColliderGrid.cpp" />
     <ClCompile Include="..\..\..\src\EntryPoint.cpp" />
     <ClCompile Include="..\..\..\src\Application.cpp" />
     <ClCompile Include="..\..\..\src\EvoShooter.pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\ExperimentState.cpp" />
     <ClCompile Include="..\..\..\src\GameState.cpp" />
     <ClCompile Include="..\..\..\src\GUI.cpp" />
     <ClCompile Include="..\..\..\src\GUILayer.cpp" />
     <ClCompile Include="..\..\..\src\GUIRenderInterface.cpp" />
     <ClCompile Include="..\..\..\src\GUISystemInterface.cpp" />
     <ClCompile Include="..\..\..\src\InGameState.cpp" />
+    <ClCompile Include="..\..\..\src\Level.cpp" />
     <ClCompile Include="..\..\..\src\MainMenuState.cpp" />
     <ClCompile Include="..\..\..\src\MainWindow.cpp" />
     <ClCompile Include="..\..\..\src\Object.cpp" />

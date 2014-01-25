@@ -111,3 +111,8 @@ bool GUILayer::processSDLEvent(const SDL_Event& event)
 
     return false;
 }
+
+Rocket::Core::Element* GUILayer::getElementById(const char* id)
+{
+    return m_rootDocument->GetElementById(id);
+}

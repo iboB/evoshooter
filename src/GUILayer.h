@@ -15,6 +15,7 @@ namespace Rocket
     {
         class Context;
         class ElementDocument;
+        class Element;
     }
 }
 
@@ -33,6 +34,8 @@ public:
 
     // return true if event is processed
     bool processSDLEvent(const SDL_Event& event);
+
+    Rocket::Core::Element* getElementById(const char* id);
 
 private:
     Rocket::Core::Context* m_rocketContext;

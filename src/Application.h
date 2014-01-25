@@ -27,6 +27,8 @@ public:
 
     const mathgp::uvector2& screenSize() const;
 
+    MainWindow* mainWindow() const { return m_mainWindow; }
+
 private:
     void initialize();
     void deinitialize();
@@ -49,9 +51,11 @@ private:
     // time
 public:
     unsigned currentFrameTime() const { return m_currentFrameTime; }
+    unsigned timeSinceLastFrame() const { return m_timeSinceLastFrame;  }
 
 private:
     unsigned m_currentFrameTime; // start of current frame (ms)
+    unsigned m_timeSinceLastFrame;
 
     //////////////////////////////////////
     // fps stuff

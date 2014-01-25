@@ -74,6 +74,13 @@ div#content
     background-color: green;
 }
 
+div#info
+{
+	padding: 5px 5px;
+    overflow: hidden auto;
+    background-color: transparent;
+}
+
 p
 {
     margin-bottom: 1em;
