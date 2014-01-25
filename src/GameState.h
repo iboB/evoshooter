@@ -21,7 +21,7 @@ public:
     virtual void deinitialize() = 0;
 
     virtual void handleEvent(const SDL_Event& event);
-    virtual void update();
+    virtual void update(int dt);
     virtual void draw();
 
     virtual Camera* camera() { return NULL; };

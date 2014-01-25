@@ -43,7 +43,7 @@ void InGameState::handleEvent(const SDL_Event& event)
 {
 }
 
-void InGameState::update()
+void InGameState::update(int dt)
 {
 }
 

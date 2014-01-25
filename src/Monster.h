@@ -16,8 +16,13 @@ class Monster
 {
 public:
 
-    //void randomize();
+    void randomize();
+    
+    float calculateFitness() const; // damage * lifetime
 
 private:
     MonsterDNA m_dna;
+
+    float m_damageDealtToPlayer;
+    float m_lifetime;
 };

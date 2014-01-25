@@ -41,7 +41,7 @@ void AboutState::handleEvent(const SDL_Event& event)
     }
 }
 
-void AboutState::update()
+void AboutState::update(int dt)
 {
     m_guiLayer->update();
 }

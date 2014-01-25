@@ -25,6 +25,8 @@ public:
 
     Uint32& width() { return m_Width; }
     Uint32& height() { return m_Height; }
+
+    void setParameter(GLenum, GLint);
 private:
     GLuint m_glHandle;
 	std::string m_Name;

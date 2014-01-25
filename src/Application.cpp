@@ -86,7 +86,7 @@ void Application::run()
         handleInput();
 
         //m_baseState->update();
-        currentState()->update();
+        currentState()->update(m_timeSinceLastFrame);
 
         drawFrame();
         updateFPSData();

@@ -16,6 +16,7 @@ class Texture;
 class Camera;
 class Level;
 class GUILayer;
+class Overlay;
 
 namespace Rocket
 {
@@ -35,7 +36,7 @@ public:
     void deinitialize() override;
 
     void handleEvent(const SDL_Event& event) override;
-    void update() override;
+    void update(int dt) override;
     void draw() override;
 
     Camera* camera() override;
@@ -62,5 +63,7 @@ private:
 
     mathgp::vector3 m_debugStart;
     mathgp::vector3 m_debugEnd;
+
+    Overlay* m_overlay;
 
 };

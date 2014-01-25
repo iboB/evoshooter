@@ -15,5 +15,7 @@
 class MainCharacter : public Character
 {
 public:
-    MainCharacter();
+    MainCharacter(const mathgp::vector3& position);
+
+    virtual void update(int dt);
 };

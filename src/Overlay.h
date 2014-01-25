@@ -8,17 +8,22 @@
 // See accompanying file LICENSE.txt or copy at
 // http://opensource.org/licenses/MIT
 //
-#include "EvoShooter.pch.h"
+#pragma once
 
-#include "MainCharacter.h"
+class Effect;
+class Texture;
 
-MainCharacter::MainCharacter(const mathgp::vector3& position)
-: Character(position, "player")
+class Overlay
 {
+public:
+    Overlay();
+    ~Overlay();
 
-}
+    void draw();
 
-void MainCharacter::update(int dt)
-{
-    Character::update(dt);
-}
+private:
+    Effect* m_effect;
+    Texture* m_texture;
+    int m_texParam;
+    int m_scaleParam;
+};
