@@ -102,6 +102,8 @@ void ExperimentState::initialize()
     monster->SetMoveSpeed(0.02f);
 
     World::instance().spawnPlayer(2.f, 1.5f, 0.5f);
+
+    m_camera->followObject(World::instance().mainCharacter());
 }
 
 void ExperimentState::deinitialize()
@@ -239,8 +241,7 @@ void ExperimentState::handleEvent(const SDL_Event& event)
     m_camDistance += distance;
     m_camDirection.z() += angle;
     m_camDirection.normalize();
-    m_camera->setDirectionAndDistance(m_camDirection, m_camDistance);
-    m_camera->followObject(World::instance().mainCharacter());
+    m_camera->setDirectionAndDistance(m_camDirection, m_camDistance);    
 }
 
 void ExperimentState::update(int dt)
