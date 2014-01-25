@@ -22,6 +22,7 @@ public:
     virtual void Move(const mathgp::vector3& position);
     virtual void Die();
     virtual void GetDamage();
+    virtual void Attack(Uint32 attackIndex);
 
     virtual void update(int dt);
 

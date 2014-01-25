@@ -19,9 +19,11 @@
 Character::Character(const mathgp::vector3& position, const std::string& name)
 : Object(position, 0.3f)
 {
-    m_AnimationsController.SetMovementAnimations(std::string("sprites/")  + name + "_walk_anim.png", 0.006f);
-    m_AnimationsController.SetDamage(std::string("sprites/") + name + "_dmg_anim.png", 0.006f);
-    m_AnimationsController.SetDeath(std::string("sprites/") + name + "_die_anim.png", 0.006f);
+    m_AnimationsController.SetMovementAnimations(std::string("sprites/")  + name + "_walk_anim.png", 0.008f);
+    m_AnimationsController.SetDamage(std::string("sprites/") + name + "_dmg_anim.png", 0.008f);
+    m_AnimationsController.SetDeath(std::string("sprites/") + name + "_die_anim.png", 0.008f);
+    m_AnimationsController.AddAttack(std::string("sprites/") + name + "_attack_anim_01.png", std::string("sprites/") + name + "_attack_anim_idle_01.png", Vec::zero, 0.003f);
+    m_AnimationsController.AddAttack(std::string("sprites/") + name + "_attack_anim_02.png", std::string("sprites/") + name + "_attack_anim_idle_02.png", Vec::zero, 0.003f);
 }
 
 void Character::Move(const mathgp::vector3& position)
@@ -53,6 +55,11 @@ void Character::Die()
 void Character::GetDamage()
 {
     m_AnimationsController.GetDamage();
+}
+
+void Character::Attack(Uint32 attackIndex)
+{
+    m_AnimationsController.Attack(attackIndex);
 }
 
 void Character::update(int dt)

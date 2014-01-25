@@ -222,6 +222,7 @@ void Sprite::getCurrentFrame(Uint32& x, Uint32& y)
         }
         else
         {
+            stopRendering();
             timeDiff = m_Duration - 1;
         }
     }

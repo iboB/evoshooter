@@ -25,7 +25,14 @@ namespace Rocket
         class Element;
     }
 }
+struct GameHud
+{
+    Rocket::Core::Element* m_healthDisplay;
+    Rocket::Core::Element* m_weaponDisplay;
 
+    void health(int health);
+    void weapon(const std::string& weaponName);
+};
 
 class ExperimentState : public GameState
 {
@@ -46,9 +53,11 @@ private:
     Camera* m_camera;
     Level* m_level;
 
-    Rocket::Core::Element* m_angleDisplay;
-    Rocket::Core::Element* m_distanceDisplay;
-    Rocket::Core::Element* m_fovDisplay;
+    //Rocket::Core::Element* m_angleDisplay;
+    //Rocket::Core::Element* m_distanceDisplay;
+    //Rocket::Core::Element* m_fovDisplay;
+
+    GameHud hud;
 
     float m_camDistance;
     mathgp::vector3 m_camDirection;

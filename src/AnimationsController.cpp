@@ -21,6 +21,9 @@ AnimationsController::AnimationsController()
 : m_ActiveMovement(MA_None)
 , m_IsTakingDamage(false)
 , m_IsDead(false)
+, m_ActiveAttack(0)
+, m_IsAttacking(false)
+, m_AtackStartTime(0)
 {
 
 }
@@ -61,6 +64,29 @@ void AnimationsController::SetDamage(const std::string& fileDamage, float scale)
     m_Damage[MA_Right]->setFlipX(true);
 }
 
+void AnimationsController::AddAttack(const std::string& fileAttack, const std::string& fileAttackIdle, const mathgp::vector3& offset, float scale)
+{
+    AnimWithOffsetAndTwoStates anim;
+    anim.Offset = offset;
+    anim.Offset.z() += 0.001f;
+
+    anim.Animation[0][MA_Left] = ResourceManager::instance().createSpriteFromSingleAnimationTexture(fileAttackIdle, 1, 8, ANIM_TIME);
+    anim.Animation[0][MA_Left]->setScale(scale);
+
+    anim.Animation[0][MA_Right] = ResourceManager::instance().createSpriteFromSingleAnimationTexture(fileAttackIdle, 1, 8, ANIM_TIME);
+    anim.Animation[0][MA_Right]->setScale(scale);
+    anim.Animation[0][MA_Right]->setFlipX(true);
+
+    anim.Animation[1][MA_Left] = ResourceManager::instance().createSpriteFromSingleAnimationTexture(fileAttack, 1, 8, ANIM_TIME);
+    anim.Animation[1][MA_Left]->setScale(scale);
+
+    anim.Animation[1][MA_Right] = ResourceManager::instance().createSpriteFromSingleAnimationTexture(fileAttack, 1, 8, ANIM_TIME);
+    anim.Animation[1][MA_Right]->setScale(scale);
+    anim.Animation[1][MA_Right]->setFlipX(true);
+
+    m_Attacks.push_back(anim);
+}
+
 void AnimationsController::AddAttachment(const std::string& file, const mathgp::vector3& offset, float scale)
 {
     SpritePtr spriteLeft = ResourceManager::instance().createSpriteFromSingleAnimationTexture(file, 1, 8, ANIM_TIME);
@@ -69,7 +95,7 @@ void AnimationsController::AddAttachment(const std::string& file, const mathgp::
     spriteRight->setScale(scale);
     spriteRight->setFlipX(true);
 
-    m_Attachments[file] = { offset, { spriteLeft, spriteRight } };
+    m_Attachments[file] = { offset + mathgp::vc(0.0f, 0.0f, 0.001f), { spriteLeft, spriteRight } };
 }
 
 void AnimationsController::RemoveAttachment(const std::string& file)
@@ -167,8 +193,43 @@ void AnimationsController::GetDamage()
     m_IsTakingDamage = true;
 }
 
+void AnimationsController::Attack(Uint32 attackIndex)
+{
+    if (attackIndex >= m_Attacks.size())
+    {
+        assert(false);
+        return;
+    }
+
+    if (m_ActiveAttack >= 0 && m_ActiveAttack != attackIndex)
+    {
+        AnimWithOffsetAndTwoStates& oldAttack = m_Attacks[m_ActiveAttack];
+        oldAttack.Animation[0][MA_Left]->stopRendering();
+        oldAttack.Animation[0][MA_Right]->stopRendering();
+
+        oldAttack.Animation[1][MA_Left]->stopRendering();
+        oldAttack.Animation[1][MA_Right]->stopRendering();
+    }
+
+    AnimWithOffsetAndTwoStates& newAttack = m_Attacks[attackIndex];
+
+    if (m_ActiveAttack != attackIndex)
+    {
+        newAttack.Animation[0][m_ActiveMovement]->stopRendering();
+        newAttack.Animation[1][m_ActiveMovement]->startRendering(0);
+    }
+    
+    newAttack.Animation[0][m_ActiveMovement]->stopRendering();
+
+    m_IsAttacking = true;
+    m_ActiveAttack = attackIndex;
+    m_AtackStartTime = SDL_GetTicks();
+}
+
 void AnimationsController::update(const mathgp::vector3& position, const mathgp::vector3& camDir)
 {
+    updateAttack(position, camDir);
+
     if (m_IsDead)
     {
         m_Death[m_ActiveMovement]->update(position, camDir);
@@ -203,6 +264,54 @@ void AnimationsController::update(const mathgp::vector3& position, const mathgp:
     updateAttachments(position, camDir);
 }
 
+void AnimationsController::updateAttack(const mathgp::vector3& position, const mathgp::vector3& camDir)
+{
+    if (m_ActiveAttack < 0 || m_ActiveAttack >= m_Attacks.size())
+    {
+        return;
+    }
+
+    AnimWithOffsetAndTwoStates& anim = m_Attacks[m_ActiveAttack];
+
+    if (m_IsAttacking && (SDL_GetTicks() - m_AtackStartTime) >= ANIM_TIME)
+    {
+        m_IsAttacking = false;
+        anim.Animation[1][MA_Left]->stopRendering();
+        anim.Animation[1][MA_Right]->stopRendering();
+
+        anim.Animation[0][m_ActiveMovement]->startRendering(0);
+    }
+
+    if (m_IsAttacking)
+    {
+        if (anim.Animation[1][m_ActiveMovement]->isRendering())
+        {
+            anim.Animation[1][m_ActiveMovement]->update(position + anim.Offset, camDir);
+        }
+        else
+        {
+            int activeFrame = anim.Animation[1][!m_ActiveMovement]->currentFrame();
+            anim.Animation[1][!m_ActiveMovement]->stopRendering();
+            anim.Animation[1][m_ActiveMovement]->startRendering(activeFrame);
+            anim.Animation[1][m_ActiveMovement]->update(position + anim.Offset, camDir);
+        }
+    }
+    else
+    {
+        if (anim.Animation[0][m_ActiveMovement]->isRendering())
+        {
+            anim.Animation[0][m_ActiveMovement]->update(position + anim.Offset, camDir);
+        }
+        else
+        {
+            int activeFrame = anim.Animation[0][!m_ActiveMovement]->currentFrame();
+            anim.Animation[0][!m_ActiveMovement]->stopRendering();
+            anim.Animation[0][m_ActiveMovement]->startRendering(activeFrame);
+            anim.Animation[0][m_ActiveMovement]->update(position + anim.Offset, camDir);
+        }
+    }
+}
+
 void AnimationsController::updateAttachments(const mathgp::vector3& position, const mathgp::vector3& camDir)
 {
     for (auto it = m_Attachments.begin(); it != m_Attachments.end(); ++it)
@@ -216,6 +325,7 @@ void AnimationsController::updateAttachments(const mathgp::vector3& position, co
             int activeFrame = it->second.Animation[!m_ActiveMovement]->currentFrame();
             it->second.Animation[!m_ActiveMovement]->stopRendering();
             it->second.Animation[m_ActiveMovement]->startRendering(activeFrame);
+            it->second.Animation[m_ActiveMovement]->update(position + it->second.Offset, camDir);
         }
     }
 }
