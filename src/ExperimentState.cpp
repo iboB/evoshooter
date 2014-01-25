@@ -213,6 +213,12 @@ void ExperimentState::handleEvent(const SDL_Event& event)
                 Application::instance().pushState(state);
             }
             break;
+        case SDLK_n:
+            World::instance().mainCharacter()->Attack(0);
+            break;
+        case SDLK_m:
+            World::instance().mainCharacter()->Attack(1);
+            break;
         default:
             return;
         }
