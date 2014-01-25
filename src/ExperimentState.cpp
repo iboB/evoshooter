@@ -16,6 +16,7 @@
 #include "Sprite.h"
 #include "ResourceManager.h"
 #include "RenderManager.h"
+#include "MonsterCharacter.h"
 #include "Camera.h"
 #include "GLSentries.h"
 #include "Level.h"
@@ -28,6 +29,7 @@
 using namespace mathgp;
 
 SpritePtr g_Sprite;
+MonsterCharacter* g_Monster;
 
 ExperimentState::ExperimentState()
     : m_camera(nullptr)
@@ -63,7 +65,7 @@ void ExperimentState::initialize()
     m_texture->loadFromFile("sprites/sprite.png");
 
     //g_Sprite = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/sprite.png", 2, 4, 8000);
-    g_Sprite = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/jaba_the_slut_die_anim_blue.png", 1, 8, 1000);
+    g_Sprite = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/jaba_the_slut_die_anim.png", 1, 8, 1000);
 
     //g_Sprite.reset(new Sprite());
 
@@ -71,7 +73,11 @@ void ExperimentState::initialize()
 
     g_Sprite->setScale(0.009f);
     g_Sprite->setFlipX(true);
-    g_Sprite->startRendering();
+    //g_Sprite->startRendering();
+
+    g_Monster = new MonsterCharacter(mathgp::vc(0.f, 0.f, 0.f), "jaba_the_slut");
+
+    g_Monster->Move(mathgp::vc(0.f, 0.f, 0.f));
 }
 
 void ExperimentState::deinitialize()
@@ -132,7 +138,12 @@ void ExperimentState::handleEvent(const SDL_Event& event)
         case SDLK_d:
             m_moveWeight.x() = 0.f;
             break;
-
+        case SDLK_SPACE:
+            g_Monster->Die();
+            break;
+        case SDLK_l:
+            g_Monster->GetDamage();
+            break;
         default:
             return;
         }
@@ -189,9 +200,11 @@ void ExperimentState::update()
     {
         m_camPosition += unitsPerSecond * frameTime * normalized(m_moveWeight);
         m_camera->moveTo(m_camPosition);
+        g_Monster->Move(g_Monster->position() + unitsPerSecond * frameTime * normalized(m_moveWeight));
     }
 
-    g_Sprite->update(vc(0.f, 0.f, 0.0f), m_camDirection);
+    //g_Sprite->update(vc(0.f, 0.f, 0.0f), m_camDirection);
+    g_Monster->Update(m_camDirection);
 }
 
 void ExperimentState::draw()
@@ -208,10 +221,10 @@ void ExperimentState::draw()
 
     Vertex quad[] =
     {
-        { vc(0, 0, 0), vc(0, 0) },
-        { vc(0.8f, 0, 0), vc(0, 1) },
-        { vc(0, 0, 1.28f), vc(1, 0) },
-        { vc(0.8f, 0, 1.28f), vc(1, 1) },
+        { vc(0, 0, 0), vc(0, 1) },
+        { vc(1.8f, 0.0, 0), vc(1, 1) },
+        { vc(0, 0.0, 1.8), vc(0, 0) },
+        { vc(1.8f, 0.0f, 1.8), vc(1, 0) },
     };
 
     float camAngle = acos(abs(m_camDirection.y()));
@@ -279,7 +292,7 @@ void ExperimentState::draw()
     glDisableVertexAttribArray(Attr_Pos);
     glDisableVertexAttribArray(Attr_UV);
 
-    g_Sprite->render(m_camera->projectionView());
+    //g_Sprite->render(m_camera->projectionView());
 
     m_guiLayer->draw();
 }

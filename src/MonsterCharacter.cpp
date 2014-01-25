@@ -8,12 +8,12 @@
 // See accompanying file LICENSE.txt or copy at
 // http://opensource.org/licenses/MIT
 //
-#pragma once
+#include "EvoShooter.pch.h"
 
-#include "Character.h"
+#include "MonsterCharacter.h"
 
-class MainCharacter : public Character
+MonsterCharacter::MonsterCharacter(const mathgp::vector3& position, const std::string& name)
+: Character(position, name)
 {
-public:
-    MainCharacter();
-};
+
+}

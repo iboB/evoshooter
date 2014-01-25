@@ -222,7 +222,7 @@ void Sprite::getCurrentFrame(Uint32& x, Uint32& y)
         }
         else
         {
-            timeDiff = m_Duration;
+            timeDiff = m_Duration - 1;
         }
     }
 

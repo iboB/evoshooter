@@ -13,6 +13,7 @@
 #include "Object.h"
 #include "ColliderGrid.h"
 #include "MainCharacter.h"
+#include "MonsterCharacter.h"
 
 
 World::World()
@@ -48,6 +49,26 @@ unsigned int World::spawnObject(float x, float y, float r)
 	{
 		m_firstFreeId = 0; //hopefully his dead;
 	}
+
+    return id;
+}
+
+unsigned int World::spawnMonster(float x, float y, float r, const std::string& name)
+{
+    mathgp::vector3 pos = mathgp::v(x, y, 0.0f);
+    unsigned int id = m_firstFreeId;
+    MonsterCharacter* monster = new MonsterCharacter(pos, name);
+    monster->Move(pos);
+
+    m_objects[id] = std::shared_ptr<Object>(monster);
+    ColliderGrid::instance().onObjectCreated(m_objects[id]);
+
+    ++m_firstFreeId;
+
+    if (m_firstFreeId >= INT_MAX)
+    {
+        m_firstFreeId = 0; //hopefully his dead;
+    }
 
     return id;
 }

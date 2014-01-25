@@ -9,3 +9,11 @@
 // http://opensource.org/licenses/MIT
 //
 #include "EvoShooter.pch.h"
+
+#include "MainCharacter.h"
+
+MainCharacter::MainCharacter()
+: Character(mathgp::vc(0.f, 0.f, 0.f), "main")
+{
+
+}

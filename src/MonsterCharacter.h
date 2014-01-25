@@ -12,8 +12,10 @@
 
 #include "Character.h"
 
-class MainCharacter : public Character
+class MonsterCharacter : public Character
 {
 public:
-    MainCharacter();
+    MonsterCharacter(const mathgp::vector3& position, const std::string& name);
+
+private:
 };
