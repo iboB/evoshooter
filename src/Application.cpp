@@ -17,6 +17,7 @@
 
 #include "InGameState.h"
 #include "ExperimentState.h"
+#include "AboutState.h"
 
 using namespace std;
 using namespace mathgp;
@@ -84,7 +85,8 @@ void Application::run()
 
         handleInput();
 
-        m_baseState->update(m_timeSinceLastFrame);
+        //m_baseState->update();
+        currentState()->update(m_timeSinceLastFrame);
 
         drawFrame();
         updateFPSData();
@@ -140,13 +142,17 @@ void Application::initialize()
     //m_baseState = new InGameState;
     m_baseState = new ExperimentState;
     m_baseState->initialize();
+    //m_baseState = new AboutState;
+    //m_baseState->initialize();
+    m_stateStack.push_back(m_baseState);
 }
 
 void Application::drawFrame()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    m_baseState->draw();
+    //m_baseState->draw();
+    currentState()->draw();
 
     m_mainWindow->swapBuffers();
 }
@@ -192,7 +198,8 @@ void Application::handleInput()
     bool handledHere = false;
     while(SDL_PollEvent(&event))
     {
-        m_baseState->handleEvent(event);
+        //m_baseState->handleEvent(event);
+        currentState()->handleEvent(event);
 
         if(event.type == SDL_QUIT)
         {
@@ -225,4 +232,20 @@ void Application::handleInput()
 const uvector2& Application::screenSize() const
 {
     return m_mainWindow->clientAreaSize();
+}
+
+void Application::popLastState()
+{
+    if (m_stateStack.size() > 0)
+    {
+        unsigned int lastStateIdx = m_stateStack.size() - 1;
+        m_stateStack[lastStateIdx]->deinitialize();
+        delete m_stateStack[lastStateIdx];
+        m_stateStack.pop_back();
+    }
+}
+void Application::pushState(GameState* state)
+{
+    state->initialize();
+    m_stateStack.push_back(state);
 }

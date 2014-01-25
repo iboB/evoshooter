@@ -36,6 +36,7 @@ public:
     void setParameter(GLint handle, float value);
     void setParameter(GLint handle, const mathgp::matrix& matrix);
     void setParameter(GLint handle, const mathgp::vector3& vec);
+    void setParameter(GLint handle, const mathgp::vector2& vec);
     void setParameter(GLint handle, const Texture& tex);
 
     static size_t numEffects() { return m_numEffects; }

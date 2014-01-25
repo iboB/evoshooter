@@ -10,19 +10,22 @@
 //
 #pragma once
 
-#include "MonsterDNA.h"
+#include "GameState.h"
 
-class Monster
+class GUILayer;
+
+class AboutState : public GameState
 {
 public:
+    AboutState();
 
-    void randomize();
-    
-    float calculateFitness() const; // damage * lifetime
+    void initialize() override;
+    void deinitialize() override;
+
+    void handleEvent(const SDL_Event& event) override;
+    void update(int d) override;
+    void draw() override;
 
 private:
-    MonsterDNA m_dna;
-
-    float m_damageDealtToPlayer;
-    float m_lifetime;
+    GUILayer* m_guiLayer;
 };

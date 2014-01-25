@@ -29,7 +29,9 @@ public:
     const mathgp::uvector2& screenSize() const;
 
     MainWindow* mainWindow() const { return m_mainWindow; }
-    GameState* currentState() const { return m_baseState;  } //todo: the actual current state?
+    GameState* currentState() const { return m_stateStack[m_stateStack.size()-1]; }
+    void popLastState();
+    void pushState(GameState* state);
 private:
     void initialize();
     void deinitialize();
@@ -76,4 +78,5 @@ private:
     //////////////////////////////////////
     // states
     GameState* m_baseState;
+    std::vector<GameState*> m_stateStack;
 };

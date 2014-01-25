@@ -75,18 +75,19 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile>EvoShooter.pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(GameRoot)third_party\lib\glew-1.10.0\include;$(GameRoot)third_party\lib\SDL2-2.0.1\include;$(GameRoot)third_party\lib\mathgp;$(GameRoot)third_party\lib\libRocket\Include;$(GameRoot)third_party\lib\SDL2_image-2.0.0\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(GameRoot)third_party\lib\glew-1.10.0\include;$(GameRoot)third_party\lib\SDL2-2.0.1\include;$(GameRoot)third_party\lib\SDL2_mixer-2.0.0\include;$(GameRoot)third_party\lib\mathgp;$(GameRoot)third_party\lib\libRocket\Include;$(GameRoot)third_party\lib\SDL2_image-2.0.0\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(GameRoot)third_party\lib\glew-1.10.0\lib\Release\Win32;$(GameRoot)third_party\lib\SDL2-2.0.1\lib\x86;$(GameRoot)third_party\lib\SDL2_image-2.0.0\lib\x86;$(GameRoot)third_party\lib\libRocket\bin</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glew32.lib;SDL2.lib;SDL2Main.lib;SDL2_image.lib;RocketCore.lib;RocketControls.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(GameRoot)third_party\lib\glew-1.10.0\lib\Release\Win32;$(GameRoot)third_party\lib\SDL2-2.0.1\lib\x86;$(GameRoot)third_party\lib\SDL2_image-2.0.0\lib\x86;$(GameRoot)third_party\lib\SDL2_mixer-2.0.0\lib\x86;$(GameRoot)third_party\lib\libRocket\bin</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glew32.lib;SDL2.lib;SDL2Main.lib;SDL2_image.lib;SDL2_mixer.lib;RocketCore.lib;RocketControls.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\src\AboutState.h" />
     <ClInclude Include="..\..\..\src\AnimationsController.h" />
     <ClInclude Include="..\..\..\src\Camera.h" />
     <ClInclude Include="..\..\..\src\Character.h" />
@@ -118,6 +119,7 @@
     <ClInclude Include="..\..\..\src\MonsterDNA.h" />
     <ClInclude Include="..\..\..\src\NonCopyable.h" />
     <ClInclude Include="..\..\..\src\Object.h" />
+    <ClInclude Include="..\..\..\src\Overlay.h" />
     <ClInclude Include="..\..\..\src\Platform.h" />
     <ClInclude Include="..\..\..\src\RenderManager.h" />
     <ClInclude Include="..\..\..\src\ResourceManager.h" />
@@ -129,6 +131,7 @@
     <ClInclude Include="..\..\..\src\World.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\src\AboutState.cpp" />
     <ClCompile Include="..\..\..\src\AnimationsController.cpp" />
     <ClCompile Include="..\..\..\src\Camera.cpp" />
     <ClCompile Include="..\..\..\src\Character.cpp" />
@@ -153,6 +156,7 @@
     <ClCompile Include="..\..\..\src\MainMenuState.cpp" />
     <ClCompile Include="..\..\..\src\MainWindow.cpp" />
     <ClCompile Include="..\..\..\src\MonsterCharacter.cpp" />
+    <ClCompile Include="..\..\..\src\Overlay.cpp" />
     <ClCompile Include="..\..\..\src\RenderManager.cpp" />
     <ClCompile Include="..\..\..\src\Monster.cpp" />
     <ClCompile Include="..\..\..\src\MonsterDNA.cpp" />

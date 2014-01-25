@@ -1,243 +1,86 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClInclude Include="..\..\..\src\Memory.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\Platform.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\VersionInfo.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\Application.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\ExplicitSingleton.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\ImplicitSingleton.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\MainWindow.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\GUI.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\GUISystemInterface.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\GUIRenderInterface.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\EvoShooter.pch.h">
-      <Filter>Core\PrecompiledHeader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\Texture.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\GUILayer.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\GUIAttribs.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\GLSentries.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\Macros.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\ResourceManager.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\Sprite.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\GameState.h">
-      <Filter>GameStates</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\InGameState.h">
-      <Filter>GameStates</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\MainMenuState.h">
-      <Filter>GameStates</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\Effect.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\NonCopyable.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\Util.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\Object.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\ColliderGrid.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\Level.h">
-      <Filter>Level</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\Camera.h">
-      <Filter>Level</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\ExperimentState.h">
-      <Filter>GameStates</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\GLExtensions.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\Constants.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\AnimationsController.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\RenderManager.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\MonsterDNA.h">
-      <Filter>Evo</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\Monster.h">
-      <Filter>Evo</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\World.h">
-      <Filter>World</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\MainCharacter.h">
-      <Filter>World</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\Character.h">
-      <Filter>World</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\SoundManager.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\MonsterCharacter.h">
+    <ClCompile Include="..\..\..\src\AnimationsController.cpp" />
+    <ClCompile Include="..\..\..\src\Camera.cpp" />
+    <ClCompile Include="..\..\..\src\Character.cpp" />
+    <ClCompile Include="..\..\..\src\Constants.cpp" />
+    <ClCompile Include="..\..\..\src\Effect.cpp" />
+    <ClCompile Include="..\..\..\src\ColliderGrid.cpp" />
+    <ClCompile Include="..\..\..\src\EntryPoint.cpp" />
+    <ClCompile Include="..\..\..\src\Application.cpp" />
+    <ClCompile Include="..\..\..\src\EvoShooter.pch.cpp" />
+    <ClCompile Include="..\..\..\src\ExperimentState.cpp" />
+    <ClCompile Include="..\..\..\src\GameState.cpp" />
+    <ClCompile Include="..\..\..\src\GUI.cpp" />
+    <ClCompile Include="..\..\..\src\GUILayer.cpp" />
+    <ClCompile Include="..\..\..\src\GUIRenderInterface.cpp" />
+    <ClCompile Include="..\..\..\src\GUISystemInterface.cpp" />
+    <ClCompile Include="..\..\..\src\InGameState.cpp" />
+    <ClCompile Include="..\..\..\src\Level.cpp" />
+    <ClCompile Include="..\..\..\src\MainCharacter.cpp" />
+    <ClCompile Include="..\..\..\src\MainMenuState.cpp" />
+    <ClCompile Include="..\..\..\src\MainWindow.cpp" />
+    <ClCompile Include="..\..\..\src\MonsterCharacter.cpp" />
+    <ClCompile Include="..\..\..\src\Overlay.cpp" />
+    <ClCompile Include="..\..\..\src\RenderManager.cpp" />
+    <ClCompile Include="..\..\..\src\Monster.cpp" />
+    <ClCompile Include="..\..\..\src\MonsterDNA.cpp" />
+    <ClCompile Include="..\..\..\src\ResourceManager.cpp" />
+    <ClCompile Include="..\..\..\src\SoundManager.cpp" />
+    <ClCompile Include="..\..\..\src\Sprite.cpp" />
+    <ClCompile Include="..\..\..\src\Object.cpp" />
+    <ClCompile Include="..\..\..\src\Texture.cpp" />
+    <ClCompile Include="..\..\..\src\Util.cpp" />
+    <ClCompile Include="..\..\..\src\World.cpp" />
+    <ClInclude Include="..\..\..\src\AboutState.h">
       <Filter>Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\src\Application.cpp">
+    <ClInclude Include="..\..\..\src\AnimationsController.h" />
+    <ClInclude Include="..\..\..\src\Camera.h" />
+    <ClInclude Include="..\..\..\src\Character.h" />
+    <ClInclude Include="..\..\..\src\Constants.h" />
+    <ClInclude Include="..\..\..\src\Effect.h" />
+    <ClInclude Include="..\..\..\src\ColliderGrid.h" />
+    <ClInclude Include="..\..\..\src\ExperimentState.h" />
+    <ClInclude Include="..\..\..\src\ExplicitSingleton.h" />
+    <ClInclude Include="..\..\..\src\Application.h" />
+    <ClInclude Include="..\..\..\src\EvoShooter.pch.h" />
+    <ClInclude Include="..\..\..\src\GameState.h" />
+    <ClInclude Include="..\..\..\src\GLExtensions.h" />
+    <ClInclude Include="..\..\..\src\GLSentries.h" />
+    <ClInclude Include="..\..\..\src\GUI.h" />
+    <ClInclude Include="..\..\..\src\GUIAttribs.h" />
+    <ClInclude Include="..\..\..\src\GUILayer.h" />
+    <ClInclude Include="..\..\..\src\GUIRenderInterface.h" />
+    <ClInclude Include="..\..\..\src\GUISystemInterface.h" />
+    <ClInclude Include="..\..\..\src\ImplicitSingleton.h" />
+    <ClInclude Include="..\..\..\src\InGameState.h" />
+    <ClInclude Include="..\..\..\src\Level.h" />
+    <ClInclude Include="..\..\..\src\Macros.h" />
+    <ClInclude Include="..\..\..\src\MainCharacter.h" />
+    <ClInclude Include="..\..\..\src\MainMenuState.h" />
+    <ClInclude Include="..\..\..\src\MainWindow.h" />
+    <ClInclude Include="..\..\..\src\Memory.h" />
+    <ClInclude Include="..\..\..\src\Monster.h" />
+    <ClInclude Include="..\..\..\src\MonsterCharacter.h" />
+    <ClInclude Include="..\..\..\src\MonsterDNA.h" />
+    <ClInclude Include="..\..\..\src\NonCopyable.h" />
+    <ClInclude Include="..\..\..\src\Object.h" />
+    <ClInclude Include="..\..\..\src\Overlay.h" />
+    <ClInclude Include="..\..\..\src\Platform.h" />
+    <ClInclude Include="..\..\..\src\RenderManager.h" />
+    <ClInclude Include="..\..\..\src\ResourceManager.h" />
+    <ClInclude Include="..\..\..\src\SoundManager.h" />
+    <ClInclude Include="..\..\..\src\Sprite.h" />
+    <ClInclude Include="..\..\..\src\Texture.h" />
+    <ClInclude Include="..\..\..\src\Util.h" />
+    <ClInclude Include="..\..\..\src\VersionInfo.h" />
+    <ClInclude Include="..\..\..\src\World.h" />
+    <ClCompile Include="..\..\..\src\AboutState.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\EntryPoint.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\MainWindow.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\GUI.cpp">
-      <Filter>GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\GUISystemInterface.cpp">
-      <Filter>GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\GUIRenderInterface.cpp">
-      <Filter>GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\EvoShooter.pch.cpp">
-      <Filter>Core\PrecompiledHeader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\Texture.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\GUILayer.cpp">
-      <Filter>GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\ResourceManager.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\Sprite.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\GameState.cpp">
-      <Filter>GameStates</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\InGameState.cpp">
-      <Filter>GameStates</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\MainMenuState.cpp">
-      <Filter>GameStates</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\Effect.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\Util.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\Object.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\ColliderGrid.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\Level.cpp">
-      <Filter>Level</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\Camera.cpp">
-      <Filter>Level</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\ExperimentState.cpp">
-      <Filter>GameStates</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\Constants.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\AnimationsController.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\RenderManager.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\MonsterDNA.cpp">
-      <Filter>Evo</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\Monster.cpp">
-      <Filter>Evo</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\World.cpp">
-      <Filter>World</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\MainCharacter.cpp">
-      <Filter>World</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\Character.cpp">
-      <Filter>World</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\SoundManager.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\MonsterCharacter.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Filter Include="GUI">
-      <UniqueIdentifier>{16def308-c4e5-42dd-b51c-cbbf19639f04}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core">
-      <UniqueIdentifier>{6402e453-d651-4c6c-8690-b874d713b1f9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\PrecompiledHeader">
-      <UniqueIdentifier>{07404084-7c73-4202-8052-7e98740befcb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameStates">
-      <UniqueIdentifier>{896bed60-59d8-4a94-8c54-e68a04b68b42}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Level">
-      <UniqueIdentifier>{b536ccb2-5600-47b4-a898-e530f8cea359}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Evo">
-      <UniqueIdentifier>{739ffb84-858f-4729-b279-27f1167cb58e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="World">
-      <UniqueIdentifier>{c366dbad-6512-4d2a-94a3-c2cc9334cea5}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
 </Project>

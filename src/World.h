@@ -10,7 +10,7 @@
 //
 #pragma once
 
-#include "ImplicitSingleton.h"
+#include "ExplicitSingleton.h"
 
 class Object;
 class MainCharacter;
@@ -21,11 +21,10 @@ const float g_gridSize = 5.0f;
 typedef std::map<unsigned int, std::shared_ptr<Object> > objectsContainer;
 
 const unsigned int g_gridCells = (const unsigned int)(g_worldSize / g_gridSize);
-class World : public ImplicitSingleton<World>
+class World : public ExplicitSingleton<World>
 {
+    DECLARE_EXPLICIT_SINGLETON(World);
 public:
-	World();
-	~World();
 
 	std::shared_ptr<Object> object(unsigned int id);
     unsigned int spawnObject(float x, float y, float r);

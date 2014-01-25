@@ -10,19 +10,20 @@
 //
 #pragma once
 
-#include "MonsterDNA.h"
+class Effect;
+class Texture;
 
-class Monster
+class Overlay
 {
 public:
+    Overlay();
+    ~Overlay();
 
-    void randomize();
-    
-    float calculateFitness() const; // damage * lifetime
+    void draw();
 
 private:
-    MonsterDNA m_dna;
-
-    float m_damageDealtToPlayer;
-    float m_lifetime;
+    Effect* m_effect;
+    Texture* m_texture;
+    int m_texParam;
+    int m_scaleParam;
 };

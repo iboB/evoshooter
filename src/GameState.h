@@ -24,7 +24,7 @@ public:
     virtual void update(int dt);
     virtual void draw();
 
-    virtual Camera* camera() = 0;
+    virtual Camera* camera() { return NULL; };
 
     void pushState(std::shared_ptr<GameState> state);
     void popState();
