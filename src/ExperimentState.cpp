@@ -171,6 +171,12 @@ void ExperimentState::handleEvent(const SDL_Event& event)
         case SDLK_l:
             World::instance().mainCharacter()->GetDamage();
             break;
+        case SDLK_n:
+            World::instance().mainCharacter()->Attack(0);
+            break;
+        case SDLK_m:
+            World::instance().mainCharacter()->Attack(1);
+            break;
         default:
             return;
         }
