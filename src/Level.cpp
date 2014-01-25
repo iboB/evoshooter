@@ -149,35 +149,6 @@ void Level::drawFace(const Face& face, const mathgp::matrix& projectionView)
     glVertexAttribPointer(Attr_TexCoord, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), OFFSET(sizeof(point3)));
 
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, OFFSET(0));
-
-    //float minx = 0, miny = 0, minz = 0;
-    //float maxx = 50, maxy = 50, maxz = 20;
-
-    //Vertex quad[] =
-    //{
-    //    { v(minx, miny, maxz), vc(0, 0) },
-    //    { v(maxx, miny, maxz), vc(0, 1) },        
-    //    { v(minx, maxy, maxz), vc(1, 0) },
-    //    { v(maxx, maxy, maxz), vc(1, 1) },
-    //};
-
-    //unsigned indices[] =
-    //{
-    //    0, 1, 2,
-    //    2, 1, 3,
-    //};
-
-
-    //glVertexAttribPointer(Attr_Pos, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), &quad->position);
-    //glEnableVertexAttribArray(Attr_Pos);
-
-    //glVertexAttribPointer(Attr_TexCoord, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), &quad->texCoord);
-    //glEnableVertexAttribArray(Attr_TexCoord);
-
-    //glDrawElements(GL_TRIANGLES, _countof(indices), GL_UNSIGNED_INT, indices);
-
-    //glDisableVertexAttribArray(Attr_Pos);
-    //glDisableVertexAttribArray(Attr_TexCoord);
 }
 
 void Level::destroyFace(Face& face)
