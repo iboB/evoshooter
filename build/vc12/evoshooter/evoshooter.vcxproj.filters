@@ -115,6 +115,9 @@
     <ClInclude Include="..\..\..\src\Character.h">
       <Filter>World</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\SoundManager.h">
+      <Filter>Core</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\src\MonsterCharacter.h">
       <Filter>Core</Filter>
     </ClInclude>
@@ -206,6 +209,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\Character.cpp">
       <Filter>World</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\SoundManager.cpp">
+      <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\MonsterCharacter.cpp">
       <Filter>Core</Filter>
