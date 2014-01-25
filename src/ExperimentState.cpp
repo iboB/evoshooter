@@ -22,6 +22,8 @@
 #include "GUILayer.h"
 #include "Application.h"
 #include "Util.h"
+#include "ColliderGrid.h"
+#include "SoundManager.h"
 #include <iostream>
 
 #include <Rocket/Core/Element.h>
@@ -64,15 +66,17 @@ void ExperimentState::initialize()
     m_texture->loadFromFile("sprites/sprite.png");
 
     //g_Sprite = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/sprite.png", 2, 4, 8000);
-    g_Sprite = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/jaba_the_slut_die_anim_blue.png", 1, 8, 1000);
+    //g_Sprite = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/jaba_the_slut_die_anim_blue.png", 1, 8, 1000);
 
     //g_Sprite.reset(new Sprite());
 
     //g_Sprite->init("sprites/sprite.png", 256, 128, 256, 128, 1, 2, 4000, true);
 
-    g_Sprite->setScale(0.009f);
-    g_Sprite->setFlipX(true);
-    g_Sprite->startRendering();
+   // g_Sprite->setScale(0.009f);
+   // g_Sprite->setFlipX(true);
+   // g_Sprite->startRendering();
+
+    SoundManager::instance().playTrack(0, true);
 }
 
 void ExperimentState::deinitialize()
@@ -133,7 +137,18 @@ void ExperimentState::handleEvent(const SDL_Event& event)
         case SDLK_d:
             m_moveWeight.x() = 0.f;
             break;
-
+        case SDLK_0:
+            SoundManager::instance().playSound((ESounds)0);
+            break;
+        case SDLK_1:
+            SoundManager::instance().playSound((ESounds)1);
+            break;
+        case SDLK_2:
+            SoundManager::instance().playSound((ESounds)2);
+            break;
+        case SDLK_3:
+            SoundManager::instance().playSound((ESounds)3);
+            break;
         default:
             return;
         }
@@ -205,7 +220,7 @@ void ExperimentState::update()
         m_camera->moveTo(m_camPosition);
     }
 
-    g_Sprite->update(vc(0.f, 0.f, 0.0f), m_camDirection);
+  //  g_Sprite->update(vc(0.f, 0.f, 0.0f), m_camDirection);
 }
 
 void ExperimentState::draw()
@@ -306,7 +321,7 @@ void ExperimentState::draw()
     glDisableVertexAttribArray(Attr_Pos);
     glDisableVertexAttribArray(Attr_UV);
 
-    g_Sprite->render(m_camera->projectionView());
+ //   g_Sprite->render(m_camera->projectionView());
 
     m_guiLayer->draw();
 }
