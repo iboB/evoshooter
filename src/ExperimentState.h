@@ -11,8 +11,6 @@
 #pragma once
 #include "GameState.h"
 
-class Effect;
-class Texture;
 class Camera;
 class Level;
 class GUILayer;
@@ -66,9 +64,6 @@ private:
     mathgp::vector3 m_camPosition;
 
     mathgp::vector3 m_moveWeight;
-
-    Effect* m_effect;
-    Texture* m_texture;
 
     mathgp::vector3 m_debugStart;
     mathgp::vector3 m_debugEnd;

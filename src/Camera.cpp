@@ -14,12 +14,15 @@
 #include "Application.h"
 #include "MainWindow.h"
 
+#include "Object.h"
+
 using namespace mathgp;
 
 Camera::Camera(const point3& point, const vector3& direction, float distance, float fov)
     : m_point(point)
     , m_view(Mat::identity)
     , m_projection(Mat::identity)
+    , m_object(nullptr)
 {
     setDirectionAndDistance(direction, distance);
     setFov(fov);
@@ -87,4 +90,19 @@ void Camera::screenToWorldPoint(const mathgp::uvector2& screenPos, mathgp::vecto
     float distToPlane = std::abs(m_position.z()) / dot(lookAt, toPlane);
 
     out = lookAt*distToPlane + m_position;
+}
+
+void Camera::update()
+{
+    if (!m_object)
+    {
+        return;
+    }
+
+    moveTo(m_object->position());
+}
+
+void Camera::followObject(const Object* obj)
+{
+    m_object = obj;
 }
