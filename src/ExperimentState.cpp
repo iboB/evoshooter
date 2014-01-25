@@ -13,6 +13,8 @@
 #include "GUILayer.h"
 #include "Effect.h"
 #include "Texture.h"
+#include "Sprite.h"
+#include "ResourceManager.h"
 #include "Camera.h"
 #include "GLSentries.h"
 #include "Level.h"
@@ -23,6 +25,8 @@
 #include <Rocket/Core/Element.h>
 
 using namespace mathgp;
+
+SpritePtr g_Sprite;
 
 ExperimentState::ExperimentState()
     : m_camera(nullptr)
@@ -56,6 +60,16 @@ void ExperimentState::initialize()
 
     m_texture = new Texture;
     m_texture->loadFromFile("sprites/sprite.png");
+
+    //g_Sprite = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/sprite.png", 2, 4, 8000);
+    g_Sprite = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/sprite2.png", 2, 4, 8000);
+
+    //g_Sprite.reset(new Sprite());
+
+    //g_Sprite->init("sprites/sprite.png", 256, 128, 256, 128, 1, 2, 4000, true);
+
+    g_Sprite->setScale(0.003f);
+    g_Sprite->startRendering();
 }
 
 void ExperimentState::deinitialize()
@@ -174,10 +188,17 @@ void ExperimentState::update()
         m_camPosition += unitsPerSecond * frameTime * normalized(m_moveWeight);
         m_camera->moveTo(m_camPosition);
     }
+
+    g_Sprite->update(vc(0.f, 0.f, 0.0f), m_camDirection);
 }
 
 void ExperimentState::draw()
 {
+    
+    
+
+   // return;
+
     m_level->draw(m_camera->projectionView());
 
     struct Vertex
@@ -258,6 +279,8 @@ void ExperimentState::draw()
 
     glDisableVertexAttribArray(Attr_Pos);
     glDisableVertexAttribArray(Attr_UV);
+
+    g_Sprite->render(m_camera->projectionView());
 
     m_guiLayer->draw();
 }
