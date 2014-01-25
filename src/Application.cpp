@@ -16,6 +16,7 @@
 #include "GUI.h"
 
 #include "InGameState.h"
+#include "ExperimentState.h"
 
 using namespace std;
 using namespace mathgp;
@@ -107,6 +108,7 @@ void Application::initialize()
     //////////////////////////////////////
     // state
     m_baseState = new InGameState;
+    //m_baseState = new ExperimentState;
     m_baseState->initialize();
 }
 

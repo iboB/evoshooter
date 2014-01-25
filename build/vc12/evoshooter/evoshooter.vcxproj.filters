@@ -67,6 +67,18 @@
     <ClInclude Include="..\..\..\src\Util.h">
       <Filter>Core</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\Level.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Camera.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\ExperimentState.h">
+      <Filter>GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\GLExtensions.h">
+      <Filter>Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\Application.cpp">
@@ -111,6 +123,15 @@
     <ClCompile Include="..\..\..\src\Util.cpp">
       <Filter>Core</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\Level.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Camera.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\ExperimentState.cpp">
+      <Filter>GameStates</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GUI">
@@ -124,6 +145,9 @@
     </Filter>
     <Filter Include="GameStates">
       <UniqueIdentifier>{896bed60-59d8-4a94-8c54-e68a04b68b42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level">
+      <UniqueIdentifier>{b536ccb2-5600-47b4-a898-e530f8cea359}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
