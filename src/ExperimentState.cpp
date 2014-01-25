@@ -30,6 +30,7 @@
 #include "ColliderGrid.h"
 #include "SoundManager.h"
 #include "AboutState.h"
+#include "ShadowManager.h"
 #include <iostream>
 
 #include <Rocket/Core/Element.h>
@@ -122,6 +123,7 @@ void ExperimentState::initialize()
 
     //g_Monster->SetMoveDirection(mathgp::vc(0.1f, 0.05f, 0.f));
     //g_Monster->SetMoveSpeed(0.02f);
+    ShadowManager::instance().initialize();
 }
 
 void ExperimentState::deinitialize()
@@ -296,6 +298,7 @@ void ExperimentState::update(int dt)
     }
 
     World::instance().update(dt);
+    ShadowManager::instance().update();
     //g_Sprite->update(vc(0.f, 0.f, 0.0f), m_camDirection);
     //g_Monster->Update(m_camDirection);
 }
@@ -303,6 +306,8 @@ void ExperimentState::update(int dt)
 void ExperimentState::draw()
 {
     m_level->draw(m_camera->projectionView());
+
+    ShadowManager::instance().draw(m_camera->projectionView());
 
     RenderManager::instance().Render(m_camera->projectionView());
 

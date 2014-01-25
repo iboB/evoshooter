@@ -25,6 +25,13 @@ ResourceManager::ResourceManager()
     m_SpriteEffect->loadPixelShaderFromFile("shaders/sprite.frag");
 
     m_SpriteEffect->link();
+
+    m_SimpleEffect = new Effect;
+
+    m_SimpleEffect->loadVertexShaderFromFile("shaders/simple.vert");
+    m_SimpleEffect->loadPixelShaderFromFile("shaders/simple.frag");
+
+    m_SimpleEffect->link();
 }
 
 TexturePtr ResourceManager::getTexture(const std::string& file)

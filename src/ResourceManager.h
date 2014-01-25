@@ -33,11 +33,12 @@ public:
     SpritePtr createSpriteFromSingleAnimationTexture(const std::string& file, Uint32 rows, Uint32 cols, int duration); //single looping animation in one texture
 
     Effect* getSpriteEffect() { return m_SpriteEffect; }
-
+    Effect* getSimpleEffect() { return m_SimpleEffect; }
 private:
 	typedef std::map<std::string, TexturePtr> TextureMap;
 	TextureMap m_Textures;
     Effect* m_SpriteEffect;
+    Effect* m_SimpleEffect;
 
 	TexturePtr findTexture(const std::string& file) const;
 };

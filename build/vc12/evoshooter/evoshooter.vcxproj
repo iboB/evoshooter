@@ -123,6 +123,7 @@
     <ClInclude Include="..\..\..\src\Platform.h" />
     <ClInclude Include="..\..\..\src\RenderManager.h" />
     <ClInclude Include="..\..\..\src\ResourceManager.h" />
+    <ClInclude Include="..\..\..\src\ShadowManager.h" />
     <ClInclude Include="..\..\..\src\SoundManager.h" />
     <ClInclude Include="..\..\..\src\Sprite.h" />
     <ClInclude Include="..\..\..\src\Texture.h" />
@@ -161,6 +162,7 @@
     <ClCompile Include="..\..\..\src\Monster.cpp" />
     <ClCompile Include="..\..\..\src\MonsterDNA.cpp" />
     <ClCompile Include="..\..\..\src\ResourceManager.cpp" />
+    <ClCompile Include="..\..\..\src\ShadowManager.cpp" />
     <ClCompile Include="..\..\..\src\SoundManager.cpp" />
     <ClCompile Include="..\..\..\src\Sprite.cpp" />
     <ClCompile Include="..\..\..\src\Object.cpp" />

@@ -33,9 +33,8 @@
     <ClCompile Include="..\..\..\src\Texture.cpp" />
     <ClCompile Include="..\..\..\src\Util.cpp" />
     <ClCompile Include="..\..\..\src\World.cpp" />
-    <ClInclude Include="..\..\..\src\AboutState.h">
-      <Filter>Core</Filter>
-    </ClInclude>
+    <ClCompile Include="..\..\..\src\AboutState.cpp" />
+    <ClCompile Include="..\..\..\src\ShadowManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\AnimationsController.h" />
@@ -79,8 +78,7 @@
     <ClInclude Include="..\..\..\src\Util.h" />
     <ClInclude Include="..\..\..\src\VersionInfo.h" />
     <ClInclude Include="..\..\..\src\World.h" />
-    <ClCompile Include="..\..\..\src\AboutState.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
+    <ClInclude Include="..\..\..\src\AboutState.h" />
+    <ClInclude Include="..\..\..\src\ShadowManager.h" />
   </ItemGroup>
 </Project>
