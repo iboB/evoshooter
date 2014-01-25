@@ -30,10 +30,13 @@ public:
 	std::shared_ptr<Object> object(unsigned int id);
     unsigned int spawnObject(float x, float y, float r);
     unsigned int spawnMonster(float x, float y, float r, const std::string& name);
+    unsigned int spawnPlayer(float x, float y, float r);
     void destroyObject(unsigned int id);
     objectsContainer& objects();
-    const MainCharacter* mainCharacter() { return m_mainCharacter; }
-	
+    MainCharacter* mainCharacter() { return m_mainCharacter; }
+
+    void update(int dt);
+
 private:
     objectsContainer m_objects;
     MainCharacter* m_mainCharacter;

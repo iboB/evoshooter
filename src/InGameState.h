@@ -23,7 +23,7 @@ public:
     void deinitialize() override;
 
     void handleEvent(const SDL_Event& event) override;
-    void update() override;
+    void update(int dt) override;
     void draw() override;
 private:
     Effect* m_effect;

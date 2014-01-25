@@ -17,6 +17,7 @@
 #include "ResourceManager.h"
 #include "RenderManager.h"
 #include "MonsterCharacter.h"
+#include "MainCharacter.h"
 #include "Camera.h"
 #include "GLSentries.h"
 #include "Level.h"
@@ -25,6 +26,9 @@
 #include "Util.h"
 #include "Overlay.h"
 #include "SoundManager.h"
+#include "World.h"
+#include <iostream>
+
 #include <Rocket/Core/Element.h>
 
 using namespace mathgp;
@@ -75,7 +79,7 @@ void ExperimentState::initialize()
     //g_Sprite->setScale(0.009f);
     //g_Sprite->setFlipX(true);
     //g_Sprite->startRendering();
-	g_Monster = new MonsterCharacter(mathgp::vc(0.f, 0.f, 0.f), "jaba_the_slut");
+
     //SoundManager::instance().playTrack(0, true);
 
     //g_Monster = new MonsterCharacter(mathgp::vc(0.f, 0.f, 0.f), "jaba_the_slut");
@@ -83,6 +87,18 @@ void ExperimentState::initialize()
     //g_Monster->Move(mathgp::vc(0.f, 0.f, 0.f));
 
     m_overlay = new Overlay;
+    //g_Monster = new MonsterCharacter(mathgp::vc(0.f, 0.f, 0.f), "jaba_the_slut");
+
+    //g_Monster->Move(mathgp::vc(0.f, 0.f, 0.f));
+
+    //unsigned int id = World::instance().spawnMonster(0.f, 0.f, 0.5f, "jaba_the_slut");
+
+    World::instance().spawnPlayer(1.f, 1.f, 0.5f);
+
+    //g_Monster = (MonsterCharacter*)World::instance().object(id).get();
+
+    //g_Monster->SetMoveDirection(mathgp::vc(0.1f, 0.05f, 0.f));
+    //g_Monster->SetMoveSpeed(0.02f);
 }
 
 void ExperimentState::deinitialize()
@@ -157,10 +173,10 @@ void ExperimentState::handleEvent(const SDL_Event& event)
             SoundManager::instance().playSound((ESounds)3);
             break;
         case SDLK_SPACE:
-            //g_Monster->Die();
+            World::instance().mainCharacter()->Die();
             break;
         case SDLK_l:
-            //g_Monster->GetDamage();
+            World::instance().mainCharacter()->GetDamage();
             break;
         default:
             return;
@@ -205,7 +221,7 @@ void ExperimentState::handleEvent(const SDL_Event& event)
     m_camera->setDirectionAndDistance(m_camDirection, m_camDistance);
 }
 
-void ExperimentState::update()
+void ExperimentState::update(int dt)
 {
     char text[100];
     sprintf(text, "%.2f", m_camDirection.z());
@@ -232,12 +248,13 @@ void ExperimentState::update()
         m_camPosition += unitsPerSecond * frameTime * normalized(m_moveWeight);
         m_camera->moveTo(m_camPosition);
         //g_Monster->Move(g_Monster->position() + unitsPerSecond * frameTime * normalized(m_moveWeight));
+
+        World::instance().mainCharacter()->Move(World::instance().mainCharacter()->position() + unitsPerSecond * frameTime * normalized(m_moveWeight));
     }
 
+    World::instance().update(dt);
     //g_Sprite->update(vc(0.f, 0.f, 0.0f), m_camDirection);
-  //  g_Sprite->update(vc(0.f, 0.f, 0.0f), m_camDirection);
-    //g_Sprite->update(vc(0.f, 0.f, 0.0f), m_camDirection);
-    g_Monster->Update(m_camDirection);
+    //g_Monster->Update(m_camDirection);
 }
 
 void ExperimentState::draw()
@@ -254,10 +271,10 @@ void ExperimentState::draw()
 
     Vertex quad[] =
     {
-        { vc(0, 0, 0), vc(0, 1) },
-        { vc(1.8f, 0.0, 0), vc(1, 1) },
-        { vc(0, 0.0, 1.8), vc(0, 0) },
-        { vc(1.8f, 0.0f, 1.8), vc(1, 0) },
+        { vc(0.f, 0.f, 0.f), vc(0, 1) },
+        { vc(1.8f, 0.0f, 0.f), vc(1, 1) },
+        { vc(0.f, 0.0f, 1.8f), vc(0, 0) },
+        { vc(1.8f, 0.0f, 1.8f), vc(1, 0) },
     };
 
     float camAngle = acos(abs(m_camDirection.y()));

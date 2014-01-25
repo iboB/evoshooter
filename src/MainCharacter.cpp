@@ -12,8 +12,13 @@
 
 #include "MainCharacter.h"
 
-MainCharacter::MainCharacter()
-: Character(mathgp::vc(0.f, 0.f, 0.f), "main")
+MainCharacter::MainCharacter(const mathgp::vector3& position)
+: Character(position, "player")
 {
 
+}
+
+void MainCharacter::update(int dt)
+{
+    Character::update(dt);
 }
