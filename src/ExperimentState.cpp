@@ -240,6 +240,7 @@ void ExperimentState::handleEvent(const SDL_Event& event)
     m_camDirection.z() += angle;
     m_camDirection.normalize();
     m_camera->setDirectionAndDistance(m_camDirection, m_camDistance);
+    m_camera->followObject(World::instance().mainCharacter());
 }
 
 void ExperimentState::update(int dt)
@@ -269,13 +270,14 @@ void ExperimentState::update(int dt)
     if (m_moveWeight.length_sq() > 0.5)
     {
         m_camPosition += unitsPerSecond * frameTime * normalized(m_moveWeight);
-        m_camera->moveTo(m_camPosition);
-
+        
         World::instance().mainCharacter()->Move(World::instance().mainCharacter()->position() + unitsPerSecond * frameTime * normalized(m_moveWeight));
     }
 
     World::instance().update(dt);
     g_Sprite->update(vc(2.f, 4.f, 0.0f), m_camDirection);
+
+    m_camera->update();
 }
 
 void ExperimentState::draw()

@@ -10,12 +10,12 @@
 //
 #pragma once
 
+class Object;
+
 class Camera
 {
 public:
     Camera(const mathgp::point3& point, const mathgp::vector3& direction, float distance, float fov);
-
-    void moveTo(const mathgp::point3& point);
 
     const mathgp::matrix& projectionView() const { return m_projectionView; }
     const mathgp::vector3& direction() const { return m_direction; }
@@ -27,7 +27,13 @@ public:
     //gives a point on the world plane
     void screenToWorldPoint(const mathgp::uvector2& screenPos, mathgp::vector3& out) const;
     void screenToWorldPoint(const mathgp::uvector2& screenPos, mathgp::vector3& outPoint, mathgp::vector3& outRayStart, mathgp::vector3& outRayEnd) const;
+
+    void update();
+
+    void followObject(Object* obj);
 private:
+    void moveTo(const mathgp::point3& point);
+
     mathgp::point3 m_point;
     mathgp::point3 m_position;
 
@@ -36,4 +42,6 @@ private:
     mathgp::matrix m_projection;
     mathgp::matrix m_view;
     mathgp::matrix m_projectionView;
+
+    Object* m_object;
 };
