@@ -13,87 +13,159 @@
 #include "GUILayer.h"
 #include "Effect.h"
 #include "Texture.h"
+#include "Camera.h"
+#include "GLSentries.h"
+#include "Level.h"
+#include "GUILayer.h"
+#include "Application.h"
+
+#include <Rocket/Core/Element.h>
 
 using namespace mathgp;
 
 ExperimentState::ExperimentState()
+    : m_camera(nullptr)
+    , m_level(nullptr)
+    , m_guiLayer(nullptr)
 {
 
 }
 
 void ExperimentState::initialize()
 {
-    m_effect = new Effect;
+    m_camera = new Camera(m_camPosition = vc(20, 20, 20), m_camDirection = normalized(vc(0, -5, 5)), m_camDistance = 5, m_camFov = mathgp::constants<float>::PI() / 4);
+    m_level = new Level;
 
-    m_effect->loadVertexShaderFromFile("shaders/simple.vert");
-    m_effect->loadPixelShaderFromFile("shaders/simple.frag");
+    m_guiLayer = new GUILayer("gui layer");
+    m_guiLayer->initialize();
+    m_guiLayer->loadRootRml("gui/hud.xml");
 
-    m_effect->link();
+    m_angleDisplay = m_guiLayer->getElementById("angle");
+    m_fovDisplay = m_guiLayer->getElementById("fov");
+    m_distanceDisplay = m_guiLayer->getElementById("dist");
 
-    m_texture = new Texture;
-    m_texture->loadFromFile("sprites/sprite.png");
+    m_moveWeight = Vec::zero;
 }
 
 void ExperimentState::deinitialize()
 {
-    safe_delete(m_effect);
+    safe_delete(m_camera);
+    safe_delete(m_level);
+
+    m_guiLayer->deinitialize();
+    safe_delete(m_guiLayer);
 }
 
 void ExperimentState::handleEvent(const SDL_Event& event)
 {
+
+    float mod = 0.1f;
+    float angle = 0, distance = 0, fov = 0;
+
+    if (event.type == SDL_KEYUP)
+    {
+        if (event.key.keysym.mod & KMOD_CTRL)
+        {
+            mod = 0.01f;
+        }
+        else if (event.key.keysym.mod & KMOD_SHIFT)
+        {
+            mod = 1;
+        }
+
+        switch (event.key.keysym.sym)
+        {
+        case SDLK_y:
+            angle = mod;
+            break;
+        case SDLK_h:
+            angle = -mod;
+            break;
+        case SDLK_u:
+            fov = mod;
+            break;
+        case SDLK_j:
+            fov = -mod;
+            break;
+        case SDLK_i:
+            distance = mod;
+            break;
+        case SDLK_k:
+            distance = -mod;
+            break;
+
+        case SDLK_w:
+        case SDLK_s:
+            m_moveWeight.y() = 0.f;
+            break;
+        case SDLK_a:
+        case SDLK_d:
+            m_moveWeight.x() = 0.f;
+            break;
+
+        default:
+            return;
+        }
+    }    
+    else if (event.type == SDL_KEYDOWN)
+    {
+        switch (event.key.keysym.sym)
+        {
+        case SDLK_w:
+            m_moveWeight.y() = 1.f;
+            break;
+        case SDLK_s:
+            m_moveWeight.y() = -1.f;
+            break;
+        case SDLK_a:
+            m_moveWeight.x() = -1.f;
+            break;
+        case SDLK_d:
+            m_moveWeight.x() = 1.f;
+            break;
+        }
+    }
+
+    m_camera->setFov(m_camFov += fov);
+    m_camDistance += distance;
+    m_camDirection.z() += angle;
+    m_camDirection.normalize();
+    m_camera->setDirectionAndDistance(m_camDirection, m_camDistance);
 }
 
 void ExperimentState::update()
 {
+    char text[100];
+    sprintf(text, "%.2f", m_camDirection.z());
+    m_angleDisplay->SetInnerRML(text);
+
+    sprintf(text, "%.2f", m_camFov);
+    m_fovDisplay->SetInnerRML(text);
+
+    sprintf(text, "%.2f", m_camDistance);
+    m_distanceDisplay->SetInnerRML(text);
+
+    m_guiLayer->update();
+
+
+    float unitsPerSecond = 2;
+    const unsigned char* keyStates = SDL_GetKeyboardState(nullptr);
+    if (keyStates[SDL_SCANCODE_LSHIFT])
+        unitsPerSecond *= 5;
+
+    float frameTime = float(Application::instance().timeSinceLastFrame())/1000;
+
+    if (m_moveWeight.length_sq() > 0.5)
+    {
+        m_camPosition += unitsPerSecond * frameTime * normalized(m_moveWeight);
+        m_camera->moveTo(m_camPosition);
+    }
 }
 
 void ExperimentState::draw()
 {
-    struct Vertex
-    {
-        vector3 pos;
-        vector2 uv;
-    };
-
-    Vertex quad[] =
-    {
-        { vc(0, 0, 0.4f), vc(0, 0) },
-        { vc(5, 0, 0.4f), vc(0, 1) },
-        { vc(0, 5, 0.4f), vc(1, 0) },
-        { vc(5, 5, 0.4f), vc(1, 1) },
-    };
-
-    unsigned indices[] =
-    {
-        0, 1, 2,
-        2, 1, 3,
-    };
-
-    const int Attr_Pos = 0;
-    const int Attr_UV = 1;
-
-    m_effect->use();
-    m_effect->bindCustomAttribute("inPos", Attr_Pos);
-    m_effect->bindCustomAttribute("inTexCoord", Attr_UV);
-
-    auto projection = matrix::ortho_rh(100, 60, 1, 100);
-    
-    int pvm = m_effect->getParameterByName("pvm");
-    m_effect->setParameter(pvm, projection);
-
-    int tex = m_effect->getParameterByName("colorMap");
-    m_effect->setParameter(tex, *m_texture);
-    
-    glVertexAttribPointer(Attr_Pos, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), &quad->pos);
-    glEnableVertexAttribArray(Attr_Pos);
-
-    glVertexAttribPointer(Attr_UV, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), &quad->uv);
-    glEnableVertexAttribArray(Attr_UV);
-
-    glDrawElements(GL_TRIANGLES, _countof(indices), GL_UNSIGNED_INT, indices);
-
-    glDisableVertexAttribArray(Attr_Pos);
-    glDisableVertexAttribArray(Attr_UV);
+    m_level->draw(m_camera->projectionView());
+    m_guiLayer->draw();
 }
 
 

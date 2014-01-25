@@ -79,6 +79,9 @@
     <ClInclude Include="..\..\..\src\GLExtensions.h">
       <Filter>Core</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\Constants.h">
+      <Filter>Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\Application.cpp">
@@ -131,6 +134,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\ExperimentState.cpp">
       <Filter>GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Constants.cpp">
+      <Filter>Core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

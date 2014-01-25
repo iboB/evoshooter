@@ -13,6 +13,18 @@
 
 class Effect;
 class Texture;
+class Camera;
+class Level;
+class GUILayer;
+
+namespace Rocket
+{
+    namespace Core
+    {
+        class Element;
+    }
+}
+
 
 class ExperimentState : public GameState
 {
@@ -26,6 +38,20 @@ public:
     void update() override;
     void draw() override;
 private:
-    Effect* m_effect;
-    Texture* m_texture;
+    GUILayer* m_guiLayer;
+
+    Camera* m_camera;
+    Level* m_level;
+
+    Rocket::Core::Element* m_angleDisplay;
+    Rocket::Core::Element* m_distanceDisplay;
+    Rocket::Core::Element* m_fovDisplay;
+
+    float m_camDistance;
+    mathgp::vector3 m_camDirection;
+    float m_camFov;
+
+    mathgp::vector3 m_camPosition;
+
+    mathgp::vector3 m_moveWeight;
 };

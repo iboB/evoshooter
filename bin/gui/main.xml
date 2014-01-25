@@ -10,11 +10,6 @@
             height: 100%;
             margin: 0px;
         }
-
-        div#content
-        {
-            text-align: center;
-        }
     </style>
 </head>
 <body class="menu">

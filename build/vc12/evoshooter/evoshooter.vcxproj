@@ -88,6 +88,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\Camera.h" />
+    <ClInclude Include="..\..\..\src\Constants.h" />
     <ClInclude Include="..\..\..\src\Effect.h" />
     <ClInclude Include="..\..\..\src\ExperimentState.h" />
     <ClInclude Include="..\..\..\src\ExplicitSingleton.h" />
@@ -116,6 +117,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\Camera.cpp" />
+    <ClCompile Include="..\..\..\src\Constants.cpp" />
     <ClCompile Include="..\..\..\src\Effect.cpp" />
     <ClCompile Include="..\..\..\src\EntryPoint.cpp" />
     <ClCompile Include="..\..\..\src\Application.cpp" />

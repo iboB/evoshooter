@@ -32,6 +32,7 @@ Application::Application()
     , m_lastFrameEnd(0)
     , m_lastFPSStatusUpdateTime(0)
     , m_lastFPSStatusUpdateFrameCount(0)
+    , m_timeSinceLastFrame(0)
     // debug stuff
     , m_isWireframe(false)
     // states
@@ -50,7 +51,9 @@ void Application::run()
     m_isRunning = true;
     while(m_isRunning)
     {
-        m_currentFrameTime = SDL_GetTicks();
+        unsigned now = SDL_GetTicks();
+        m_timeSinceLastFrame = now - m_currentFrameTime;
+        m_currentFrameTime = now;
 
         handleInput();
 
@@ -107,8 +110,8 @@ void Application::initialize()
 
     //////////////////////////////////////
     // state
-    m_baseState = new InGameState;
-    //m_baseState = new ExperimentState;
+    //m_baseState = new InGameState;
+    m_baseState = new ExperimentState;
     m_baseState->initialize();
 }
 
