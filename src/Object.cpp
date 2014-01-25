@@ -21,7 +21,8 @@ m_bb(mathgp::v(1.0f,1.0f))
 
 Object::Object(const mathgp::vector3& pos, float bc):
 m_pos(pos),
-m_boundingCircle(bc)
+m_boundingCircle(bc),
+m_bb(mathgp::v(10.0f, 10.0f))
 {
 }
 

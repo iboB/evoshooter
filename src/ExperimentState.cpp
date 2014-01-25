@@ -24,7 +24,7 @@
 #include "Application.h"
 #include "Util.h"
 #include "Overlay.h"
-
+#include "SoundManager.h"
 #include <Rocket/Core/Element.h>
 
 using namespace mathgp;
@@ -67,7 +67,6 @@ void ExperimentState::initialize()
     m_texture->loadFromFile("sprites/sprite.png");
 
     //g_Sprite = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/sprite.png", 2, 4, 8000);
-    //g_Sprite = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/jaba_the_slut_die_anim.png", 1, 8, 1000);
 
     //g_Sprite.reset(new Sprite());
 
@@ -76,6 +75,8 @@ void ExperimentState::initialize()
     //g_Sprite->setScale(0.009f);
     //g_Sprite->setFlipX(true);
     //g_Sprite->startRendering();
+	g_Monster = new MonsterCharacter(mathgp::vc(0.f, 0.f, 0.f), "jaba_the_slut");
+    SoundManager::instance().playTrack(0, true);
 
     //g_Monster = new MonsterCharacter(mathgp::vc(0.f, 0.f, 0.f), "jaba_the_slut");
 
@@ -143,6 +144,18 @@ void ExperimentState::handleEvent(const SDL_Event& event)
         case SDLK_a:
         case SDLK_d:
             m_moveWeight.x() = 0.f;
+            break;
+        case SDLK_0:
+            SoundManager::instance().playSound((ESounds)0);
+            break;
+        case SDLK_1:
+            SoundManager::instance().playSound((ESounds)1);
+            break;
+        case SDLK_2:
+            SoundManager::instance().playSound((ESounds)2);
+            break;
+        case SDLK_3:
+            SoundManager::instance().playSound((ESounds)3);
             break;
         case SDLK_SPACE:
             //g_Monster->Die();
@@ -223,7 +236,9 @@ void ExperimentState::update()
     }
 
     //g_Sprite->update(vc(0.f, 0.f, 0.0f), m_camDirection);
-    //g_Monster->Update(m_camDirection);
+  //  g_Sprite->update(vc(0.f, 0.f, 0.0f), m_camDirection);
+    //g_Sprite->update(vc(0.f, 0.f, 0.0f), m_camDirection);
+    g_Monster->Update(m_camDirection);
 }
 
 void ExperimentState::draw()
@@ -324,6 +339,7 @@ void ExperimentState::draw()
     glDisableVertexAttribArray(Attr_Pos);
     glDisableVertexAttribArray(Attr_UV);
 
+    //g_Sprite->render(m_camera->projectionView());
     //g_Sprite->render(m_camera->projectionView());
 
     m_overlay->draw();

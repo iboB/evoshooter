@@ -113,6 +113,10 @@
     <ClInclude Include="..\..\..\src\MonsterCharacter.h" />
     <ClInclude Include="..\..\..\src\RenderManager.h" />
     <ClInclude Include="..\..\..\src\Overlay.h">
+    <ClInclude Include="..\..\..\src\SoundManager.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\MonsterCharacter.h">
       <Filter>Core</Filter>
     </ClInclude>
   </ItemGroup>
@@ -202,6 +206,10 @@
     <ClCompile Include="..\..\..\src\MonsterCharacter.cpp" />
     <ClCompile Include="..\..\..\src\RenderManager.cpp" />
     <ClCompile Include="..\..\..\src\Overlay.cpp">
+    <ClCompile Include="..\..\..\src\SoundManager.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\MonsterCharacter.cpp">
       <Filter>Core</Filter>
     </ClCompile>
   </ItemGroup>

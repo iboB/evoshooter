@@ -48,18 +48,20 @@ std::shared_ptr<Object> ColliderGrid::requestMoveTo(std::shared_ptr<Object> obj,
     unsigned int x, y;
     for (int i = -1; i <= 1; ++i)
     {
-        if (i < 0 || i >= m_sizeX)
+        x = id.x() + i;
+        if (x < 0 || x >= m_sizeX)
         {
             continue;
         }
         for (int j = -1; j <= 1; ++j)
         {
-            if (j < 0 || j >= m_sizeY)
+            y = id.y() + j;
+
+            if (y < 0 || y >= m_sizeY)
             {
                 continue;
             }
-            x = id.x() + i;
-            y = id.y() + j;
+                        
             it = m_grid[x][y].begin();
             while (it != m_grid[x][y].end())
             {
@@ -197,7 +199,7 @@ std::vector<std::shared_ptr<Object> > ColliderGrid::collideCirclesWith2dRay(math
 
     return out;
 }
-
+//#include <iostream>
 std::vector<std::shared_ptr<Object> > ColliderGrid::collideWithQuadsOnClick(const mathgp::uvector2& screenPos, const mathgp::vector3& worldPoint)
 {
     m_currentCollisionRayStart = v(0.0f, 0.0f, 0.0f); //todo: make this player pos;
@@ -207,8 +209,8 @@ std::vector<std::shared_ptr<Object> > ColliderGrid::collideWithQuadsOnClick(cons
     uvector2 id = getObjectCell(worldPoint.x(), worldPoint.y());
     vector3 topLeftWorld;
     vector3 botRightWorld;
-    vector2 topLeftScreen;
-    vector2 botRightScreen;
+    vector3 topLeftScreen;
+    vector3 botRightScreen;
     
     const uvector2& screenSize = Application::instance().mainWindow()->clientAreaSize();
 
@@ -222,37 +224,42 @@ std::vector<std::shared_ptr<Object> > ColliderGrid::collideWithQuadsOnClick(cons
     unsigned int x, y;
     for (int i = -1; i <= 1; ++i)
     {
-        if (i < 0 || i >= m_sizeX)
+        x = id.x() + i;       
+        if (x < 0 || x >= m_sizeX)
         {
             continue;
         }
-        for (int j = -1; j <= 1; ++j)
+        for (int j = -1; j + id.y() <= 1; ++j)
         {
-            if (j < 0 || j >= m_sizeY)
+            y = id.y() + j;
+            if (y < 0 || y >= m_sizeY)
             {
                 continue;
             }
-            x = id.x() + i;
-            y = id.y() + j;
+           
             it = m_grid[x][y].begin();
             while (it != m_grid[x][y].end())
             {
                 topLeftWorld = (*it)->position() + (up*(*it)->bb_h()) + (left*((*it)->bb_w() / 2.0f));
                 botRightWorld = (*it)->position() + ((-1.0f*left)*((*it)->bb_w() / 2.0f));
 
-                topLeftScreen = transform_coord(topLeftWorld, projectionView).xy();
+                topLeftScreen = transform_coord(topLeftWorld, projectionView);
+                
                 topLeftScreen.x() = (topLeftScreen.x()*halfScreenSize.x()) + halfScreenSize.x();
                 topLeftScreen.y() = halfScreenSize.y() - (topLeftScreen.y()*halfScreenSize.y());
 
-                botRightScreen = transform_coord(botRightWorld, projectionView).xy();
+                botRightScreen = transform_coord(botRightWorld, projectionView);
+                
                 botRightScreen.x() = (botRightScreen.x()*halfScreenSize.x()) + halfScreenSize.x();
                 botRightScreen.y() = halfScreenSize.y() - (botRightScreen.y()*halfScreenSize.y());
 
                 if (screenPos.x() >= topLeftScreen.x() && screenPos.x() <= botRightScreen.x() &&
                     screenPos.y() >= topLeftScreen.y() && screenPos.y() <= botRightScreen.y())
                 {
+                    //std::cout << "COLLIDED WITH obj on pos x : " << (*it)->x();
                     out.push_back(*it);
                 }
+                ++it;
             }
 
         }

@@ -56,14 +56,14 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(GameRoot)third_party\lib\glew-1.10.0\include;$(GameRoot)third_party\lib\SDL2-2.0.1\include;$(GameRoot)third_party\lib\mathgp;$(GameRoot)third_party\lib\libRocket\Include;$(GameRoot)third_party\lib\SDL2_image-2.0.0\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(GameRoot)third_party\lib\glew-1.10.0\include;$(GameRoot)third_party\lib\SDL2-2.0.1\include;$(GameRoot)third_party\lib\SDL2_mixer-2.0.0\include;$(GameRoot)third_party\lib\mathgp;$(GameRoot)third_party\lib\libRocket\Include;$(GameRoot)third_party\lib\SDL2_image-2.0.0\include</AdditionalIncludeDirectories>
       <PrecompiledHeaderFile>EvoShooter.pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(GameRoot)third_party\lib\glew-1.10.0\lib\Release\Win32;$(GameRoot)third_party\lib\SDL2-2.0.1\lib\x86;$(GameRoot)third_party\lib\SDL2_image-2.0.0\lib\x86;$(GameRoot)third_party\lib\libRocket\bin</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glew32.lib;SDL2.lib;SDL2Main.lib;SDL2_image.lib;RocketCore_d.lib;RocketControls_d.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(GameRoot)third_party\lib\glew-1.10.0\lib\Release\Win32;$(GameRoot)third_party\lib\SDL2-2.0.1\lib\x86;$(GameRoot)third_party\lib\SDL2_mixer-2.0.0\lib\x86;$(GameRoot)third_party\lib\SDL2_image-2.0.0\lib\x86;$(GameRoot)third_party\lib\libRocket\bin</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glew32.lib;SDL2.lib;SDL2Main.lib;SDL2_image.lib;SDL2_mixer.lib;RocketCore_d.lib;RocketControls_d.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -122,6 +122,7 @@
     <ClInclude Include="..\..\..\src\Platform.h" />
     <ClInclude Include="..\..\..\src\RenderManager.h" />
     <ClInclude Include="..\..\..\src\ResourceManager.h" />
+    <ClInclude Include="..\..\..\src\SoundManager.h" />
     <ClInclude Include="..\..\..\src\Sprite.h" />
     <ClInclude Include="..\..\..\src\Texture.h" />
     <ClInclude Include="..\..\..\src\Util.h" />
@@ -158,6 +159,7 @@
     <ClCompile Include="..\..\..\src\Monster.cpp" />
     <ClCompile Include="..\..\..\src\MonsterDNA.cpp" />
     <ClCompile Include="..\..\..\src\ResourceManager.cpp" />
+    <ClCompile Include="..\..\..\src\SoundManager.cpp" />
     <ClCompile Include="..\..\..\src\Sprite.cpp" />
     <ClCompile Include="..\..\..\src\Object.cpp" />
     <ClCompile Include="..\..\..\src\Texture.cpp" />
