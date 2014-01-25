@@ -15,6 +15,7 @@
 #include "Effect.h"
 #include "Texture.h"
 #include "ResourceManager.h"
+#include "RenderManager.h"
 
 unsigned Sprite::sm_Indices[] = 
 {
@@ -37,6 +38,7 @@ Sprite::Sprite()
 , m_Scale(1.0)
 , m_CellWidth(0)
 , m_CellHeight(0)
+, m_FlipX(false)
 {}
 
 Sprite::~Sprite()
@@ -45,6 +47,8 @@ Sprite::~Sprite()
     {
         ResourceManager::instance().releaseTexture(m_Texture);
     }
+   
+    RenderManager::instance().RemoveSprite(this);
 }
 
 void Sprite::init(const std::string& file, Uint32 startX, Uint32 startY, Uint32 width, Uint32 height, Uint32 rows, Uint32 cols, Uint32 duration, bool loop)
@@ -102,6 +106,8 @@ void Sprite::startRendering(Uint32 frameOffset)
     m_StartTime = SDL_GetTicks();
     m_IsRendering = true;
     m_FramesOffset = frameOffset;
+
+    RenderManager::instance().AddSprite(this);
 }
 
 void Sprite::restartRendering(Uint32 frameOffset)
@@ -115,6 +121,7 @@ void Sprite::restartRendering(Uint32 frameOffset)
 void Sprite::stopRendering()
 {
     m_IsRendering = false;
+    RenderManager::instance().RemoveSprite(this);
 }
 
 void Sprite::setScale(float scale)
@@ -135,6 +142,11 @@ void Sprite::update(const mathgp::vector3& position, const mathgp::vector3& camD
 
     float u1 = float(x + m_CellWidth) / float(m_Texture->width());
     float v1 = float(y + m_CellHeight) / float(m_Texture->height());
+
+    if (m_FlipX)
+    {
+        std::swap(u0, u1);
+    }
 
     m_Vertices[0] = { position, mathgp::vc(u0, v1) };
     m_Vertices[1] = { mathgp::vc(position.x() + m_ScaledFrameWidth, position.z(), position.y()), mathgp::vc(u1, v1) };

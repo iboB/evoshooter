@@ -27,12 +27,18 @@ public:
     void restartRendering(Uint32 frameOffset = 0);
 	void stopRendering();
 
+    int currentFrame() { return m_CurrentFrame; }
+
     void setLoop(bool loop) { m_Loop = loop; }
 
     void setScale(float scale);
 
+    void setFlipX(bool flip) { m_FlipX = flip; }
+
     void update(const mathgp::vector3& position, const mathgp::vector3& camDir);
     void render(const mathgp::matrix4& viewProj);
+
+    bool isRendering() { return m_IsRendering; }
 
 private:
     void getCurrentFrame(Uint32& x, Uint32& y);
@@ -57,6 +63,8 @@ private:
     float m_Scale;
     float m_ScaledFrameWidth;
     float m_ScaledFrameHeight;
+
+    bool m_FlipX;
 
     mathgp::vector3 m_Position;
 

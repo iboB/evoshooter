@@ -15,6 +15,7 @@
 #include "Texture.h"
 #include "Sprite.h"
 #include "ResourceManager.h"
+#include "RenderManager.h"
 #include "Camera.h"
 #include "GLSentries.h"
 #include "Level.h"
@@ -62,13 +63,14 @@ void ExperimentState::initialize()
     m_texture->loadFromFile("sprites/sprite.png");
 
     //g_Sprite = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/sprite.png", 2, 4, 8000);
-    g_Sprite = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/sprite2.png", 2, 4, 8000);
+    g_Sprite = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/jaba_the_slut_die_anim_blue.png", 1, 8, 1000);
 
     //g_Sprite.reset(new Sprite());
 
     //g_Sprite->init("sprites/sprite.png", 256, 128, 256, 128, 1, 2, 4000, true);
 
-    g_Sprite->setScale(0.003f);
+    g_Sprite->setScale(0.009f);
+    g_Sprite->setFlipX(true);
     g_Sprite->startRendering();
 }
 
@@ -194,12 +196,9 @@ void ExperimentState::update()
 
 void ExperimentState::draw()
 {
-    
-    
-
-   // return;
-
     m_level->draw(m_camera->projectionView());
+
+    RenderManager::instance().Render(m_camera->projectionView());
 
     struct Vertex
     {

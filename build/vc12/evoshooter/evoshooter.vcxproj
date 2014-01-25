@@ -87,6 +87,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\src\AnimationsController.h" />
     <ClInclude Include="..\..\..\src\Camera.h" />
     <ClInclude Include="..\..\..\src\Constants.h" />
     <ClInclude Include="..\..\..\src\Effect.h" />
@@ -113,6 +114,7 @@
     <ClInclude Include="..\..\..\src\NonCopyable.h" />
     <ClInclude Include="..\..\..\src\Object.h" />
     <ClInclude Include="..\..\..\src\Platform.h" />
+    <ClInclude Include="..\..\..\src\RenderManager.h" />
     <ClInclude Include="..\..\..\src\ResourceManager.h" />
     <ClInclude Include="..\..\..\src\Sprite.h" />
     <ClInclude Include="..\..\..\src\Texture.h" />
@@ -121,6 +123,7 @@
     <ClInclude Include="..\..\..\src\World.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\src\AnimationsController.cpp" />
     <ClCompile Include="..\..\..\src\Camera.cpp" />
     <ClCompile Include="..\..\..\src\Constants.cpp" />
     <ClCompile Include="..\..\..\src\Effect.cpp" />
@@ -141,6 +144,7 @@
     <ClCompile Include="..\..\..\src\Level.cpp" />
     <ClCompile Include="..\..\..\src\MainMenuState.cpp" />
     <ClCompile Include="..\..\..\src\MainWindow.cpp" />
+    <ClCompile Include="..\..\..\src\RenderManager.cpp" />
     <ClCompile Include="..\..\..\src\ResourceManager.cpp" />
     <ClCompile Include="..\..\..\src\Sprite.cpp" />
     <ClCompile Include="..\..\..\src\Object.cpp" />
