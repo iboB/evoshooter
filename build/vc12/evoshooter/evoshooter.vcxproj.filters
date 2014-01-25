@@ -121,6 +121,9 @@
     <ClInclude Include="..\..\..\src\MonsterCharacter.h">
       <Filter>Core</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\AboutState.h">
+      <Filter>Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\Application.cpp">
@@ -214,6 +217,9 @@
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\MonsterCharacter.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\AboutState.cpp">
       <Filter>Core</Filter>
     </ClCompile>
   </ItemGroup>
