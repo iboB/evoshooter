@@ -28,10 +28,13 @@ public:
 	void stopRendering();
 
     int currentFrame() { return m_CurrentFrame; }
+    const mathgp::vector3 lastPosition() const { return m_Position; }
 
     void setLoop(bool loop) { m_Loop = loop; }
 
     void setScale(float scale);
+
+    float scaledFrameWidth() const { return m_ScaledFrameWidth; }
 
     void setFlipX(bool flip) { m_FlipX = flip; }
 

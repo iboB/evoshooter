@@ -76,35 +76,27 @@ void ExperimentState::initialize()
     m_texture = new Texture;
     m_texture->loadFromFile("sprites/sprite.png");
 
-    //g_Sprite = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/sprite.png", 2, 4, 8000);
+    g_Sprite = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/sprite.png", 2, 4, 8000);
 
     //g_Sprite.reset(new Sprite());
 
     //g_Sprite->init("sprites/sprite.png", 256, 128, 256, 128, 1, 2, 4000, true);
 
-    //g_Sprite->setScale(0.009f);
-    //g_Sprite->setFlipX(true);
-    //g_Sprite->startRendering();
+    g_Sprite->setScale(0.02f);
+    g_Sprite->setFlipX(true);
+    g_Sprite->startRendering();
 
     //SoundManager::instance().playTrack(0, true);
 
-    //g_Monster = new MonsterCharacter(mathgp::vc(0.f, 0.f, 0.f), "jaba_the_slut");
-
-    //g_Monster->Move(mathgp::vc(0.f, 0.f, 0.f));
-
     m_overlay = new Overlay;
-    //g_Monster = new MonsterCharacter(mathgp::vc(0.f, 0.f, 0.f), "jaba_the_slut");
 
-    //g_Monster->Move(mathgp::vc(0.f, 0.f, 0.f));
+    unsigned int id = World::instance().spawnMonster(1.f, 1.f, 0.5f, "player");
 
-    //unsigned int id = World::instance().spawnMonster(0.f, 0.f, 0.5f, "jaba_the_slut");
+    MonsterCharacter* monster = (MonsterCharacter*)World::instance().object(id).get();
+    monster->SetMoveDirection(mathgp::vc(0.0f, 0.0f, 0.f));
+    monster->SetMoveSpeed(0.02f);
 
-    World::instance().spawnPlayer(1.f, 1.f, 0.5f);
-
-    //g_Monster = (MonsterCharacter*)World::instance().object(id).get();
-
-    //g_Monster->SetMoveDirection(mathgp::vc(0.1f, 0.05f, 0.f));
-    //g_Monster->SetMoveSpeed(0.02f);
+    World::instance().spawnPlayer(2.f, 1.5f, 0.5f);
 }
 
 void ExperimentState::deinitialize()
@@ -193,11 +185,14 @@ void ExperimentState::handleEvent(const SDL_Event& event)
                 Application::instance().pushState(state);
             }
             break;
-        case SDLK_n:
+        case SDLK_b:
             World::instance().mainCharacter()->Attack(0);
             break;
-        case SDLK_m:
+        case SDLK_n:
             World::instance().mainCharacter()->Attack(1);
+            break;
+        case SDLK_m:
+            World::instance().mainCharacter()->Attack(2);
             break;
         default:
             return;
@@ -268,14 +263,12 @@ void ExperimentState::update(int dt)
     {
         m_camPosition += unitsPerSecond * frameTime * normalized(m_moveWeight);
         m_camera->moveTo(m_camPosition);
-        //g_Monster->Move(g_Monster->position() + unitsPerSecond * frameTime * normalized(m_moveWeight));
 
         World::instance().mainCharacter()->Move(World::instance().mainCharacter()->position() + unitsPerSecond * frameTime * normalized(m_moveWeight));
     }
 
     World::instance().update(dt);
-    //g_Sprite->update(vc(0.f, 0.f, 0.0f), m_camDirection);
-    //g_Monster->Update(m_camDirection);
+    g_Sprite->update(vc(2.f, 4.f, 0.0f), m_camDirection);
 }
 
 void ExperimentState::draw()
@@ -376,7 +369,7 @@ void ExperimentState::draw()
     glDisableVertexAttribArray(Attr_Pos);
     glDisableVertexAttribArray(Attr_UV);
 
-    //g_Sprite->render(m_camera->projectionView());
+    g_Sprite->render(m_camera->projectionView());
     //g_Sprite->render(m_camera->projectionView());
 
     m_overlay->draw();

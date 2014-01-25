@@ -133,6 +133,8 @@ void Sprite::setScale(float scale)
 
 void Sprite::update(const mathgp::vector3& position, const mathgp::vector3& camDir)
 {
+    m_Position = position;
+
     Uint32 x(0), y(0);
 
     getCurrentFrame(x, y);
@@ -169,6 +171,7 @@ void Sprite::render(const mathgp::matrix4& viewProj)
         return;
 
     glEnable(GL_BLEND);
+    glDisable(GL_DEPTH_TEST);
 
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 

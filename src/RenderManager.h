@@ -23,15 +23,17 @@ public:
 
     void RemoveSprite(Sprite* sprite);
 
-    void CLear();
+    void Clear();
 
     void Render(const mathgp::matrix4& viewProj);
 
 private:
     void Sort();
 
-    //todo: cmp y
     typedef std::set<Sprite*> Sprites;
+    typedef std::vector<Sprite*> SpritesVector;
 
     Sprites m_RenderList;
+
+    SpritesVector m_SortedSprites;
 };
