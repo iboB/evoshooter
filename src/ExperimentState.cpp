@@ -39,6 +39,18 @@ using namespace mathgp;
 SpritePtr g_Sprite;
 MonsterCharacter* g_Monster;
 
+void GameHud::health(int health)
+{
+    char text[50];
+    sprintf(text, "%i", health);
+    m_healthDisplay->SetInnerRML(text);
+}
+
+void GameHud::weapon(const std::string& weaponName)
+{
+    m_weaponDisplay->SetInnerRML(weaponName.c_str());
+}
+
 ExperimentState::ExperimentState()
     : m_camera(nullptr)
     , m_level(nullptr)
@@ -53,16 +65,21 @@ void ExperimentState::initialize()
     World::createInstance();
     ColliderGrid::createInstance();
 
-    m_camera = new Camera(m_camPosition = vc(2, 2, 0), m_camDirection = normalized(vc(0, -5, 5)), m_camDistance = 5, m_camFov = mathgp::constants<float>::PI() / 4);
+    m_camera = new Camera(m_camPosition = vc(2, 2, 0), m_camDirection = normalized(vc(0, -5, 3.5)), m_camDistance = 6, m_camFov = mathgp::constants<float>::PI() / 4);
     m_level = new Level;
 
     m_guiLayer = new GUILayer("gui layer");
     m_guiLayer->initialize();
-    m_guiLayer->loadRootRml("gui/hud.xml");
+    m_guiLayer->loadRootRml("gui/game_hud.xml");
 
-    m_angleDisplay = m_guiLayer->getElementById("angle");
-    m_fovDisplay = m_guiLayer->getElementById("fov");
-    m_distanceDisplay = m_guiLayer->getElementById("dist");
+    //m_angleDisplay = m_guiLayer->getElementById("angle");
+    //m_fovDisplay = m_guiLayer->getElementById("fov");
+    //m_distanceDisplay = m_guiLayer->getElementById("dist");
+    hud.m_healthDisplay = m_guiLayer->getElementById("health");
+    hud.m_weaponDisplay = m_guiLayer->getElementById("weapon");
+
+    hud.health(100);
+    hud.weapon("Knife");
 
     m_moveWeight = Vec::zero;
 
@@ -106,6 +123,9 @@ void ExperimentState::deinitialize()
 
     m_guiLayer->deinitialize();
     safe_delete(m_guiLayer);
+
+    hud.m_healthDisplay = NULL;
+    hud.m_weaponDisplay = NULL;
 
     safe_delete(m_effect);
     safe_delete(m_texture);
@@ -239,7 +259,9 @@ void ExperimentState::handleEvent(const SDL_Event& event)
 
 void ExperimentState::update(int dt)
 {
+    /*
     char text[100];
+    
     sprintf(text, "%.2f", m_camDirection.z());
     m_angleDisplay->SetInnerRML(text);
 
@@ -248,7 +270,7 @@ void ExperimentState::update(int dt)
 
     sprintf(text, "%.2f", m_camDistance);
     m_distanceDisplay->SetInnerRML(text);
-
+    */
     m_guiLayer->update();
 
 

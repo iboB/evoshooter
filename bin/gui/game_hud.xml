@@ -1,0 +1,21 @@
+<!-- named xml so it would get basic syntax highlighting from popular editors -->
+<rml>
+<head>
+    <title>Hud</title>
+    <link type="text/rcss" href="game_hud.css"/>
+    <style>
+        body
+        {
+            width: 100%;
+            height: 100%;
+            margin: 0px;
+        }
+    </style>
+</head>
+<body>
+	<div id="info">
+		<p>[Health: <span id="health">x</span>]</p>    
+		<p>[Weapon: <span id="weapon">x</span>]</p>
+	</div>
+</body>
+</rml>

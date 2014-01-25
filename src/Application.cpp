@@ -152,6 +152,10 @@ void Application::drawFrame()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     //m_baseState->draw();
+    if (currentState() != m_baseState)
+    {
+        m_baseState->draw();
+    }
     currentState()->draw();
 
     m_mainWindow->swapBuffers();

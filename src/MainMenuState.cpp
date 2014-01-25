@@ -20,7 +20,7 @@ MainMenuState::MainMenuState()
 
 void MainMenuState::initialize()
 {
-    m_guiLayer = new GUILayer("gui layer");
+    m_guiLayer = new GUILayer("main menu layer");
     m_guiLayer->initialize();
     m_guiLayer->loadRootRml("gui/main.xml");
 }
