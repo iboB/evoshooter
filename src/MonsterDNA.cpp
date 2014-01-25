@@ -103,3 +103,9 @@ void MonsterDNA::randomize()
     }
 }
 
+float MonsterDNA::operator()(GeneType g) const
+{
+    return m[g].value();
+}
+
+
