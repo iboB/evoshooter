@@ -16,6 +16,12 @@
 #include "Texture.h"
 #include "ResourceManager.h"
 
+unsigned Sprite::sm_Indices[] = 
+{
+    0, 1, 2,
+    2, 1, 3,
+};
+
 Sprite::Sprite()
 : m_StartX(0)
 , m_StartY(0)
@@ -27,7 +33,8 @@ Sprite::Sprite()
 , m_StartTime(0)
 , m_CurrentFrame(0)
 , m_Loop(false)
-, m_IsRunning(false)
+, m_IsRendering(false)
+, m_Scale(1.0)
 , m_CellWidth(0)
 , m_CellHeight(0)
 {}
@@ -60,7 +67,9 @@ void Sprite::init(const std::string& file, Uint32 startX, Uint32 startY, Uint32 
 
     m_Loop = loop;
 
-    m_IsRunning = false;
+    m_IsRendering = false;
+
+    setScale(m_Scale);
 }
 
 void Sprite::init(TexturePtr texture, Uint32 startX, Uint32 startY, Uint32 width, Uint32 height, Uint32 rows, Uint32 cols, Uint32 duration, bool loop)
@@ -83,41 +92,41 @@ void Sprite::init(TexturePtr texture, Uint32 startX, Uint32 startY, Uint32 width
 
     m_Loop = loop;
 
-    m_IsRunning = false;
+    m_IsRendering = false;
+
+    setScale(m_Scale);
 }
 
-void Sprite::startAnimation()
+void Sprite::startRendering(Uint32 frameOffset)
 {
     m_StartTime = SDL_GetTicks();
-    m_IsRunning = true;
+    m_IsRendering = true;
+    m_FramesOffset = frameOffset;
 }
 
-void Sprite::restartAnimation()
+void Sprite::restartRendering(Uint32 frameOffset)
 {
     m_StartTime = SDL_GetTicks();
-    m_IsRunning = true;
+    m_IsRendering = true;
+
+    m_FramesOffset = frameOffset;
 }
 
-void Sprite::stopAnimation()
+void Sprite::stopRendering()
 {
-    m_IsRunning = false;
+    m_IsRendering = false;
 }
 
-void Sprite::update()
+void Sprite::setScale(float scale)
 {
-
+    m_Scale = scale;
+    m_ScaledFrameWidth = float(m_CellWidth) * scale;
+    m_ScaledFrameHeight = float(m_CellHeight) * scale;
 }
 
-void Sprite::render()
+void Sprite::update(const mathgp::vector3& position, const mathgp::vector3& camDir)
 {
-    if (!m_IsRunning)
-        return;
-
     Uint32 x(0), y(0);
-
-    glEnable(GL_BLEND);
-
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     getCurrentFrame(x, y);
 
@@ -127,30 +136,29 @@ void Sprite::render()
     float u1 = float(x + m_CellWidth) / float(m_Texture->width());
     float v1 = float(y + m_CellHeight) / float(m_Texture->height());
 
-    struct Vertex
-    {
-        mathgp::vector3 pos;
-        mathgp::vector2 uv;
-    };
+    m_Vertices[0] = { position, mathgp::vc(u0, v1) };
+    m_Vertices[1] = { mathgp::vc(position.x() + m_ScaledFrameWidth, position.z(), position.y()), mathgp::vc(u1, v1) };
+    m_Vertices[2] = { mathgp::vc(position.x(), position.z(), position.y() + m_ScaledFrameHeight), mathgp::vc(u0, v0) };
+    m_Vertices[3] = { mathgp::vc(position.x() + m_ScaledFrameWidth, position.z(), position.y() + m_ScaledFrameHeight), mathgp::vc(u1, v0) };
 
-    Vertex quad[] =
-    {
-        { mathgp::vc(0, 0, 0.4f), mathgp::vc(u0, v1) },
-        { mathgp::vc(5, 0, 0.4f), mathgp::vc(u1, v1) },
-        { mathgp::vc(0, 5, 0.4f), mathgp::vc(u0, v0) },
-        { mathgp::vc(5, 5, 0.4f), mathgp::vc(u1, v0) },
-    };
+    float camAngle = acos(abs(camDir.y()));
+    mathgp::matrix camAlign = mathgp::matrix::rotation_x(-camAngle);
 
-    /*for (auto& v : quad)
+    for (auto& vert : m_Vertices)
     {
-        v.pos.xy() += vc(30, 30);
+        vert.position = mathgp::transform_coord(vert.position, camAlign);
+        vert.position += position;
     }
-*/
-    unsigned indices[] =
-    {
-        0, 1, 2,
-        2, 1, 3,
-    };
+}
+
+void Sprite::render(const mathgp::matrix4& viewProj)
+{
+    if (!m_IsRendering)
+        return;
+
+    glEnable(GL_BLEND);
+
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     const int Attr_Pos = 0;
     const int Attr_UV = 1;
@@ -161,21 +169,19 @@ void Sprite::render()
     spriteEffect->bindCustomAttribute("inPos", Attr_Pos);
     spriteEffect->bindCustomAttribute("inTexCoord", Attr_UV);
 
-    auto projection = mathgp::matrix::ortho_lh(20, 12, 1, 100);
-
     int pvm = spriteEffect->getParameterByName("pvm");
-    spriteEffect->setParameter(pvm, projection);
+    spriteEffect->setParameter(pvm, viewProj);
 
     int tex = spriteEffect->getParameterByName("colorMap");
     spriteEffect->setParameter(tex, *m_Texture);
 
-    glVertexAttribPointer(Attr_Pos, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), &quad->pos);
+    glVertexAttribPointer(Attr_Pos, 3, GL_FLOAT, GL_FALSE, sizeof(SpriteVertex), &m_Vertices->position);
     glEnableVertexAttribArray(Attr_Pos);
 
-    glVertexAttribPointer(Attr_UV, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), &quad->uv);
+    glVertexAttribPointer(Attr_UV, 2, GL_FLOAT, GL_FALSE, sizeof(SpriteVertex), &m_Vertices->texCoord);
     glEnableVertexAttribArray(Attr_UV);
 
-    glDrawElements(GL_TRIANGLES, _countof(indices), GL_UNSIGNED_INT, indices);
+    glDrawElements(GL_TRIANGLES, _countof(sm_Indices), GL_UNSIGNED_INT, sm_Indices);
 
     glDisableVertexAttribArray(Attr_Pos);
     glDisableVertexAttribArray(Attr_UV);
@@ -209,6 +215,12 @@ void Sprite::getCurrentFrame(Uint32& x, Uint32& y)
     }
 
     m_CurrentFrame = Uint32(float(totalFrames) * (float(timeDiff) / float(m_Duration))) % totalFrames;
+
+    if (m_FramesOffset)
+    {
+        m_CurrentFrame += m_FramesOffset;
+        m_CurrentFrame %= totalFrames;
+    }
 
     x = m_StartX + ((m_CurrentFrame % m_Cols) * m_CellWidth);
     y = m_StartY + ((m_CurrentFrame / m_Cols) * m_CellHeight);

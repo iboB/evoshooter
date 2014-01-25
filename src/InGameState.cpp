@@ -13,12 +13,8 @@
 #include "GUILayer.h"
 #include "Effect.h"
 #include "Texture.h"
-#include "ResourceManager.h"
-#include "Sprite.h"
 
 using namespace mathgp;
-
-SpritePtr g_Sprite;
 
 InGameState::InGameState()
 {
@@ -36,15 +32,6 @@ void InGameState::initialize()
 
     m_texture = new Texture;
     m_texture->loadFromFile("sprites/sprite.png");
-
-    //g_Sprite = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/sprite.png", 2, 4, 8000);
-    g_Sprite = ResourceManager::instance().createSpriteFromSingleFrameTexture("Cracked-Facebook-Logo.png");// , 2, 4, 8000);
-
-    //g_Sprite.reset(new Sprite());
-
-    //g_Sprite->init("sprites/sprite.png", 256, 128, 256, 128, 1, 2, 4000, true);
-
-    g_Sprite->startAnimation();
 }
 
 void InGameState::deinitialize()
@@ -62,10 +49,6 @@ void InGameState::update()
 
 void InGameState::draw()
 {
-    g_Sprite->render();
-
-    return;
-
     struct Vertex
     {
         vector3 pos;
