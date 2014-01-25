@@ -97,6 +97,12 @@
     <ClInclude Include="..\..\..\src\Constants.h">
       <Filter>Core</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\MonsterDNA.h">
+      <Filter>Evo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Monster.h">
+      <Filter>Evo</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\Application.cpp">
@@ -168,6 +174,12 @@
     <ClCompile Include="..\..\..\src\Constants.cpp">
       <Filter>Core</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\MonsterDNA.cpp">
+      <Filter>Evo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Monster.cpp">
+      <Filter>Evo</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GUI">
@@ -184,6 +196,9 @@
     </Filter>
     <Filter Include="Level">
       <UniqueIdentifier>{b536ccb2-5600-47b4-a898-e530f8cea359}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Evo">
+      <UniqueIdentifier>{739ffb84-858f-4729-b279-27f1167cb58e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

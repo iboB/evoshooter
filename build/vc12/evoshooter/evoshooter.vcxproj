@@ -110,6 +110,8 @@
     <ClInclude Include="..\..\..\src\MainMenuState.h" />
     <ClInclude Include="..\..\..\src\MainWindow.h" />
     <ClInclude Include="..\..\..\src\Memory.h" />
+    <ClInclude Include="..\..\..\src\Monster.h" />
+    <ClInclude Include="..\..\..\src\MonsterDNA.h" />
     <ClInclude Include="..\..\..\src\NonCopyable.h" />
     <ClInclude Include="..\..\..\src\Object.h" />
     <ClInclude Include="..\..\..\src\Platform.h" />
@@ -141,6 +143,8 @@
     <ClCompile Include="..\..\..\src\Level.cpp" />
     <ClCompile Include="..\..\..\src\MainMenuState.cpp" />
     <ClCompile Include="..\..\..\src\MainWindow.cpp" />
+    <ClCompile Include="..\..\..\src\Monster.cpp" />
+    <ClCompile Include="..\..\..\src\MonsterDNA.cpp" />
     <ClCompile Include="..\..\..\src\ResourceManager.cpp" />
     <ClCompile Include="..\..\..\src\Sprite.cpp" />
     <ClCompile Include="..\..\..\src\Object.cpp" />
