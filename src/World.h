@@ -13,6 +13,7 @@
 #include "ImplicitSingleton.h"
 
 class Object;
+class MainCharacter;
 
 const float g_worldSize = 50.0f;
 const float g_gridSize = 5.0f;
@@ -26,8 +27,12 @@ public:
 	std::shared_ptr<Object> object(unsigned int id);
 	unsigned int spawnObject(float x, float y, float r);
     void destroyObject(unsigned int id);
+
+    const MainCharacter* mainCharacter() { return m_mainCharacter; }
 	
 private:
+    MainCharacter* m_mainCharacter;
+
 	std::map<unsigned int, std::shared_ptr<Object> > m_objects;
 	unsigned int m_firstFreeId;
 };

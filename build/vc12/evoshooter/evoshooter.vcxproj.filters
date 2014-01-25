@@ -76,9 +76,6 @@
     <ClInclude Include="..\..\..\src\Object.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\World.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\ColliderGrid.h">
       <Filter>Core</Filter>
     </ClInclude>
@@ -102,6 +99,15 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\Monster.h">
       <Filter>Evo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\World.h">
+      <Filter>World</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\MainCharacter.h">
+      <Filter>World</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Character.h">
+      <Filter>World</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -156,9 +162,6 @@
     <ClCompile Include="..\..\..\src\Object.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\World.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\ColliderGrid.cpp">
       <Filter>Core</Filter>
     </ClCompile>
@@ -180,6 +183,15 @@
     <ClCompile Include="..\..\..\src\Monster.cpp">
       <Filter>Evo</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\World.cpp">
+      <Filter>World</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\MainCharacter.cpp">
+      <Filter>World</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Character.cpp">
+      <Filter>World</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GUI">
@@ -199,6 +211,9 @@
     </Filter>
     <Filter Include="Evo">
       <UniqueIdentifier>{739ffb84-858f-4729-b279-27f1167cb58e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="World">
+      <UniqueIdentifier>{c366dbad-6512-4d2a-94a3-c2cc9334cea5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
