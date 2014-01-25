@@ -17,6 +17,7 @@ class IObjectController;
 class Renderer;
 class GameState;
 
+
 class Application : public ImplicitSingleton<Application>
 {
 public:
@@ -28,7 +29,7 @@ public:
     const mathgp::uvector2& screenSize() const;
 
     MainWindow* mainWindow() const { return m_mainWindow; }
-
+    GameState* currentState() const { return m_baseState;  } //todo: the actual current state?
 private:
     void initialize();
     void deinitialize();

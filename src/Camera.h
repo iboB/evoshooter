@@ -22,6 +22,11 @@ public:
     void setFov(float fov);
     void setDirectionAndDistance(const mathgp::vector3& direction, float distance);
 
+
+    void screenToWorldRay(const mathgp::uvector2& screenPos, mathgp::vector3& outStart, mathgp::vector3& outEnd) const;
+    //gives a point on the world plane
+    void screenToWorldPoint(const mathgp::uvector2& screenPos, mathgp::vector3& out) const;
+    void screenToWorldPoint(const mathgp::uvector2& screenPos, mathgp::vector3& outPoint, mathgp::vector3& outRayStart, mathgp::vector3& outRayEnd) const;
 private:
     mathgp::point3 m_point;
     mathgp::point3 m_position;

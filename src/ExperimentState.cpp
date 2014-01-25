@@ -19,6 +19,7 @@
 #include "GUILayer.h"
 #include "Application.h"
 #include "Util.h"
+#include <iostream>
 
 #include <Rocket/Core/Element.h>
 
@@ -139,6 +140,19 @@ void ExperimentState::handleEvent(const SDL_Event& event)
             break;
         }
     }
+    else if (event.type == SDL_MOUSEBUTTONUP)
+    {
+        if (event.button.button == SDL_BUTTON_LEFT)
+        {
+            vector3 start;
+            vector3 end;
+            m_camera->screenToWorldRay(v((unsigned int)event.button.x, (unsigned int)event.button.y), start, end);
+            m_camera->screenToWorldPoint(v((unsigned int)event.button.x, (unsigned int)event.button.y), end);
+            m_debugStart = start;
+            m_debugEnd = end;
+            //std::cout << "end world Pos x:" << end.x() << " y:" << end.y() << std::endl;
+        }
+    }
 
     m_camera->setFov(m_camFov += fov);
     m_camDistance += distance;
@@ -255,11 +269,28 @@ void ExperimentState::draw()
         glVertexAttribPointer(Attr_Pos, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), &quad2->pos);
         glDrawElements(GL_TRIANGLES, _countof(indices), GL_UNSIGNED_INT, indices);
     }
+    
+    {
+        Vertex quad2[] =
+        {
+            { m_debugStart, vc(0, 0) },
+            { m_debugEnd, vc(0, 1) }
+          
+        };
+        int indices[] = { 0, 1 };
 
+        glVertexAttribPointer(Attr_Pos, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), &quad2->pos);
+        glDrawElements(GL_LINES, _countof(indices), GL_UNSIGNED_INT, indices);
+    }
+    
     glDisableVertexAttribArray(Attr_Pos);
     glDisableVertexAttribArray(Attr_UV);
 
     m_guiLayer->draw();
 }
 
+Camera* ExperimentState::camera()
+{
+    return m_camera;
+}
 

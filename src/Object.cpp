@@ -14,7 +14,8 @@
 
 Object::Object():
 m_pos(),
-m_boundingCircle(0.0f)
+m_boundingCircle(0.0f),
+m_bb(mathgp::v(1.0f,1.0f))
 {
 }
 
@@ -64,4 +65,13 @@ float Object::r()
 bool Object::collidesWith(std::shared_ptr<Object> otherGuy)
 {
     return (std::sqrt((otherGuy->x() - m_pos.x())*(otherGuy->x() - m_pos.x()) + (otherGuy->y() - m_pos.y())*(otherGuy->y() - m_pos.y())) < m_boundingCircle + otherGuy->r());
+}
+
+float Object::bb_w()
+{
+    return m_bb.y();
+}
+float Object::bb_h()
+{
+    return m_bb.x();
 }

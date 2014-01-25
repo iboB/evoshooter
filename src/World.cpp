@@ -55,3 +55,8 @@ void World::destroyObject(unsigned int id)
     ColliderGrid::instance().onObjectDestroyed(object(id));
     m_objects.erase(id);
 }
+
+objectsContainer& World::objects()
+{
+    return m_objects;
+}
