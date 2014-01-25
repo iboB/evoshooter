@@ -12,3 +12,8 @@
 ipch/
 
 Debug/
+Release/
+
+# release files
+*.zip
+
