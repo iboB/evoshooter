@@ -17,7 +17,7 @@ public:
 	Object(const mathgp::vector3& pos, float bc);
 	virtual ~Object();
 
-	mathgp::vector3 position();
+	mathgp::vector3 position() const;
 	float boundingCircle();
 	float x();
     void  x(float val);

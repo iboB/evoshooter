@@ -104,7 +104,7 @@ void ExperimentState::initialize()
 
     World::instance().spawnPlayer(2.f, 1.5f, 0.5f);
 
-    m_camera->followObject(World::instance().object(id).get());
+    m_camera->followObject(World::instance().mainCharacter());
 }
 
 void ExperimentState::deinitialize()
