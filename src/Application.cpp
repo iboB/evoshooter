@@ -14,7 +14,8 @@
 #include "VersionInfo.h"
 
 #include "GUI.h"
-#include "GUILayer.h"
+
+#include "InGameState.h"
 
 using namespace std;
 using namespace mathgp;
@@ -32,8 +33,8 @@ Application::Application()
     , m_lastFPSStatusUpdateFrameCount(0)
     // debug stuff
     , m_isWireframe(false)
-    // gui
-    , m_guiLayer(nullptr)
+    // states
+    , m_baseState(nullptr)
 {
 }
 
@@ -49,7 +50,7 @@ void Application::run()
 {
     initialize();
 
-    TexturePtr texture = ResourceManager::instance().getTexture("Cracked-Facebook-Logo.png");
+    /*TexturePtr texture = ResourceManager::instance().getTexture("Cracked-Facebook-Logo.png");
     TexturePtr texture2 = ResourceManager::instance().getTexture("Cracked-Facebook-Logo.png");
     TexturePtr texture3 = ResourceManager::instance().getTexture("Cracked-Facebook-Logo.png");
 
@@ -71,7 +72,7 @@ void Application::run()
 
 
     ResourceManager::instance().releaseTexture(texture3);
-
+*/
     m_isRunning = true;
     while(m_isRunning)
     {
@@ -79,7 +80,7 @@ void Application::run()
 
         handleInput();
 
-        m_guiLayer->update();
+        m_baseState->update();
 
         drawFrame();
         updateFPSData();
@@ -103,7 +104,7 @@ void Application::initialize()
     }
 
     MainWindow::CreationParameters mwc;
-    mwc.clientAreaSize = v(1024u, 768u);
+    mwc.clientAreaSize = v(1024u, 600u);
     mwc.isFullScreen = false;
     mwc.title = APP_NAME;
     m_mainWindow = new MainWindow(mwc);
@@ -129,25 +130,26 @@ void Application::initialize()
     // gui
     GUI::createInstance();
     GUI::instance().loadFont("gui/fonts/atari.ttf");
-    m_guiLayer = new GUILayer("gui layer");
-    m_guiLayer->initialize();
-    m_guiLayer->loadRootRml("gui/main.xml");
+
+    //////////////////////////////////////
+    // state
+    m_baseState = new InGameState;
+    m_baseState->initialize();
 }
 
 void Application::drawFrame()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-
-    m_guiLayer->draw();
+    m_baseState->draw();
 
     m_mainWindow->swapBuffers();
 }
 
 void Application::deinitialize()
 {
-    m_guiLayer->deinitialize();
-    delete m_guiLayer;
+    m_baseState->deinitialize();
+    delete m_baseState;
     GUI::destroyInstance();
 
     safe_delete(m_mainWindow);
@@ -185,12 +187,7 @@ void Application::handleInput()
     bool handledHere = false;
     while(SDL_PollEvent(&event))
     {
-        // first try to process it with the GUI
-        if (m_guiLayer->processSDLEvent(event))
-        {
-            continue;
-        }
-            
+        m_baseState->handleEvent(event);
 
         if(event.type == SDL_QUIT)
         {

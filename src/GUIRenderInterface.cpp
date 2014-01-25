@@ -199,6 +199,9 @@ void GUIRenderInterface::RenderGeometry(Rocket::Core::Vertex* vertices, int numV
         glUniform2f(m_ulColorTranslation, translation.x, translation.y);
     }
 
+    glEnableVertexAttribArray(Attrib_Position);
+    glEnableVertexAttribArray(Attrib_Color);
+
     glVertexAttribPointer(Attrib_Position, 2, GL_FLOAT, GL_FALSE, sizeof(Rocket::Core::Vertex), &vertices->position);    
     glVertexAttribPointer(Attrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(Rocket::Core::Vertex), &vertices->colour);
 
@@ -208,6 +211,7 @@ void GUIRenderInterface::RenderGeometry(Rocket::Core::Vertex* vertices, int numV
         glBindTexture(GL_TEXTURE_2D, tex->glHandle());
         glUniform1i(m_ulTexture, 0);
         glVertexAttribPointer(Attrib_TexCoord, 2, GL_FLOAT, GL_FALSE, sizeof(Rocket::Core::Vertex), &vertices->tex_coord);
+        glEnableVertexAttribArray(Attrib_TexCoord);
     }
 
     glDrawElements(GL_TRIANGLES, numIndices, GL_UNSIGNED_INT, indices);

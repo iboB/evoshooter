@@ -15,8 +15,7 @@ class MainWindow;
 class Scene;
 class IObjectController;
 class Renderer;
-
-class GUILayer;
+class GameState;
 
 class Application : public ImplicitSingleton<Application>
 {
@@ -70,6 +69,6 @@ private:
     bool m_isWireframe;
 
     //////////////////////////////////////
-    // gui
-    GUILayer* m_guiLayer;
+    // states
+    GameState* m_baseState;
 };

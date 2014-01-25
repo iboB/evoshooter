@@ -13,8 +13,19 @@
 
 #include "Texture.h"
 #include "Sprite.h"
+#include "Effect.h"
 
 #include "ResourceManager.h"
+
+ResourceManager::ResourceManager()
+{
+    m_SpriteEffect = new Effect;
+
+    m_SpriteEffect->loadVertexShaderFromFile("shaders/sprite.vert");
+    m_SpriteEffect->loadPixelShaderFromFile("shaders/sprite.frag");
+
+    m_SpriteEffect->link();
+}
 
 TexturePtr ResourceManager::getTexture(const std::string& file)
 {
@@ -74,7 +85,7 @@ SpritePtr ResourceManager::createSpriteFromSingleFrameTexture(const std::string&
     return sprite;
 }
 
-SpritePtr ResourceManager::createSpriteFromSingleAnimationTexture(const std::string& file, Uint32 rows, Uint32 cols)
+SpritePtr ResourceManager::createSpriteFromSingleAnimationTexture(const std::string& file, Uint32 rows, Uint32 cols, int duration)
 {
     TexturePtr texture = getTexture(file);
 
@@ -85,7 +96,7 @@ SpritePtr ResourceManager::createSpriteFromSingleAnimationTexture(const std::str
 
     SpritePtr sprite(new Sprite());
 
-    sprite->init(file, 0, 0, texture->width(), texture->height(), rows, cols, 0, false);
+    sprite->init(file, 0, 0, texture->width(), texture->height(), rows, cols, duration, true);
 
     return sprite;
 }

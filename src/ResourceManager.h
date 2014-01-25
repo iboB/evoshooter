@@ -19,18 +19,25 @@ typedef std::shared_ptr<Texture> TexturePtr;
 class Sprite;
 typedef std::shared_ptr<Sprite> SpritePtr;
 
+class Effect;
+
 class ResourceManager : public ImplicitSingleton<ResourceManager>
 {
 public:
+    ResourceManager();
+
 	TexturePtr getTexture(const std::string& file);
 	void releaseTexture(TexturePtr& texture); // forget'about'it
 
     SpritePtr createSpriteFromSingleFrameTexture(const std::string& file); // one frame, no animation, no shit
-    SpritePtr createSpriteFromSingleAnimationTexture(const std::string& file, Uint32 rows, Uint32 cols); //single looping animation in one texture
+    SpritePtr createSpriteFromSingleAnimationTexture(const std::string& file, Uint32 rows, Uint32 cols, int duration); //single looping animation in one texture
+
+    Effect* getSpriteEffect() { return m_SpriteEffect; }
 
 private:
 	typedef std::map<std::string, TexturePtr> TextureMap;
 	TextureMap m_Textures;
+    Effect* m_SpriteEffect;
 
 	TexturePtr findTexture(const std::string& file) const;
 };
