@@ -28,7 +28,8 @@ public:
 	~World();
 
 	std::shared_ptr<Object> object(unsigned int id);
-	unsigned int spawnObject(float x, float y, float r);
+    unsigned int spawnObject(float x, float y, float r);
+    unsigned int spawnMonster(float x, float y, float r, const std::string& name);
     void destroyObject(unsigned int id);
     objectsContainer& objects();
     const MainCharacter* mainCharacter() { return m_mainCharacter; }

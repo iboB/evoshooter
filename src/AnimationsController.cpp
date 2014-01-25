@@ -79,8 +79,29 @@ void AnimationsController::RemoveAttachment(const std::string& file)
 
 void AnimationsController::SetMove(MovementAnim anim)
 {
-    if (m_IsDead || m_IsTakingDamage)
+    if (m_IsDead)
     {
+        return;
+    }
+
+    if (m_ActiveMovement == anim)
+    {
+        return;
+    }
+
+    if (m_IsTakingDamage)
+    {
+        int activeFrame = 0;
+        if (m_ActiveMovement != MA_None)
+        {
+            activeFrame = m_Damage[m_ActiveMovement]->currentFrame();
+            m_Damage[m_ActiveMovement]->stopRendering();
+        }
+
+        m_ActiveMovement = anim;
+
+        m_Damage[m_ActiveMovement]->startRendering(activeFrame);
+
         return;
     }
 
@@ -114,6 +135,10 @@ void AnimationsController::Die()
     m_Death[m_ActiveMovement]->startRendering(0);
 
     m_IsDead = true;
+    if (m_IsTakingDamage)
+    {
+        m_Damage[m_ActiveMovement]->stopRendering();
+    }
     m_IsTakingDamage = false;
 }
 
@@ -167,6 +192,11 @@ void AnimationsController::update(const mathgp::vector3& position, const mathgp:
             m_Damage[m_ActiveMovement]->update(position, camDir);
             updateAttachments(position, camDir);
         }
+    }
+
+    if (m_ActiveMovement == MA_None)
+    {
+        return;
     }
 
     m_MovementAnimations[m_ActiveMovement]->update(position, camDir);

@@ -27,7 +27,7 @@ public:
     bool collidesWith(std::shared_ptr<Object> otherGuy);
     float bb_w();
     float bb_h();
-private:
+protected:
 
 	mathgp::vector3 m_pos;
 	float m_boundingCircle;
