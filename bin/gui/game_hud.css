@@ -1,0 +1,34 @@
+body
+{
+    font-family: Atari Font Full Version;
+    font-weight: normal;
+    font-style: normal;
+    font-size: 100%;
+    color: white;
+}
+
+body.menu
+{
+    min-width: 100px;
+    min-height: 100px;
+}
+
+div#info
+{
+	padding: 5px 5px;
+    overflow: hidden auto;
+    background-color: transparent;
+	float: left;
+	display:inline-block;
+}
+
+div#info_right
+{
+	padding: 5px 5px;
+    overflow: hidden auto;
+    background-color: transparent;
+	text-align: right;
+	float: right;
+	display:inline-block;
+}
+
