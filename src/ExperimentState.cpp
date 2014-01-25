@@ -18,6 +18,7 @@
 #include "Level.h"
 #include "GUILayer.h"
 #include "Application.h"
+#include "Util.h"
 
 #include <Rocket/Core/Element.h>
 
@@ -33,7 +34,7 @@ ExperimentState::ExperimentState()
 
 void ExperimentState::initialize()
 {
-    m_camera = new Camera(m_camPosition = vc(20, 20, 0), m_camDirection = normalized(vc(0, -5, 5)), m_camDistance = 35, m_camFov = mathgp::constants<float>::PI() / 4);
+    m_camera = new Camera(m_camPosition = vc(2, 2, 0), m_camDirection = normalized(vc(0, -5, 5)), m_camDistance = 5, m_camFov = mathgp::constants<float>::PI() / 4);
     m_level = new Level;
 
     m_guiLayer = new GUILayer("gui layer");
@@ -228,6 +229,32 @@ void ExperimentState::draw()
     glEnableVertexAttribArray(Attr_UV);
 
     glDrawElements(GL_TRIANGLES, _countof(indices), GL_UNSIGNED_INT, indices);
+
+    srand(10);
+    for (int i = 0; i < 20; ++i)
+    {
+        Vertex quad2[] =
+        {
+            { vc(0, 0, 0), vc(0, 0) },
+            { vc(0.8f, 0, 0), vc(0, 1) },
+            { vc(0, 0, 1.28f), vc(1, 0) },
+            { vc(0.8f, 0, 1.28f), vc(1, 1) },
+        };
+
+        float camAngle = acos(abs(m_camDirection.y()));
+        matrix camAlign = matrix::rotation_x(-camAngle);
+
+        vector3 translate = 50 * vc(Util::Rnd01(), Util::Rnd01(), 0);
+
+        for (auto& vert : quad2)
+        {
+            vert.pos = transform_coord(vert.pos, camAlign);
+            vert.pos += translate;
+        }
+
+        glVertexAttribPointer(Attr_Pos, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), &quad2->pos);
+        glDrawElements(GL_TRIANGLES, _countof(indices), GL_UNSIGNED_INT, indices);
+    }
 
     glDisableVertexAttribArray(Attr_Pos);
     glDisableVertexAttribArray(Attr_UV);
