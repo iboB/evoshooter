@@ -33,7 +33,7 @@ ExperimentState::ExperimentState()
 
 void ExperimentState::initialize()
 {
-    m_camera = new Camera(m_camPosition = vc(20, 20, 0), m_camDirection = normalized(vc(0, -5, 5)), m_camDistance = 5, m_camFov = mathgp::constants<float>::PI() / 4);
+    m_camera = new Camera(m_camPosition = vc(20, 20, 0), m_camDirection = normalized(vc(0, -5, 5)), m_camDistance = 35, m_camFov = mathgp::constants<float>::PI() / 4);
     m_level = new Level;
 
     m_guiLayer = new GUILayer("gui layer");
