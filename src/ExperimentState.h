@@ -54,4 +54,8 @@ private:
     mathgp::vector3 m_camPosition;
 
     mathgp::vector3 m_moveWeight;
+
+    Effect* m_effect;
+    Texture* m_texture;
+
 };
