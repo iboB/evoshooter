@@ -27,7 +27,7 @@
 #include "Overlay.h"
 #include "SoundManager.h"
 #include "World.h"
-#include <iostream>
+#include "ColliderGrid.h"
 
 #include <Rocket/Core/Element.h>
 
@@ -47,6 +47,9 @@ ExperimentState::ExperimentState()
 
 void ExperimentState::initialize()
 {
+    World::createInstance();
+    ColliderGrid::createInstance();
+
     m_camera = new Camera(m_camPosition = vc(2, 2, 0), m_camDirection = normalized(vc(0, -5, 5)), m_camDistance = 5, m_camFov = mathgp::constants<float>::PI() / 4);
     m_level = new Level;
 
@@ -113,6 +116,9 @@ void ExperimentState::deinitialize()
     safe_delete(m_texture);
 
     safe_delete(m_overlay);
+
+    ColliderGrid::destroyInstance();
+    World::destroyInstance();
 }
 
 void ExperimentState::handleEvent(const SDL_Event& event)

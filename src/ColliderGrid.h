@@ -10,18 +10,17 @@
 //
 #pragma once
 
-#include "ImplicitSingleton.h"
+#include "ExplicitSingleton.h"
 
 class Object;
 
 typedef std::vector<std::vector<std::list<std::shared_ptr<Object> > > > gridContainer;
 
-class ColliderGrid : public ImplicitSingleton<ColliderGrid>
+class ColliderGrid : public ExplicitSingleton<ColliderGrid>
 {
-public:
-	ColliderGrid();
-	~ColliderGrid();
+    DECLARE_EXPLICIT_SINGLETON(ColliderGrid);
 
+public:
 	//returns null if move possible, else returns first collider
 	std::shared_ptr<Object> requestMoveTo(Object* obj, const mathgp::vector2& pos);
     std::shared_ptr<Object> requestMoveTo(Object* obj, const mathgp::vector3& pos);
@@ -32,7 +31,7 @@ public:
                             //get all colliding circles in a line
     std::vector<std::shared_ptr<Object> > collideCirclesWith2dRay(mathgp::vector2 start, mathgp::vector2 end);
                             //used to sort outgoing collision data
-    bool                    operator()(const std::shared_ptr<Object> obj1, const std::shared_ptr<Object> obj2);
+    bool                    sortCompare(const std::shared_ptr<Object> obj1, const std::shared_ptr<Object> obj2);
 
     std::vector<std::shared_ptr<Object> > collideWithQuadsOnClick(const mathgp::uvector2& screenPos, const mathgp::vector3& worldPoint);
     //bool                     collideAABBWith3dRay(const std::shared_ptr<Object> obj, const mathgp::vector3& rayStart, const mathgp::vector3& rayDir);
