@@ -49,6 +49,12 @@
     <ClInclude Include="..\..\..\src\Macros.h">
       <Filter>Core</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\ResourceManager.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Sprite.h">
+      <Filter>Core</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\src\GameState.h">
       <Filter>GameStates</Filter>
     </ClInclude>
@@ -70,9 +76,6 @@
     <ClInclude Include="..\..\..\src\Object.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\World.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\ColliderGrid.h">
       <Filter>Core</Filter>
     </ClInclude>
@@ -90,6 +93,27 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\Constants.h">
       <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\AnimationsController.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\RenderManager.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\MonsterDNA.h">
+      <Filter>Evo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Monster.h">
+      <Filter>Evo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\World.h">
+      <Filter>World</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\MainCharacter.h">
+      <Filter>World</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Character.h">
+      <Filter>World</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -120,6 +144,12 @@
     <ClCompile Include="..\..\..\src\GUILayer.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\ResourceManager.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Sprite.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\src\GameState.cpp">
       <Filter>GameStates</Filter>
     </ClCompile>
@@ -138,9 +168,6 @@
     <ClCompile Include="..\..\..\src\Object.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\World.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\ColliderGrid.cpp">
       <Filter>Core</Filter>
     </ClCompile>
@@ -155,6 +182,27 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\Constants.cpp">
       <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\AnimationsController.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\RenderManager.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\MonsterDNA.cpp">
+      <Filter>Evo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Monster.cpp">
+      <Filter>Evo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\World.cpp">
+      <Filter>World</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\MainCharacter.cpp">
+      <Filter>World</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Character.cpp">
+      <Filter>World</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -172,6 +220,12 @@
     </Filter>
     <Filter Include="Level">
       <UniqueIdentifier>{b536ccb2-5600-47b4-a898-e530f8cea359}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Evo">
+      <UniqueIdentifier>{739ffb84-858f-4729-b279-27f1167cb58e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="World">
+      <UniqueIdentifier>{c366dbad-6512-4d2a-94a3-c2cc9334cea5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

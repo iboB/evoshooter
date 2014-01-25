@@ -13,6 +13,7 @@
 #include "ImplicitSingleton.h"
 
 class Object;
+class MainCharacter;
 
 const float g_worldSize = 50.0f;
 const float g_gridSize = 5.0f;
@@ -30,8 +31,10 @@ public:
 	unsigned int spawnObject(float x, float y, float r);
     void destroyObject(unsigned int id);
     objectsContainer& objects();
-
+    const MainCharacter* mainCharacter() { return m_mainCharacter; }
+	
 private:
     objectsContainer m_objects;
+    MainCharacter* m_mainCharacter;
 	unsigned int m_firstFreeId;
 };

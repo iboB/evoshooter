@@ -44,10 +44,37 @@ Application::~Application()
 {
 }
 
+#include "ResourceManager.h"
+#include "Sprite.h"
+#include "Texture.h"
+
 void Application::run()
 {
     initialize();
 
+    /*TexturePtr texture = ResourceManager::instance().getTexture("Cracked-Facebook-Logo.png");
+    TexturePtr texture2 = ResourceManager::instance().getTexture("Cracked-Facebook-Logo.png");
+    TexturePtr texture3 = ResourceManager::instance().getTexture("Cracked-Facebook-Logo.png");
+
+    ResourceManager::instance().releaseTexture(texture);
+    ResourceManager::instance().releaseTexture(texture2);
+
+    {
+        Sprite s1;
+        s1.init("Cracked-Facebook-Logo.png", 32, 64, 32, 64, 4, 8, 2000, true);
+        s1.startAnimation();
+        s1.render();
+        s1.render();
+
+        Sprite s2;
+        s2.init("Cracked-Facebook-Logo.png", 0, 0, 0, 0, 0, 0, 0, true);
+        s2.startAnimation();
+        s2.render();
+    }
+
+
+    ResourceManager::instance().releaseTexture(texture3);
+*/
     m_isRunning = true;
     while(m_isRunning)
     {

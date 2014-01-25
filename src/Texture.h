@@ -20,6 +20,17 @@ public:
 
     GLenum type() const { return GL_TEXTURE_2D; }
     GLuint glHandle() const { return m_glHandle; }
+
+	const std::string& name() const { return m_Name; }
+
+    Uint32& width() { return m_Width; }
+    Uint32& height() { return m_Height; }
 private:
     GLuint m_glHandle;
+	std::string m_Name;
+
+    Uint32 m_Width;
+    Uint32 m_Height;
 };
+
+typedef std::shared_ptr<Texture> TexturePtr;
