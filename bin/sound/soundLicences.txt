@@ -9,3 +9,7 @@ http://www.tannerhelland.com/52/song-retribution/
 everything else:
 http://www.freesound.org/
 Creative commons 0 licence.
+EnemyDeath.wav - http://www.freesound.org/people/Flasher21/sounds/87535/
+PlayerDeath.wav - http://www.freesound.org/people/Robinhood76/sounds/68300/
+EnemyOnHit.wav - http://www.freesound.org/people/Under7dude/sounds/163447/
+Shoot.wav - http://www.freesound.org/people/fins/sounds/146730/
