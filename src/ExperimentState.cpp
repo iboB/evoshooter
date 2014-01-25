@@ -23,7 +23,7 @@
 #include "GUILayer.h"
 #include "Application.h"
 #include "Util.h"
-#include <iostream>
+#include "Overlay.h"
 
 #include <Rocket/Core/Element.h>
 
@@ -36,6 +36,7 @@ ExperimentState::ExperimentState()
     : m_camera(nullptr)
     , m_level(nullptr)
     , m_guiLayer(nullptr)
+    , m_overlay(nullptr)
 {
 
 }
@@ -66,19 +67,21 @@ void ExperimentState::initialize()
     m_texture->loadFromFile("sprites/sprite.png");
 
     //g_Sprite = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/sprite.png", 2, 4, 8000);
-    g_Sprite = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/jaba_the_slut_die_anim.png", 1, 8, 1000);
+    //g_Sprite = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/jaba_the_slut_die_anim.png", 1, 8, 1000);
 
     //g_Sprite.reset(new Sprite());
 
     //g_Sprite->init("sprites/sprite.png", 256, 128, 256, 128, 1, 2, 4000, true);
 
-    g_Sprite->setScale(0.009f);
-    g_Sprite->setFlipX(true);
+    //g_Sprite->setScale(0.009f);
+    //g_Sprite->setFlipX(true);
     //g_Sprite->startRendering();
 
-    g_Monster = new MonsterCharacter(mathgp::vc(0.f, 0.f, 0.f), "jaba_the_slut");
+    //g_Monster = new MonsterCharacter(mathgp::vc(0.f, 0.f, 0.f), "jaba_the_slut");
 
-    g_Monster->Move(mathgp::vc(0.f, 0.f, 0.f));
+    //g_Monster->Move(mathgp::vc(0.f, 0.f, 0.f));
+
+    m_overlay = new Overlay;
 }
 
 void ExperimentState::deinitialize()
@@ -91,6 +94,8 @@ void ExperimentState::deinitialize()
 
     safe_delete(m_effect);
     safe_delete(m_texture);
+
+    safe_delete(m_overlay);
 }
 
 void ExperimentState::handleEvent(const SDL_Event& event)
@@ -140,10 +145,10 @@ void ExperimentState::handleEvent(const SDL_Event& event)
             m_moveWeight.x() = 0.f;
             break;
         case SDLK_SPACE:
-            g_Monster->Die();
+            //g_Monster->Die();
             break;
         case SDLK_l:
-            g_Monster->GetDamage();
+            //g_Monster->GetDamage();
             break;
         default:
             return;
@@ -214,11 +219,11 @@ void ExperimentState::update()
     {
         m_camPosition += unitsPerSecond * frameTime * normalized(m_moveWeight);
         m_camera->moveTo(m_camPosition);
-        g_Monster->Move(g_Monster->position() + unitsPerSecond * frameTime * normalized(m_moveWeight));
+        //g_Monster->Move(g_Monster->position() + unitsPerSecond * frameTime * normalized(m_moveWeight));
     }
 
     //g_Sprite->update(vc(0.f, 0.f, 0.0f), m_camDirection);
-    g_Monster->Update(m_camDirection);
+    //g_Monster->Update(m_camDirection);
 }
 
 void ExperimentState::draw()
@@ -321,7 +326,10 @@ void ExperimentState::draw()
 
     //g_Sprite->render(m_camera->projectionView());
 
+    m_overlay->draw();
+
     m_guiLayer->draw();
+    
 }
 
 Camera* ExperimentState::camera()

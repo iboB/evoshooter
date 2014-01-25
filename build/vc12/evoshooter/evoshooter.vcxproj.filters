@@ -73,9 +73,6 @@
     <ClInclude Include="..\..\..\src\Util.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\Object.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\ColliderGrid.h">
       <Filter>Core</Filter>
     </ClInclude>
@@ -94,12 +91,6 @@
     <ClInclude Include="..\..\..\src\Constants.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\AnimationsController.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\RenderManager.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\MonsterDNA.h">
       <Filter>Evo</Filter>
     </ClInclude>
@@ -115,7 +106,13 @@
     <ClInclude Include="..\..\..\src\Character.h">
       <Filter>World</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\MonsterCharacter.h">
+    <ClInclude Include="..\..\..\src\Object.h">
+      <Filter>World</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\AnimationsController.h" />
+    <ClInclude Include="..\..\..\src\MonsterCharacter.h" />
+    <ClInclude Include="..\..\..\src\RenderManager.h" />
+    <ClInclude Include="..\..\..\src\Overlay.h">
       <Filter>Core</Filter>
     </ClInclude>
   </ItemGroup>
@@ -168,9 +165,6 @@
     <ClCompile Include="..\..\..\src\Util.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\Object.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\ColliderGrid.cpp">
       <Filter>Core</Filter>
     </ClCompile>
@@ -184,12 +178,6 @@
       <Filter>GameStates</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\Constants.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\AnimationsController.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\RenderManager.cpp">
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\MonsterDNA.cpp">
@@ -207,7 +195,13 @@
     <ClCompile Include="..\..\..\src\Character.cpp">
       <Filter>World</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\MonsterCharacter.cpp">
+    <ClCompile Include="..\..\..\src\Object.cpp">
+      <Filter>World</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\AnimationsController.cpp" />
+    <ClCompile Include="..\..\..\src\MonsterCharacter.cpp" />
+    <ClCompile Include="..\..\..\src\RenderManager.cpp" />
+    <ClCompile Include="..\..\..\src\Overlay.cpp">
       <Filter>Core</Filter>
     </ClCompile>
   </ItemGroup>

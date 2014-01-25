@@ -16,6 +16,7 @@ class Texture;
 class Camera;
 class Level;
 class GUILayer;
+class Overlay;
 
 namespace Rocket
 {
@@ -62,5 +63,7 @@ private:
 
     mathgp::vector3 m_debugStart;
     mathgp::vector3 m_debugEnd;
+
+    Overlay* m_overlay;
 
 };
