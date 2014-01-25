@@ -12,10 +12,12 @@
 #include "World.h"
 #include "Object.h"
 #include "ColliderGrid.h"
+#include "MainCharacter.h"
 
 
-World::World() :
-m_firstFreeId(0)
+World::World()
+    : m_firstFreeId(0)
+    , m_mainCharacter(nullptr)
 {
 }
 
