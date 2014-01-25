@@ -93,15 +93,15 @@ void ExperimentState::initialize()
     m_texture = new Texture;
     m_texture->loadFromFile("sprites/sprite.png");
 
-    g_Sprite = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/sprite.png", 2, 4, 8000);
+    //g_Sprite = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/sprite.png", 2, 4, 8000);
 
     //g_Sprite.reset(new Sprite());
 
     //g_Sprite->init("sprites/sprite.png", 256, 128, 256, 128, 1, 2, 4000, true);
 
-    g_Sprite->setScale(0.02f);
-    g_Sprite->setFlipX(true);
-    g_Sprite->startRendering();
+    //g_Sprite->setScale(0.02f);
+    //g_Sprite->setFlipX(true);
+    //g_Sprite->startRendering();
 
     //SoundManager::instance().playTrack(0, true);
 
@@ -290,7 +290,7 @@ void ExperimentState::update(int dt)
     }
 
     World::instance().update(dt);
-    g_Sprite->update(vc(2.f, 4.f, 0.0f), m_camDirection);
+    //g_Sprite->update(vc(2.f, 4.f, 0.0f), m_camDirection);
 }
 
 void ExperimentState::draw()
@@ -391,7 +391,7 @@ void ExperimentState::draw()
     glDisableVertexAttribArray(Attr_Pos);
     glDisableVertexAttribArray(Attr_UV);
 
-    g_Sprite->render(m_camera->projectionView());
+    //g_Sprite->render(m_camera->projectionView());
     //g_Sprite->render(m_camera->projectionView());
 
     m_overlay->draw();

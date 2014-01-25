@@ -22,9 +22,9 @@ Character::Character(const mathgp::vector3& position, const std::string& name)
     m_AnimationsController.SetMovementAnimations(std::string("sprites/")  + name + "_walk_anim.png", 0.008f);
     m_AnimationsController.SetDamage(std::string("sprites/") + name + "_dmg_anim.png", 0.008f);
     m_AnimationsController.SetDeath(std::string("sprites/") + name + "_die_anim.png", 0.008f);
-    m_AnimationsController.AddAttack("sprites/attacks/attack_anim_01.png", "sprites/attacks/attack_anim_idle_01.png", Vec::zero, 0.003f);
-    m_AnimationsController.AddAttack("sprites/attacks/attack_anim_02.png", "sprites/attacks/attack_anim_idle_02.png", Vec::zero, 0.003f);
-    m_AnimationsController.AddAttack("sprites/attacks/attack_anim_03.png", "sprites/attacks/attack_anim_idle_03.png", Vec::zero, 0.003f);
+    m_AnimationsController.AddAttack("sprites/attacks/attack_anim_01.png", "sprites/attacks/attack_anim_idle_01.png", Vec::zero, 0.005f);
+    m_AnimationsController.AddAttack("sprites/attacks/attack_anim_02.png", "sprites/attacks/attack_anim_idle_02.png", Vec::zero, 0.005f);
+    m_AnimationsController.AddAttack("sprites/attacks/attack_anim_03.png", "sprites/attacks/attack_anim_idle_03.png", mathgp::vc(0.f, 0.25f, 0.f), 0.005f);
 }
 
 void Character::Move(const mathgp::vector3& position)
