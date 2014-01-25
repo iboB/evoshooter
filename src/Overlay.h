@@ -25,4 +25,5 @@ private:
     Effect* m_effect;
     Texture* m_texture;
     int m_texParam;
+    int m_scaleParam;
 };

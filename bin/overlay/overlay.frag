@@ -1,11 +1,9 @@
-attribute vec4 inPos;
-attribute vec2 inTexCoord;
+uniform sampler2D colorMap;
 
 varying vec2 texCoord;
 
-void main()
-{
-	gl_Position =  inPos;
-	
-	texCoord = inTexCoord.xy;
+void main(void)
+{	
+	vec4 color = texture2D(colorMap, texCoord);
+  gl_FragColor = color * (1 - color.x);
 }

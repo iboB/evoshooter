@@ -76,7 +76,7 @@ void ExperimentState::initialize()
     //g_Sprite->setFlipX(true);
     //g_Sprite->startRendering();
 	g_Monster = new MonsterCharacter(mathgp::vc(0.f, 0.f, 0.f), "jaba_the_slut");
-    SoundManager::instance().playTrack(0, true);
+    //SoundManager::instance().playTrack(0, true);
 
     //g_Monster = new MonsterCharacter(mathgp::vc(0.f, 0.f, 0.f), "jaba_the_slut");
 
@@ -101,7 +101,6 @@ void ExperimentState::deinitialize()
 
 void ExperimentState::handleEvent(const SDL_Event& event)
 {
-
     float mod = 0.1f;
     float angle = 0, distance = 0, fov = 0;
 

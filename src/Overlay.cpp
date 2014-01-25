@@ -13,6 +13,8 @@
 #include "Effect.h"
 #include "Texture.h"
 #include "GLSentries.h"
+#include "Application.h"
+#include "MainWindow.h"
 
 using namespace mathgp;
 
@@ -26,9 +28,12 @@ Overlay::Overlay()
     m_effect->link();
 
     m_texParam = m_effect->getParameterByName("colorMap");
+    m_scaleParam = m_effect->getParameterByName("scale");
 
     m_texture = new Texture;
     m_texture->loadFromFile("overlay/gradient_black_screen_01.png");
+    m_texture->setParameter(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    m_texture->setParameter(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 }
 
 Overlay::~Overlay()
@@ -72,6 +77,14 @@ void Overlay::draw()
     m_effect->bindCustomAttribute("inTexCoord", Attr_UV);
 
     m_effect->setParameter(m_texParam, *m_texture);
+    
+    vector2 scale;
+    auto size = Application::instance().mainWindow()->clientAreaSize();
+
+    scale.y() = 1;// float(size.x()) / size.y();
+    scale.x() = 1;
+    //scale *= 3;
+    m_effect->setParameter(m_scaleParam, scale);
 
     glVertexAttribPointer(Attr_Pos, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), &quad->pos);
     SENTRY(GLEnableAttribSentry, Attr_Pos);

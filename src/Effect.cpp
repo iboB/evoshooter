@@ -192,6 +192,11 @@ void Effect::setParameter(GLint param, const vector3& vec)
     glUniform3fv(param, 1, vec.as_array());
 }
 
+void Effect::setParameter(GLint param, const vector2& vec)
+{
+    glUniform2fv(param, 1, vec.as_array());
+}
+
 void Effect::setParameter(GLint param, const Texture& tex)
 {
     glActiveTexture(GL_TEXTURE0 + m_boundTextures);
