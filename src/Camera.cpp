@@ -50,3 +50,39 @@ void Camera::moveTo(const point3& point)
     m_view = matrix::look_at_rh(m_position, m_point, Vec::up);
     m_projectionView = m_projection * m_view;
 }
+void Camera::screenToWorldRay(const mathgp::uvector2& screenPos, mathgp::vector3& outStart, mathgp::vector3& outEnd) const
+{
+    const uvector2& screenSize = Application::instance().mainWindow()->clientAreaSize();
+    
+    uvector2 halfScreenSize = v(screenSize.x() / 2, screenSize.y() / 2);
+    vector2 ooScreenCoords = v(float((int)screenPos.x() - (int)halfScreenSize.x()) / float(halfScreenSize.x()), float((int)halfScreenSize.y() - (int)screenPos.y()) / float(halfScreenSize.y()));
+
+    vector3 start = v(ooScreenCoords.x(), ooScreenCoords.y(), 0.0f);
+    vector3 end = v(ooScreenCoords.x(), ooScreenCoords.y(), 1.0f);
+    
+
+    outStart = transform_coord(start, inverse(m_projectionView));
+    outEnd = transform_coord(end, inverse(m_projectionView));
+}
+void Camera::screenToWorldPoint(const mathgp::uvector2& screenPos, mathgp::vector3& outPoint, mathgp::vector3& outRayStart, mathgp::vector3& outRayEnd) const
+{
+    screenToWorldRay(screenPos, outRayStart, outRayEnd);
+    vector3 lookAt = normalized(outRayEnd - outRayStart);
+    vector3 posOnPlane = v(m_position.x(), m_position.y(), 0.0f);
+    vector3 toPlane = normalized(posOnPlane - m_position);
+    float distToPlane = std::abs(m_position.z()) / dot(lookAt, toPlane);
+
+    outPoint = lookAt*distToPlane + m_position;
+}
+void Camera::screenToWorldPoint(const mathgp::uvector2& screenPos, mathgp::vector3& out) const
+{
+    vector3 rayStart;
+    vector3 rayEnd;
+    screenToWorldRay(screenPos, rayStart, rayEnd);
+    vector3 lookAt = normalized(rayEnd - rayStart);
+    vector3 posOnPlane = v(m_position.x(), m_position.y(), 0.0f);
+    vector3 toPlane = normalized(posOnPlane - m_position);
+    float distToPlane = std::abs(m_position.z()) / dot(lookAt, toPlane);
+
+    out = lookAt*distToPlane + m_position;
+}

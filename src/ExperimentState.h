@@ -37,6 +37,8 @@ public:
     void handleEvent(const SDL_Event& event) override;
     void update() override;
     void draw() override;
+
+    Camera* camera() override;
 private:
     GUILayer* m_guiLayer;
 
@@ -57,5 +59,8 @@ private:
 
     Effect* m_effect;
     Texture* m_texture;
+
+    mathgp::vector3 m_debugStart;
+    mathgp::vector3 m_debugEnd;
 
 };

@@ -10,6 +10,8 @@
 //
 #pragma once
 
+class Camera;
+
 class GameState
 {
 public:
@@ -21,6 +23,8 @@ public:
     virtual void handleEvent(const SDL_Event& event);
     virtual void update();
     virtual void draw();
+
+    virtual Camera* camera() = 0;
 
     void pushState(std::shared_ptr<GameState> state);
     void popState();
