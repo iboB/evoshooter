@@ -30,7 +30,7 @@ public:
 
     void update();
 
-    void followObject(Object* obj);
+    void followObject(const Object* obj);
 private:
     void moveTo(const mathgp::point3& point);
 
@@ -43,5 +43,5 @@ private:
     mathgp::matrix m_view;
     mathgp::matrix m_projectionView;
 
-    Object* m_object;
+    const Object* m_object;
 };

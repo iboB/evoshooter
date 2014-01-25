@@ -102,7 +102,7 @@ void Camera::update()
     moveTo(m_object->position());
 }
 
-void Camera::followObject(Object* obj)
+void Camera::followObject(const Object* obj)
 {
     m_object = obj;
 }
