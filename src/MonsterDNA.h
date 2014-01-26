@@ -19,8 +19,8 @@ enum GeneType
     G_Empathy, // 0 doesn't care if not hit - 1 aggro on every attack in sight/hearing
     G_SenseOfOwnRange, // 0 random attacks - 1 attack only in range
     G_AttackDesire, // 1 only when player is in range - 0 total randomness (ie 1 - chance to perform random attack)
-    G_Aim, // no clear cost???? extrapolate a part of a unit in front of a player
-    G_Precision, // 1 exactly as needed, 0 - wide range (meaningless for mellee)
+    //G_Aim, // no clear cost???? extrapolate a part of a unit in front of a player
+    //G_Precision, // 1 exactly as needed, 0 - wide range (meaningless for mellee)
     G_HardHit, // bonus melee dmg for longer cooldown and more stamina cost
     G_HP, // percent of max - guideline
     G_Speed, // percent of max - guideline

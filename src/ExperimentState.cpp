@@ -22,6 +22,7 @@
 #include "GLSentries.h"
 #include "Level.h"
 #include "GUILayer.h"
+#include "SpawnManager.h"
 #include "Application.h"
 #include "Util.h"
 #include "Overlay.h"
@@ -39,7 +40,7 @@
 
 using namespace mathgp;
 
-SpritePtr g_Sprite;
+//SpritePtr g_Sprite;
 MonsterCharacter* g_Monster;
 
 void GameHud::health(int health, int maxHealth)
@@ -106,19 +107,6 @@ void ExperimentState::initialize()
     attacks.push_back(a1);
     attacks.push_back(a2);
     attacks.push_back(a3);
-
-    srand(105);
-    for (int i = 0; i < 10; ++i)
-    {
-        float2 pos = v(Util::Rnd01(), Util::Rnd01()) * g_worldSize;
-
-        unsigned int id = World::instance().spawnMonster(pos.x(), pos.y(), 0.5f, "eye", attacks);
-        MonsterCharacter* monster = (MonsterCharacter*)World::instance().object(id).get();
-        monster->SetMoveDirection(mathgp::vc(0.0f, 0.0f, 0.f));
-        MonsterDNA dna;
-        dna.randomize();
-        monster->useDNA(dna);
-    }
 
     AttacksData attacks2;
     AttackData a11 = { "sprites/attacks/attack_anim_01.png", "sprites/attacks/attack_anim_idle_01.png", Vec::zero, 0.005f, false };
@@ -206,16 +194,18 @@ void ExperimentState::handleEvent(const SDL_Event& event)
             SoundManager::instance().playSound((ESounds)0);
             break;
         case SDLK_1:
-            SoundManager::instance().playSound((ESounds)1);
+            //SoundManager::instance().playSound((ESounds)1);
+            World::instance().mainCharacter()->previousWeapon();
             break;
         case SDLK_2:
-            SoundManager::instance().playSound((ESounds)2);
+            //SoundManager::instance().playSound((ESounds)2);
+            World::instance().mainCharacter()->nextWeapon();
             break;
         case SDLK_3:
-            SoundManager::instance().playSound((ESounds)3);
+            //SoundManager::instance().playSound((ESounds)3);
             break;
         case SDLK_SPACE:
-            World::instance().mainCharacter()->Die();
+            //World::instance().mainCharacter()->Die();
             break;
         case SDLK_l:
             World::instance().mainCharacter()->GetDamage();
@@ -369,6 +359,7 @@ void ExperimentState::update(int dt)
         World::instance().mainCharacter()->GoIdle();
     }
 
+    SpawnManager::instance().update(dt);
     World::instance().update(dt);
     //g_Sprite->update(vc(2.f, 4.f, 0.0f), m_camDirection);
 

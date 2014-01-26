@@ -29,6 +29,9 @@ class Character : public Object
 {
 public:
     Character(const mathgp::vector3& position, const std::string& name, const std::vector<AttackData>& attacks);
+    Character(const mathgp::vector3& position);
+
+    void init(const std::string& name, const std::vector<AttackData>& attacks);
 
     virtual void Move(const mathgp::vector3& position);
     virtual void Die();

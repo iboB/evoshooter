@@ -17,6 +17,7 @@ enum EWeaponType
 {
     EKnife = 0,
     EPistol,
+    EShotgun,
     EWeaponCount
 };
 
@@ -50,5 +51,6 @@ private:
     
     unsigned damage();
     void meleeAttack(const mathgp::vector3& worldPoint);
-    void rangedAttack(const mathgp::vector3& targetPos);
+    void rangedGunAttack(const mathgp::vector3& targetPos);
+    void rangedShotgunAttack(const mathgp::vector3& targetPos);
 };

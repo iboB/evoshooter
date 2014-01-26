@@ -18,7 +18,7 @@
 class Object;
 class MainCharacter;
 
-const float g_worldSize = 39.0f;
+const float g_worldSize = 39;
 const float g_gridSize = 5.0f;
 const float g_worldBorderOffset = 0.2f; //distance of world border you are not allowed to go;
 
@@ -32,7 +32,7 @@ public:
 
 	std::shared_ptr<Object> object(unsigned int id);
     unsigned int spawnObject(float x, float y, float r);
-    unsigned int spawnMonster(float x, float y, float r, const std::string& name, const AttacksData& attacks);
+    unsigned int spawnMonster(const MonsterDNA& dna);
     unsigned int spawnPlayer(float x, float y, float r, const AttacksData& attacks);
     unsigned int spawnBullet(float x, float y, float r, SpritePtr projectile, SpritePtr impact, const mathgp::vector3& direction, float speed, float maxDistance);
     unsigned int spawnStaticObject(float x, float y, float r, SpritePtr sprite);

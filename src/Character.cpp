@@ -23,6 +23,17 @@
 Character::Character(const mathgp::vector3& position, const std::string& name, const std::vector<AttackData>& attacks)
 : Object(position, 1.0f)
 {
+    init(name, attacks);
+}
+
+Character::Character(const mathgp::vector3& position)
+: Object(position, 1.0f)
+{
+
+}
+
+void Character::init(const std::string& name, const std::vector<AttackData>& attacks)
+{
     m_renderShadow = true;
  
     if (name == "player")
@@ -111,7 +122,7 @@ void Character::OnHit(EAttackDamageType dmgType, int dmg)
 int Character::rawDamage(int dmg)
 {
     m_hp -= dmg;
-
+   // SoundManager::instance().playSound();
     if (m_hp <= 0)
     {
         //dead;

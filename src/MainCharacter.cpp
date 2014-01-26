@@ -13,6 +13,7 @@
 #include "GameplayConstants.h"
 #include "Application.h"
 #include "ExperimentState.h"
+#include "SoundManager.h"
 #include "ColliderGrid.h"
 #include "Application.h"
 #include "GameState.h"
@@ -28,6 +29,8 @@ MainCharacter::MainCharacter(const mathgp::vector3& position, const std::vector<
     m_weapons.push_back(m_currentWeapon);
     m_currentWeapon = new PlayerWeapon(EKnife, 1000, mathgp::v((unsigned)Knife_Damage_Min, (unsigned)Knife_Damage_Max));
     m_weapons.push_back(m_currentWeapon);
+    m_currentWeapon = new PlayerWeapon(EShotgun, 1000, mathgp::v((unsigned)Shotgun_Damage_Min, (unsigned)Shotgun_Damage_Max));
+    m_weapons.push_back(m_currentWeapon);
 
     m_currentWeaponIndex = 1;
 
@@ -40,7 +43,7 @@ MainCharacter::MainCharacter(const mathgp::vector3& position, const std::vector<
 
 MainCharacter::~MainCharacter()
 {
-    for (int i = 0; i < m_weapons.size(); ++i)
+    for (unsigned i = 0; i < m_weapons.size(); ++i)
     {
         delete m_weapons[i];
     }
@@ -50,7 +53,7 @@ MainCharacter::~MainCharacter()
 void MainCharacter::nextWeapon()
 {
     ++m_currentWeaponIndex;
-    if (m_currentWeaponIndex >= m_weapons.size())
+    if (m_currentWeaponIndex >= (int)m_weapons.size())
     {
         m_currentWeaponIndex = 0;
     }
@@ -122,6 +125,7 @@ void MainCharacter::OnHit(EAttackDamageType dmgType, int dmg)
 
 void MainCharacter::useWeapon(const mathgp::vector3& worldPoint, Object* objectHit)
 {
+    SoundManager::instance().playSound(ESounds_Shoot);
     m_currentWeapon->attack(worldPoint, objectHit);
 
     m_PlayerAnimationController.Attack();
