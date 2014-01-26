@@ -77,6 +77,8 @@ void Application::run()
 
     ResourceManager::instance().releaseTexture(texture3);
 */
+    m_currentFrameTime = SDL_GetTicks() - 1;
+
     m_isRunning = true;
     while(m_isRunning)
     {

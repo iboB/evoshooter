@@ -99,6 +99,7 @@
     <ClInclude Include="..\..\..\src\ExplicitSingleton.h" />
     <ClInclude Include="..\..\..\src\Application.h" />
     <ClInclude Include="..\..\..\src\EvoShooter.pch.h" />
+    <ClInclude Include="..\..\..\src\GameplayConstants.h" />
     <ClInclude Include="..\..\..\src\GameState.h" />
     <ClInclude Include="..\..\..\src\GLExtensions.h" />
     <ClInclude Include="..\..\..\src\GLSentries.h" />
