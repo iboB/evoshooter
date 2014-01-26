@@ -13,6 +13,7 @@
 #include "Bullet.h"
 #include "Object.h"
 #include "ColliderGrid.h"
+#include "StaticObject.h"
 #include "MainCharacter.h"
 #include "MonsterCharacter.h"
 
@@ -115,6 +116,26 @@ unsigned int World::spawnBullet(float x, float y, float r, SpritePtr projectile,
     m_objects[id] = std::shared_ptr<Object>(bullet);
     ColliderGrid::instance().onObjectCreated(m_objects[id]);
     
+    ++m_firstFreeId;
+
+    if (m_firstFreeId >= INT_MAX)
+    {
+        m_firstFreeId = 0; //hopefully his dead;
+    }
+
+    return id;
+}
+
+unsigned int World::spawnStaticObject(float x, float y, float r, SpritePtr sprite)
+{
+    mathgp::vector3 pos = mathgp::v(x, y, 0.0f);
+    unsigned int id = m_firstFreeId;
+    StaticObject* object = new StaticObject(sprite, pos, r);
+    object->id() = id;
+
+    m_objects[id] = std::shared_ptr<Object>(object);
+    ColliderGrid::instance().onObjectCreated(m_objects[id]);
+
     ++m_firstFreeId;
 
     if (m_firstFreeId >= INT_MAX)

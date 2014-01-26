@@ -34,6 +34,7 @@ public:
     unsigned int spawnMonster(float x, float y, float r, const std::string& name, const AttacksData& attacks);
     unsigned int spawnPlayer(float x, float y, float r, const AttacksData& attacks);
     unsigned int spawnBullet(float x, float y, float r, SpritePtr projectile, SpritePtr impact, const mathgp::vector3& direction, float speed, float maxDistance);
+    unsigned int spawnStaticObject(float x, float y, float r, SpritePtr sprite);
     void destroyObject(unsigned int id);
     objectsContainer& objects();
     MainCharacter* mainCharacter() { return m_mainCharacter; }
