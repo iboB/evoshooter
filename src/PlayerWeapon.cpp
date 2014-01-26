@@ -95,12 +95,12 @@ void PlayerWeapon::meleeAttack(const mathgp::vector3& worldPoint)
 
 void PlayerWeapon::rangedAttack(const mathgp::vector3& worldPoint)
 {
-    SpritePtr projectile = ResourceManager::instance().createSpriteFromSingleFrameTexture("sprites/projectiles/bullet.png");
+    SpritePtr projectile = ResourceManager::instance().createSpriteFromSingleFrameTexture("sprites/projectiles/rocket.png");
     SpritePtr impact = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/projectiles/explosion.png", 1, 4, 400);
     vector3 playerPos = World::instance().mainCharacter()->position();
     vector3 directionOfAttack = normalized(worldPoint - playerPos);
 
-    unsigned int id = World::instance().spawnBullet(playerPos.x(), playerPos.y(), 0.1f, projectile, impact, directionOfAttack, 3.f, 5.f);
+    unsigned int id = World::instance().spawnBullet(playerPos.x() + 0.3f, playerPos.y() + 0.8f, 0.1f, projectile, impact, directionOfAttack, 3.f, 5.f);
     Bullet* bullet = (Bullet*)(World::instance().object(id).get());
     bullet->setDamage(damage());
     bullet->setDamageType(m_damageType);

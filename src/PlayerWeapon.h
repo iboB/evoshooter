@@ -36,6 +36,8 @@ public:
     static std::string m_weaponNames[EWeaponCount]; //what to show in the gui
     static EAttackDamageType m_weaponDamageTypes[EWeaponCount];
     static EAttackType m_weaponAttackTypes[EWeaponCount];
+
+    EWeaponType type() { return m_type; }
 private:
     EWeaponType m_type;
     unsigned int m_attackDelay;

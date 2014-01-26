@@ -18,10 +18,15 @@ class MainCharacter : public Character
 {
 public:
     MainCharacter(const mathgp::vector3& position, const std::vector<AttackData>& attacks);
+    ~MainCharacter();
+
     void OnHit(EAttackDamageType dmgType, int dmg);
 
     virtual void update(int dt);
     void useWeapon(const mathgp::vector3& worldPoint, Object* objectHit);
+
+    void nextWeapon();
+    void previousWeapon();
 
     virtual void Die();
     virtual void GetDamage();
@@ -32,7 +37,9 @@ public:
     void GoIdle();
 
 private:
-    PlayerWeapon* m_weapon;
+    PlayerWeapon* m_currentWeapon;
+    std::vector<PlayerWeapon*> m_weapons;
+    int m_currentWeaponIndex;
 
     PlayerAnimationsController m_PlayerAnimationController;
 };

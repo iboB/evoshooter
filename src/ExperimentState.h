@@ -46,6 +46,8 @@ public:
     void update(int dt) override;
     void draw() override;
 
+    void weaponDisplay(const std::string& name);
+
     Camera* camera() override;
 private:
     GUILayer* m_guiLayer;

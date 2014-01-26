@@ -267,6 +267,16 @@ void ExperimentState::handleEvent(const SDL_Event& event)
             std::vector< std::shared_ptr<Object>> test = ColliderGrid::instance().collideWithCircle(v(25.f, 25.f), 5.0f);
             break;
         }
+        case SDLK_LEFTBRACKET:
+            {
+                World::instance().mainCharacter()->previousWeapon();
+            }
+            break;
+        case SDLK_RIGHTBRACKET:
+            {
+                World::instance().mainCharacter()->nextWeapon();
+            }
+            break;
         default:
             return;
         }
@@ -316,6 +326,11 @@ void ExperimentState::handleEvent(const SDL_Event& event)
     m_camera->setDirectionAndDistance(m_camDirection, m_camDistance);    
 }
 
+void ExperimentState::weaponDisplay(const std::string& str)
+{
+    hud.weapon(str);
+}
+
 void ExperimentState::update(int dt)
 {
     /*
@@ -331,7 +346,7 @@ void ExperimentState::update(int dt)
     m_distanceDisplay->SetInnerRML(text);
     */
     hud.health(World::instance().mainCharacter()->hp(), World::instance().mainCharacter()->maxHp());
-    hud.weapon("Knife");
+    //hud.weapon("Knife");
 
     m_guiLayer->update();
 

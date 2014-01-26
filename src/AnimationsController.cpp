@@ -587,6 +587,8 @@ void PlayerAnimationsController::Attack()
     m_Animations[m_ActiveWeapon].Attack[m_ActiveMovement]->startRendering(currentFrame);
 
     m_AtackStartTime = SDL_GetTicks();
+
+    m_IsAttacking = true;
 }
 
 void PlayerAnimationsController::update(const mathgp::vector3& position, const mathgp::vector3& camDir)
@@ -601,23 +603,38 @@ void PlayerAnimationsController::update(const mathgp::vector3& position, const m
         return;
     }
 
-    if (m_IsAttacking && (SDL_GetTicks() - m_AtackStartTime) >= ANIM_TIME)
+    if (m_IsAttacking)
     {
-        m_IsAttacking = false;
+        if ((SDL_GetTicks() - m_AtackStartTime) >= ANIM_TIME)
+        {
+            m_IsAttacking = false;
 
-        int currentFrame = StopAll();
-        m_Animations[m_ActiveWeapon].Move[m_ActiveMovement]->startRendering(currentFrame);
-        m_Animations[m_ActiveWeapon].Move[m_ActiveMovement]->update(position, camDir);
+            int currentFrame = StopAll();
+            m_Animations[m_ActiveWeapon].Move[m_ActiveMovement]->startRendering(currentFrame);
+            m_Animations[m_ActiveWeapon].Move[m_ActiveMovement]->update(position, camDir);
+        }
+        else
+        {
+            m_Animations[m_ActiveWeapon].Attack[m_ActiveMovement]->update(position, camDir);
+        }
+
         return;
     }
 
-    if (m_IsTakingDamage && (SDL_GetTicks() - m_DamageStartTime) >= ANIM_TIME)
+    if (m_IsTakingDamage)
     {
-        m_IsTakingDamage = false;
+        if((SDL_GetTicks() - m_DamageStartTime) >= ANIM_TIME)
+        {
+            m_IsTakingDamage = false;
 
-        int currentFrame = StopAll();
-        m_Animations[m_ActiveWeapon].Move[m_ActiveMovement]->startRendering(currentFrame);
-        m_Animations[m_ActiveWeapon].Move[m_ActiveMovement]->update(position, camDir);
+            int currentFrame = StopAll();
+            m_Animations[m_ActiveWeapon].Move[m_ActiveMovement]->startRendering(currentFrame);
+            m_Animations[m_ActiveWeapon].Move[m_ActiveMovement]->update(position, camDir);
+        }
+        else
+        {
+            m_Animations[m_ActiveWeapon].Damage[m_ActiveMovement]->update(position, camDir);
+        }
         return;
     }
 
