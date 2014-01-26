@@ -382,14 +382,13 @@ void AnimationsController::updateAttachments(const mathgp::vector3& position, co
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 PlayerAnimationsController::PlayerAnimationsController()
-: m_ActiveWeapon(PWT_Sword)
+: m_ActiveWeapon(PWT_Shotgun)
 , m_ActiveMovement(PM_Idle)
 , m_IsDead(false)
 {
     //////////////////// sword
     m_Animations[PWT_Sword].Move[PM_Idle] = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/player/MC_idle_sword_anim.png", 1, 8, ANIM_TIME);
     m_Animations[PWT_Sword].Move[PM_Idle]->setScale(0.008f);
-    m_Animations[PWT_Sword].Move[PM_Idle]->startRendering(0);
     m_Animations[PWT_Sword].Move[PM_LEft] = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/player/MC_run_sword_anim.png", 1, 8, ANIM_TIME);
     m_Animations[PWT_Sword].Move[PM_LEft]->setScale(0.008f);
     m_Animations[PWT_Sword].Move[PM_LEft]->setFlipX(true);
@@ -440,6 +439,7 @@ PlayerAnimationsController::PlayerAnimationsController()
     //////////////////// shotgun
     m_Animations[PWT_Shotgun].Move[PM_Idle] = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/player/MC_idle_shotgun_anim.png", 1, 8, ANIM_TIME);
     m_Animations[PWT_Shotgun].Move[PM_Idle]->setScale(0.008f);
+    m_Animations[PWT_Shotgun].Move[PM_Idle]->startRendering(0);
     m_Animations[PWT_Shotgun].Move[PM_LEft] = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/player/MC_runshotgun_anim.png", 1, 8, ANIM_TIME);
     m_Animations[PWT_Shotgun].Move[PM_LEft]->setScale(0.008f);
     m_Animations[PWT_Shotgun].Move[PM_LEft]->setFlipX(true);
