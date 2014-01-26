@@ -201,7 +201,7 @@ void MonsterCharacter::useDNA(const MonsterDNA& dna)
         break;
     }
 
-   // m_attack->setOwner(this);
+    m_attack->setOwner(this);
 
     float maxDefense = 0;
     int defense = G_UseSpitter;

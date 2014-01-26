@@ -58,7 +58,7 @@ void GUILayer::update()
 
 void GUILayer::draw()
 {
-    SENTRY(GLDisableSentry, GL_DEPTH_TEST);    
+    SENTRY(GLDisableSentry, GL_DEPTH_TEST);
     SENTRY(GLEnableSentry, GL_BLEND);
 
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

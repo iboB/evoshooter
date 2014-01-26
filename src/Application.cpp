@@ -113,7 +113,7 @@ void Application::initialize()
     }
 
     MainWindow::CreationParameters mwc;
-    mwc.clientAreaSize = v(1024u, 600u);
+    mwc.clientAreaSize = v(unsigned(Screen::size.x()), unsigned(Screen::size.y()));
     mwc.isFullScreen = false;
     mwc.title = APP_NAME;
     m_mainWindow = new MainWindow(mwc);

@@ -20,3 +20,8 @@ namespace Mat
 {
     extern const mathgp::matrix identity;
 }
+
+namespace Screen
+{
+    extern const mathgp::vector2 size; // v(1024u, 600u);
+}

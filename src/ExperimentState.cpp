@@ -33,6 +33,8 @@
 #include "ShadowManager.h"
 #include <iostream>
 
+#include "Hud.h"
+
 #include <Rocket/Core/Element.h>
 
 using namespace mathgp;
@@ -40,10 +42,10 @@ using namespace mathgp;
 SpritePtr g_Sprite;
 MonsterCharacter* g_Monster;
 
-void GameHud::health(int health)
+void GameHud::health(int health, int maxHealth)
 {
     char text[50];
-    sprintf(text, "%i", health);
+    sprintf(text, "%i/%i", health, maxHealth);
     m_healthDisplay->SetInnerRML(text);
 }
 
@@ -57,6 +59,7 @@ ExperimentState::ExperimentState()
     , m_level(nullptr)
     , m_guiLayer(nullptr)
     , m_overlay(nullptr)
+    , m_hud(nullptr)
 {
 
 }
@@ -78,9 +81,6 @@ void ExperimentState::initialize()
     //m_distanceDisplay = m_guiLayer->getElementById("dist");
     hud.m_healthDisplay = m_guiLayer->getElementById("health");
     hud.m_weaponDisplay = m_guiLayer->getElementById("weapon");
-
-    hud.health(100);
-    hud.weapon("Knife");
 
     m_moveWeight = Vec::zero;
 
@@ -135,10 +135,13 @@ void ExperimentState::initialize()
     m_camera->followObject(World::instance().mainCharacter());
     ShadowManager::instance().initialize();
     ColliderGrid::instance().initialize();
+
+    m_hud = new Hud;
 }
 
 void ExperimentState::deinitialize()
 {
+    safe_delete(m_hud);
     safe_delete(m_camera);
     safe_delete(m_level);
 
@@ -322,6 +325,9 @@ void ExperimentState::update(int dt)
     sprintf(text, "%.2f", m_camDistance);
     m_distanceDisplay->SetInnerRML(text);
     */
+    hud.health(World::instance().mainCharacter()->hp(), World::instance().mainCharacter()->maxHp());
+    hud.weapon("Knife");
+
     m_guiLayer->update();
 
 
@@ -344,6 +350,8 @@ void ExperimentState::update(int dt)
 
     m_camera->update();
 	ShadowManager::instance().update();
+
+    m_hud->update();
 }
 
 void ExperimentState::draw()
@@ -358,6 +366,8 @@ void ExperimentState::draw()
     //g_Sprite->render(m_camera->projectionView());
 
     m_overlay->draw();
+
+    m_hud->draw();
 
     m_guiLayer->draw();
     

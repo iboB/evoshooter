@@ -23,3 +23,8 @@ namespace Mat
 {
     const mathgp::matrix identity = matrix::identity();
 }
+
+namespace Screen
+{
+    const mathgp::vector2 size = vc(1024, 600);
+}

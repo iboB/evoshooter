@@ -39,6 +39,9 @@ public:
     virtual void update(int dt);
     void heal(int hp);
     int rawDamage(int dmg);
+
+    int maxHp() const { return m_maxHp; }
+    int hp() const { return m_hp; }
 protected:
     AnimationsController m_AnimationsController;
     int m_maxHp;

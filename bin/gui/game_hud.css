@@ -7,10 +7,9 @@ body
     color: white;
 }
 
-body.menu
+body
 {
-    min-width: 100px;
-    min-height: 100px;
+    text-align: bottom;
 }
 
 div#info
@@ -20,6 +19,10 @@ div#info
     background-color: transparent;
 	float: left;
 	display:inline-block;
+	
+	position: absolute;
+	bottom: 20;
+	right: 0;
 }
 
 div#info_right
