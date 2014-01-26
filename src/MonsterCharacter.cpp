@@ -34,7 +34,6 @@ MonsterCharacter::MonsterCharacter(const mathgp::vector3& position, const std::s
 , m_defenseStrength(0.0f)
 {
     m_MoveDirection = mathgp::vc(0.f, 0.0f, 0.f);
-
 }
 
 MonsterCharacter::~MonsterCharacter()
@@ -70,6 +69,7 @@ void MonsterCharacter::update(int dt)
 {
     m_timeAtLastPosition += dt;
 
+    //SetTargetPoint(World::instance().mainCharacter()->position());
     think(dt);
 
     mathgp::vector3 offset = m_MoveDirection * (m_speed * float(dt) * 0.001f);
@@ -161,15 +161,39 @@ void MonsterCharacter::useDNA(const MonsterDNA& dna)
     {
     case G_UseSpitter:
         m_attack = new RangedAttack;
+        m_attack->m_range = Base_Spitter_Range * m_dna(G_SpitterPower) + (Base_Spitter_Range * m_dna(G_Size)) / 2;
+        m_attack->m_aoeRange = Spitter_AOE_Radius;
+        m_attack->m_damage = int(Base_Spitter_Damage * m_dna(G_SpitterPower));
+        m_attack->m_cooldownTime = int(Base_Spitter_Cooldown - (Base_Spitter_Cooldown * m_dna(G_Size)) / 2);
+        m_attack->m_projectileSpeed = Base_Spitter_Projectile_Speed + (Base_Spitter_Range * m_dna(G_Size)) / 2;
+        m_attack->m_staminaCostPerHit = Base_Spitter_Stamina_Cost + (Base_Spitter_Stamina_Cost * m_dna(G_SpitterPower)) / 2;
         break;
     case G_UseGrapple:
         m_attack = new MeleeAttack;
+        m_attack->m_range = Base_Grapple_Range * m_dna(G_GrapplePower) + (Base_Grapple_Range * m_dna(G_Size)) / 2;
+        m_attack->m_aoeRange = Grapple_AOE_Radius;
+        m_attack->m_damage = int(Base_Grapple_Damage * m_dna(G_GrapplePower));
+        m_attack->m_cooldownTime = int(Base_Grapple_Cooldown - (Base_Grapple_Cooldown * m_dna(G_Size)) / 2);
+        m_attack->m_projectileSpeed = Base_Grapple_Projectile_Speed + (Base_Grapple_Range * m_dna(G_Size)) / 2;
+        m_attack->m_staminaCostPerHit = Base_Grapple_Stamina_Cost + (Base_Grapple_Stamina_Cost * m_dna(G_GrapplePower)) / 2;
         break;
     case G_UseClaws:
         m_attack = new MeleeAttack;
+        m_attack->m_range = Base_Claws_Range * m_dna(G_ClawsPower) + (Base_Claws_Range * m_dna(G_Size)) / 2;
+        m_attack->m_aoeRange = Claws_AOE_Radius;
+        m_attack->m_damage = int(Base_Claws_Damage * m_dna(G_ClawsPower));
+        m_attack->m_cooldownTime = int(Base_Claws_Cooldown - (Base_Claws_Cooldown * m_dna(G_Size)) / 2);
+        m_attack->m_projectileSpeed = Base_Claws_Projectile_Speed + (Base_Claws_Range * m_dna(G_Size)) / 2;
+        m_attack->m_staminaCostPerHit = Base_Claws_Stamina_Cost + (Base_Claws_Stamina_Cost * m_dna(G_ClawsPower)) / 2;
         break;
     case G_UseThorns:
         m_attack = new RangedAttack;
+        m_attack->m_range = Base_Thorns_Range * m_dna(G_ThornsPower) + (Base_Thorns_Range * m_dna(G_Size)) / 2;
+        m_attack->m_aoeRange = Thorns_AOE_Radius;
+        m_attack->m_damage = int(Base_Thorns_Damage * m_dna(G_ThornsPower));
+        m_attack->m_cooldownTime = int(Base_Thorns_Cooldown - (Base_Thorns_Cooldown * m_dna(G_Size)) / 2);
+        m_attack->m_projectileSpeed = Base_Thorns_Projectile_Speed + (Base_Thorns_Range * m_dna(G_Size)) / 2;
+        m_attack->m_staminaCostPerHit = Base_Thorns_Stamina_Cost + (Base_Thorns_Stamina_Cost * m_dna(G_ThornsPower)) / 2;
         break;
     default:
         // no weapon!

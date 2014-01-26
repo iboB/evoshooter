@@ -14,6 +14,7 @@
 #include "GameplayConstants.h"
 #include "World.h"
 #include "MainCharacter.h"
+#include "RegisteredMonsterDamage.h"
 
 class MonsterCharacter;
 class MonsterDNA;
@@ -34,12 +35,45 @@ public:
 
     virtual void attack(const mathgp::point3& lastKnownPosition, const mathgp::point3& point)
     {
+        int now = SDL_GetTicks();
+        if (now - m_lastAttackTime < m_cooldownTime)
+        {
+            // cant attack
+            return;
+        }
 
+        using namespace mathgp;
+        
+        point3 at = aimAt(lastKnownPosition, point);
+
+        float dist = distance(at, m_owner->position());
+
+        if (dist > range())
+        {
+            vector3 atDirection = at - m_owner->position();
+            at = m_owner->position() + range() * normalized(atDirection);
+        }
+
+        // btodo: distort at based og G_PRECISION
+
+        RegisteredMonsterDamage dealDmg;
+
+        dealDmg.damage = m_damage;
+        dealDmg.damageType = m_damageType;
+        dealDmg.ownerId = m_owner->id();
+        dealDmg.position = at;
+        dealDmg.raidus = m_aoeRange;
+        
+        dealDmg.remainingTime = int(1000 * (dist / m_projectileSpeed)); // ms to s conversion
+
+        World::instance().registerMonsterDamage(dealDmg);
+
+        m_lastAttackTime = now;
     }
 
     virtual mathgp::point3 aimAt(const mathgp::point3& prevPoint, const mathgp::point3& curPoint) = 0;    
 
-protected:
+//protected:
     MonsterCharacter* m_owner;
 
     float m_staminaCostPerHit;
@@ -48,6 +82,8 @@ protected:
     float m_range;
     float m_aoeRange;
     float m_projectileSpeed;
+    int m_damage;
+    int m_damageType;
 };
 
 class RangedAttack : public MonsterAttack
@@ -55,6 +91,7 @@ class RangedAttack : public MonsterAttack
 public:
     mathgp::point3 aimAt(const mathgp::point3& prevPoint, const mathgp::point3& curPoint) override
     {
+        // btodo : G_AttackDesire
         return curPoint;
     }
 };
