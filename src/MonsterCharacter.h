@@ -16,7 +16,7 @@
 class MonsterCharacter : public Character
 {
 public:
-    MonsterCharacter(const mathgp::vector3& position, const std::string& name);
+    MonsterCharacter(const mathgp::vector3& position, const std::string& name, const std::vector<AttackData>& attacks);
 
     void SetMoveDirection(const mathgp::vector3& dir);
     void SetTargetPoint(const mathgp::point3& point);

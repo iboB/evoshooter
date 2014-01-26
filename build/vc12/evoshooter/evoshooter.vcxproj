@@ -89,6 +89,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\..\src\AboutState.h" />
     <ClInclude Include="..\..\..\src\AnimationsController.h" />
+    <ClInclude Include="..\..\..\src\Bullet.h" />
     <ClInclude Include="..\..\..\src\Camera.h" />
     <ClInclude Include="..\..\..\src\Character.h" />
     <ClInclude Include="..\..\..\src\Constants.h" />
@@ -123,6 +124,7 @@
     <ClInclude Include="..\..\..\src\Platform.h" />
     <ClInclude Include="..\..\..\src\RenderManager.h" />
     <ClInclude Include="..\..\..\src\ResourceManager.h" />
+    <ClInclude Include="..\..\..\src\ShadowManager.h" />
     <ClInclude Include="..\..\..\src\SoundManager.h" />
     <ClInclude Include="..\..\..\src\Sprite.h" />
     <ClInclude Include="..\..\..\src\Texture.h" />
@@ -133,6 +135,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\src\AboutState.cpp" />
     <ClCompile Include="..\..\..\src\AnimationsController.cpp" />
+    <ClCompile Include="..\..\..\src\Bullet.cpp" />
     <ClCompile Include="..\..\..\src\Camera.cpp" />
     <ClCompile Include="..\..\..\src\Character.cpp" />
     <ClCompile Include="..\..\..\src\Constants.cpp" />
@@ -161,6 +164,7 @@
     <ClCompile Include="..\..\..\src\Monster.cpp" />
     <ClCompile Include="..\..\..\src\MonsterDNA.cpp" />
     <ClCompile Include="..\..\..\src\ResourceManager.cpp" />
+    <ClCompile Include="..\..\..\src\ShadowManager.cpp" />
     <ClCompile Include="..\..\..\src\SoundManager.cpp" />
     <ClCompile Include="..\..\..\src\Sprite.cpp" />
     <ClCompile Include="..\..\..\src\Object.cpp" />

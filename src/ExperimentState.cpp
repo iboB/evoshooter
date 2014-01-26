@@ -28,6 +28,7 @@
 #include "ColliderGrid.h"
 #include "SoundManager.h"
 #include "AboutState.h"
+#include "ShadowManager.h"
 #include <iostream>
 
 #include <Rocket/Core/Element.h>
@@ -82,31 +83,50 @@ void ExperimentState::initialize()
     m_moveWeight = Vec::zero;
 
     g_Sprite = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/sprite.png", 2, 4, 8000);
+    //g_Sprite = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/sprite.png", 2, 4, 8000);
 
     //g_Sprite.reset(new Sprite());
 
     //g_Sprite->init("sprites/sprite.png", 256, 128, 256, 128, 1, 2, 4000, true);
 
-    g_Sprite->setScale(0.02f);
-    g_Sprite->setFlipX(true);
-    g_Sprite->startRendering();
+    //g_Sprite->setScale(0.02f);
+    //g_Sprite->setFlipX(true);
+    //g_Sprite->startRendering();
 
     //SoundManager::instance().playTrack(0, true);
 
     m_overlay = new Overlay;
 
-    unsigned int id = World::instance().spawnMonster(1.f, 1.f, 0.5f, "player");
+    AttacksData attacks;
+    AttackData a1 = { "sprites/attacks/attack_anim_01.png", "sprites/attacks/attack_anim_idle_01.png", Vec::zero, 0.005f, false };
+    AttackData a2 = { "sprites/attacks/attack_anim_02.png", "sprites/attacks/attack_anim_idle_02.png", Vec::zero, 0.005f, false };
+    AttackData a3 = { "sprites/attacks/attack_anim_03.png", "sprites/attacks/attack_anim_idle_03.png", mathgp::vc(0.f, 0.25f, 0.f), 0.005f, false };
+    attacks.push_back(a1);
+    attacks.push_back(a2);
+    attacks.push_back(a3);
 
     srand(105);
+    unsigned int id = World::instance().spawnMonster(1.f, 1.f, 0.5f, "player", attacks);
     MonsterCharacter* monster = (MonsterCharacter*)World::instance().object(id).get();
     monster->SetMoveDirection(mathgp::vc(0.0f, 0.0f, 0.f));
     MonsterDNA dna;
     dna.randomize();
     monster->useDNA(dna);
 
-    World::instance().spawnPlayer(2.f, 1.5f, 0.5f);
+    AttacksData attacks2;
+    AttackData a11 = { "sprites/attacks/attack_anim_01.png", "sprites/attacks/attack_anim_idle_01.png", Vec::zero, 0.005f, false };
+    AttackData a21 = { "sprites/attacks/attack_anim_02.png", "sprites/attacks/attack_anim_idle_02.png", Vec::zero, 0.005f, false };
+    AttackData a31 = { "sprites/attacks/attack_anim_00.png", "sprites/attacks/attack_anim_idle_00.png", Vec::zero, 0.008f, true };
+    attacks2.push_back(a11);
+    attacks2.push_back(a21);
+    attacks2.push_back(a31);
 
-    m_camera->followObject(World::instance().object(id).get());
+    //id = World::instance().spawnMonster(2.f, 3.f, 0.5f, "eye", attacks);
+    
+    World::instance().spawnPlayer(2.f, 1.5f, 0.5f, attacks2);
+
+    m_camera->followObject(World::instance().mainCharacter());
+    ShadowManager::instance().initialize();
 }
 
 void ExperimentState::deinitialize()
@@ -279,18 +299,21 @@ void ExperimentState::update(int dt)
     }
 
     World::instance().update(dt);
-    g_Sprite->update(vc(2.f, 4.f, 0.0f), m_camDirection);
+    //g_Sprite->update(vc(2.f, 4.f, 0.0f), m_camDirection);
 
     m_camera->update();
+	ShadowManager::instance().update();
 }
 
 void ExperimentState::draw()
 {
     m_level->draw(m_camera->projectionView());
 
+    ShadowManager::instance().draw(m_camera->projectionView());
+
     RenderManager::instance().Render(m_camera->projectionView());
 
-    g_Sprite->render(m_camera->projectionView());
+    //g_Sprite->render(m_camera->projectionView());
     //g_Sprite->render(m_camera->projectionView());
 
     m_overlay->draw();

@@ -39,6 +39,7 @@ Sprite::Sprite()
 , m_CellWidth(0)
 , m_CellHeight(0)
 , m_FlipX(false)
+, m_SortingYOffset(0.f)
 {}
 
 Sprite::~Sprite()
@@ -129,6 +130,16 @@ void Sprite::setScale(float scale)
     m_Scale = scale;
     m_ScaledFrameWidth = float(m_CellWidth) * scale;
     m_ScaledFrameHeight = float(m_CellHeight) * scale;
+}
+
+void Sprite::setSortingYOffset(float offset)
+{
+    m_SortingYOffset = offset;
+}
+
+float Sprite::getSortingY() const
+{
+    return m_Position.y() + m_SortingYOffset;
 }
 
 void Sprite::update(const mathgp::vector3& position, const mathgp::vector3& camDir)

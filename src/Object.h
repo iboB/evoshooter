@@ -27,12 +27,20 @@ public:
     bool collidesWith(std::shared_ptr<Object> otherGuy);
     float bb_w();
     float bb_h();
+    float size() const { return m_size; }
+
+    bool shouldRenderShadow() { return m_renderShadow;  }
 
     virtual void update(int dt){}
+
+    unsigned int& id() { return m_id; }
 
 protected:
 
 	mathgp::vector3 m_pos;
 	float m_boundingCircle;
     mathgp::vector2 m_bb; //w,h of the bounding quad
+    bool m_renderShadow;
+    float m_size;
+    unsigned int m_id;
 };

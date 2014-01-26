@@ -64,32 +64,33 @@ void AnimationsController::SetDamage(const std::string& fileDamage, float scale)
     m_Damage[MA_Right]->setFlipX(true);
 }
 
-void AnimationsController::AddAttack(const std::string& fileAttack, const std::string& fileAttackIdle, const mathgp::vector3& offset, float scale)
+void AnimationsController::AddAttack(const std::string& fileAttack, const std::string& fileAttackIdle, const mathgp::vector3& offset, float scale, bool wholeBodyAttack)
 {
-    AnimWithOffsetAndTwoStates anim;
-    
+    AttackAnimation anim;
+    anim.m_IsWholeBodyAttack = wholeBodyAttack;
+
     anim.Animation[0][MA_Left] = ResourceManager::instance().createSpriteFromSingleAnimationTexture(fileAttackIdle, 1, 8, ANIM_TIME);
     anim.Animation[0][MA_Left]->setScale(scale);
+    anim.Animation[0][MA_Left]->setSortingYOffset(-offset.y() - 0.001f);
 
     anim.Animation[0][MA_Right] = ResourceManager::instance().createSpriteFromSingleAnimationTexture(fileAttackIdle, 1, 8, ANIM_TIME);
     anim.Animation[0][MA_Right]->setScale(scale);
     anim.Animation[0][MA_Right]->setFlipX(true);
+    anim.Animation[0][MA_Right]->setSortingYOffset(-offset.y() - 0.001f);
 
     anim.Animation[1][MA_Left] = ResourceManager::instance().createSpriteFromSingleAnimationTexture(fileAttack, 1, 8, ANIM_TIME);
     anim.Animation[1][MA_Left]->setScale(scale);
+    anim.Animation[1][MA_Left]->setSortingYOffset(-offset.y() - 0.001f);
 
     anim.Animation[1][MA_Right] = ResourceManager::instance().createSpriteFromSingleAnimationTexture(fileAttack, 1, 8, ANIM_TIME);
     anim.Animation[1][MA_Right]->setScale(scale);
     anim.Animation[1][MA_Right]->setFlipX(true);
+    anim.Animation[1][MA_Right]->setSortingYOffset(-offset.y() - 0.001f);
 
     anim.Offsets[MA_Left] = offset;
-    anim.Offsets[MA_Left].z() += 0.001f;
-
-
     anim.Offsets[MA_Right] = offset;
     
     anim.Offsets[MA_Right].x() = m_MovementAnimations[MA_Right]->scaledFrameWidth() - anim.Animation[0][MA_Right]->scaledFrameWidth() - offset.x();
-    anim.Offsets[MA_Right].z() += 0.001f;
 
     m_Attacks.push_back(anim);
 }
@@ -99,8 +100,10 @@ void AnimationsController::AddAttachment(const std::string& file, const mathgp::
     SpritePtr spriteLeft = ResourceManager::instance().createSpriteFromSingleAnimationTexture(file, 1, 8, ANIM_TIME);
     SpritePtr spriteRight = ResourceManager::instance().createSpriteFromSingleAnimationTexture(file, 1, 8, ANIM_TIME);
     spriteLeft->setScale(scale);
+    spriteLeft->setSortingYOffset(-offset.y() - 0.001f);
     spriteRight->setScale(scale);
     spriteRight->setFlipX(true);
+    spriteRight->setSortingYOffset(-offset.y() - 0.001f);
 
     mathgp::vector3 flipedOffset = offset;
     flipedOffset.x() = m_MovementAnimations[MA_Right]->scaledFrameWidth() - spriteRight->scaledFrameWidth() - offset.x();
@@ -152,7 +155,10 @@ void AnimationsController::SetMove(MovementAnim anim)
 
     if (m_ActiveMovement != MA_None)
     {
-        m_MovementAnimations[m_ActiveMovement]->startRendering(activeFrame);
+        if (!m_IsAttacking || !m_Attacks[m_ActiveAttack].m_IsWholeBodyAttack)
+        {
+            m_MovementAnimations[m_ActiveMovement]->startRendering(activeFrame);
+        }
     }
 }
 
@@ -185,6 +191,11 @@ void AnimationsController::GetDamage()
         return;
     }
 
+    if (m_IsAttacking && m_Attacks[m_ActiveAttack].m_IsWholeBodyAttack)
+    {
+        return;
+    }
+
     int activeFrame = 0;
     if (m_ActiveMovement != MA_None)
     {
@@ -211,9 +222,14 @@ void AnimationsController::Attack(Uint32 attackIndex)
         return;
     }
 
+    if (m_IsTakingDamage && m_Attacks[attackIndex].m_IsWholeBodyAttack)
+    {
+        return;
+    }
+
     if (m_ActiveAttack >= 0 && m_ActiveAttack != attackIndex)
     {
-        AnimWithOffsetAndTwoStates& oldAttack = m_Attacks[m_ActiveAttack];
+        AttackAnimation& oldAttack = m_Attacks[m_ActiveAttack];
         oldAttack.Animation[0][MA_Left]->stopRendering();
         oldAttack.Animation[0][MA_Right]->stopRendering();
 
@@ -221,7 +237,7 @@ void AnimationsController::Attack(Uint32 attackIndex)
         oldAttack.Animation[1][MA_Right]->stopRendering();
     }
 
-    AnimWithOffsetAndTwoStates& newAttack = m_Attacks[attackIndex];
+    AttackAnimation& newAttack = m_Attacks[attackIndex];
 
     if (m_ActiveAttack != attackIndex)
     {
@@ -234,6 +250,12 @@ void AnimationsController::Attack(Uint32 attackIndex)
     m_IsAttacking = true;
     m_ActiveAttack = attackIndex;
     m_AtackStartTime = SDL_GetTicks();
+
+    if (newAttack.m_IsWholeBodyAttack && !m_IsDead)
+    {
+        m_MovementAnimations[m_ActiveMovement]->stopRendering();
+        m_Damage[m_ActiveMovement]->stopRendering();
+    }
 }
 
 void AnimationsController::update(const mathgp::vector3& position, const mathgp::vector3& camDir)
@@ -281,7 +303,7 @@ void AnimationsController::updateAttack(const mathgp::vector3& position, const m
         return;
     }
 
-    AnimWithOffsetAndTwoStates& anim = m_Attacks[m_ActiveAttack];
+    AttackAnimation& anim = m_Attacks[m_ActiveAttack];
 
     if (m_IsAttacking && (SDL_GetTicks() - m_AtackStartTime) >= ANIM_TIME)
     {
@@ -289,7 +311,16 @@ void AnimationsController::updateAttack(const mathgp::vector3& position, const m
         anim.Animation[1][MA_Left]->stopRendering();
         anim.Animation[1][MA_Right]->stopRendering();
 
-        anim.Animation[0][m_ActiveMovement]->startRendering(0);
+        if (anim.m_IsWholeBodyAttack)
+        {
+            MovementAnim m = m_ActiveMovement;
+            m_ActiveMovement = MovementAnim(!m_ActiveMovement);
+            SetMove(m);
+        }
+        else
+        {
+            anim.Animation[0][m_ActiveMovement]->startRendering(0);
+        }
     }
 
     if (m_IsAttacking)
@@ -316,8 +347,11 @@ void AnimationsController::updateAttack(const mathgp::vector3& position, const m
         {
             int activeFrame = anim.Animation[0][!m_ActiveMovement]->currentFrame();
             anim.Animation[0][!m_ActiveMovement]->stopRendering();
-            anim.Animation[0][m_ActiveMovement]->startRendering(activeFrame);
-            anim.Animation[0][m_ActiveMovement]->update(position + anim.Offsets[m_ActiveMovement], camDir);
+            if (!anim.m_IsWholeBodyAttack)
+            {
+                anim.Animation[0][m_ActiveMovement]->startRendering(activeFrame);
+                anim.Animation[0][m_ActiveMovement]->update(position + anim.Offsets[m_ActiveMovement], camDir);
+            }
         }
     }
 }

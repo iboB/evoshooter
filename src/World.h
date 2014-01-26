@@ -12,6 +12,8 @@
 
 #include "ExplicitSingleton.h"
 
+#include "MonsterCharacter.h"
+
 class Object;
 class MainCharacter;
 
@@ -28,16 +30,22 @@ public:
 
 	std::shared_ptr<Object> object(unsigned int id);
     unsigned int spawnObject(float x, float y, float r);
-    unsigned int spawnMonster(float x, float y, float r, const std::string& name);
-    unsigned int spawnPlayer(float x, float y, float r);
+    unsigned int spawnMonster(float x, float y, float r, const std::string& name, const AttacksData& attacks);
+    unsigned int spawnPlayer(float x, float y, float r, const AttacksData& attacks);
     void destroyObject(unsigned int id);
     objectsContainer& objects();
     MainCharacter* mainCharacter() { return m_mainCharacter; }
 
+    void queueObjectForDestruction(unsigned int id);
+
     void update(int dt);
 
 private:
+    void desetroyPendingObjects();
+
     objectsContainer m_objects;
     MainCharacter* m_mainCharacter;
 	unsigned int m_firstFreeId;
+
+    std::vector<unsigned int> m_ObjectsPendingDestruction;
 };
