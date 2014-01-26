@@ -10,8 +10,10 @@
 //
 #include "EvoShooter.pch.h"
 #include "World.h"
+#include "Bullet.h"
 #include "Object.h"
 #include "ColliderGrid.h"
+#include "StaticObject.h"
 #include "MainCharacter.h"
 #include "MonsterCharacter.h"
 
@@ -42,6 +44,7 @@ unsigned int World::spawnObject(float x, float y, float r)
     unsigned int id = m_firstFreeId;
     std::shared_ptr<Object> object(new Object(pos, r));
     object->id() = id;
+    object->type(EBase_Object);
     m_objects[id] = object;
     ColliderGrid::instance().onObjectCreated(m_objects[id]);
 
@@ -62,6 +65,7 @@ unsigned int World::spawnMonster(float x, float y, float r, const std::string& n
 
     MonsterCharacter* monster = new MonsterCharacter(pos, name, attacks);
     monster->id() = id;
+    monster->type(EMonster_Character);
     monster->Move(pos);
 
     m_objects[id] = std::shared_ptr<Object>(monster);
@@ -83,12 +87,57 @@ unsigned int World::spawnPlayer(float x, float y, float r, const AttacksData& at
     unsigned int id = m_firstFreeId;
     MainCharacter* player = new MainCharacter(pos, attacks);
     player->id() = id;
+    player->type(EPlayer_Character);
     player->Move(pos);
 
     m_objects[id] = std::shared_ptr<Object>(player);
     ColliderGrid::instance().onObjectCreated(m_objects[id]);
 
     m_mainCharacter = player;
+
+    ++m_firstFreeId;
+
+    if (m_firstFreeId >= INT_MAX)
+    {
+        m_firstFreeId = 0; //hopefully his dead;
+    }
+
+    return id;
+}
+
+unsigned int World::spawnBullet(float x, float y, float r, SpritePtr projectile, SpritePtr impact, const mathgp::vector3& direction, float speed, float maxDistance)
+{
+    mathgp::vector3 pos = mathgp::v(x, y, 0.01f);
+    unsigned int id = m_firstFreeId;
+    Bullet* bullet = new Bullet(pos, r);
+
+    bullet->init(projectile, impact, pos, direction, speed, maxDistance);
+
+    bullet->id() = id;
+    bullet->Move(pos);
+
+    m_objects[id] = std::shared_ptr<Object>(bullet);
+    ColliderGrid::instance().onObjectCreated(m_objects[id]);
+    
+    ++m_firstFreeId;
+
+    if (m_firstFreeId >= INT_MAX)
+    {
+        m_firstFreeId = 0; //hopefully his dead;
+    }
+
+    return id;
+}
+
+unsigned int World::spawnStaticObject(float x, float y, float r, SpritePtr sprite)
+{
+    mathgp::vector3 pos = mathgp::v(x, y, 0.0f);
+    unsigned int id = m_firstFreeId;
+    StaticObject* object = new StaticObject(sprite, pos, r);
+    object->id() = id;
+
+    m_objects[id] = std::shared_ptr<Object>(object);
+    ColliderGrid::instance().onObjectCreated(m_objects[id]);
 
     ++m_firstFreeId;
 

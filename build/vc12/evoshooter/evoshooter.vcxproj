@@ -128,6 +128,7 @@
     <ClInclude Include="..\..\..\src\ShadowManager.h" />
     <ClInclude Include="..\..\..\src\SoundManager.h" />
     <ClInclude Include="..\..\..\src\Sprite.h" />
+    <ClInclude Include="..\..\..\src\StaticObject.h" />
     <ClInclude Include="..\..\..\src\Texture.h" />
     <ClInclude Include="..\..\..\src\Util.h" />
     <ClInclude Include="..\..\..\src\VersionInfo.h" />
@@ -170,6 +171,7 @@
     <ClCompile Include="..\..\..\src\SoundManager.cpp" />
     <ClCompile Include="..\..\..\src\Sprite.cpp" />
     <ClCompile Include="..\..\..\src\Object.cpp" />
+    <ClCompile Include="..\..\..\src\StaticObject.cpp" />
     <ClCompile Include="..\..\..\src\Texture.cpp" />
     <ClCompile Include="..\..\..\src\Util.cpp" />
     <ClCompile Include="..\..\..\src\World.cpp" />

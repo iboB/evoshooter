@@ -39,7 +39,7 @@ void RenderManager::Sort()
     {
         bool operator()(const Sprite* l, const Sprite* r)
         {
-            return l->getSortingY() >= r->getSortingY();
+            return l->getSortingY() > r->getSortingY();
         }
     };
 

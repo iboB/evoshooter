@@ -17,6 +17,8 @@
 #include "MonsterCharacter.h"
 #include "MainCharacter.h"
 #include "Camera.h"
+#include "Bullet.h"
+#include "StaticObject.h"
 #include "GLSentries.h"
 #include "Level.h"
 #include "GUILayer.h"
@@ -127,6 +129,7 @@ void ExperimentState::initialize()
 
     m_camera->followObject(monster);
     ShadowManager::instance().initialize();
+    ColliderGrid::instance().initialize();
 }
 
 void ExperimentState::deinitialize()
@@ -224,6 +227,33 @@ void ExperimentState::handleEvent(const SDL_Event& event)
         case SDLK_m:
             World::instance().mainCharacter()->Attack(2);
             break;
+        case SDLK_o:
+            {
+                SpritePtr projectile = ResourceManager::instance().createSpriteFromSingleFrameTexture("sprites/projectiles/bullet.png");
+                SpritePtr impact = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/projectiles/explosion.png", 1, 4, 400);
+
+                unsigned int id = World::instance().spawnBullet(0.5f, 0.5f, 0.1f, projectile, impact, mathgp::vc(0.5f, 0.5f, 0.0f), 3.f, 5.f);
+
+                ((Bullet*)(World::instance().object(id).get()))->shoot();
+            }
+            break;
+        case SDLK_v:
+            {
+                SpritePtr sprite  = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/projectiles/explosion.png", 1, 4, 4000);
+                sprite->setScale(0.01f);
+                World::instance().spawnStaticObject(3.5f, 3.5f, 0.1f, sprite);
+            }
+            break;
+        case SDLK_4:
+        {
+            std::vector< std::shared_ptr<Object>> test = ColliderGrid::instance().collideWithCircle(v(2.5f, 2.5f), 5.0f);
+            break;
+        }
+        case SDLK_5:
+        {
+            std::vector< std::shared_ptr<Object>> test = ColliderGrid::instance().collideWithCircle(v(25.f, 25.f), 5.0f);
+            break;
+        }
         default:
             return;
         }
@@ -256,6 +286,7 @@ void ExperimentState::handleEvent(const SDL_Event& event)
             m_camera->screenToWorldPoint(v((unsigned int)event.button.x, (unsigned int)event.button.y), end);
             m_debugStart = start;
             m_debugEnd = end;
+            std::vector< std::shared_ptr<Object>> test = ColliderGrid::instance().collideWithQuadsOnClick(v((unsigned int)event.button.x, (unsigned int)event.button.y), end);
             //std::cout << "end world Pos x:" << end.x() << " y:" << end.y() << std::endl;
         }
     }
