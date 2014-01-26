@@ -15,10 +15,21 @@
 MainCharacter::MainCharacter(const mathgp::vector3& position, const std::vector<AttackData>& attacks)
 : Character(position, "eye", attacks)
 {
-
+    m_weapon = new PlayerWeapon(EKnife, 1000);
 }
 
 void MainCharacter::update(int dt)
 {
     Character::update(dt);
+}
+
+void MainCharacter::OnHit(EAttackDamageType dmgType, int dmg)
+{
+    if (dmgType != EMonsterDamage)
+        return; //not concerned by own dmg
+}
+
+void MainCharacter::useWeapon(const mathgp::vector3& worldPoint, Object* objectHit)
+{
+    m_weapon->attack(worldPoint, objectHit);
 }

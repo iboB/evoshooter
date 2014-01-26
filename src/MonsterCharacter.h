@@ -15,6 +15,13 @@
 
 class MonsterAttack;
 
+enum EMonsterDefenseType
+{
+    ENone = 0,
+    EScales,
+    EFatness
+};
+
 class MonsterCharacter : public Character
 {
 public:
@@ -31,6 +38,8 @@ public:
     const MonsterDNA& dna() const { return m_dna;  }
 
     int isDead() { return m_hp <= 0; }
+
+    virtual void OnHit(EAttackDamageType dmgType, int dmg);
 
     void loseStamina(int n);
 
@@ -58,9 +67,7 @@ private:
     void aggravate();
 
     // stats
-    int m_maxHp;
-    int m_hp;
-    void heal(int hp);
+    
 
     int m_maxStamina;
     int m_stamina;
@@ -113,4 +120,7 @@ private:
     int m_damagePainFrames;
 
     float m_aggroStaminaLoss;
+
+    float m_defenseStrength;
+    EMonsterDefenseType m_defenseType;
 };

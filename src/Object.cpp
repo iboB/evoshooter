@@ -11,6 +11,7 @@
 #include "EvoShooter.pch.h"
 #include "Object.h"
 #include <math.h>
+#include "GameplayConstants.h"
 
 const float g_scaleConst = 0.008f;
 
@@ -82,7 +83,7 @@ void Object::y(float val)
 
 float Object::r() const
 {
-	return m_size*0.15f;
+    return m_size*Collision_Circle_Scale_Factor;
 }
 bool Object::collidesWith(std::shared_ptr<Object> otherGuy)
 {
@@ -96,4 +97,9 @@ float Object::bb_w()
 float Object::bb_h()
 {
     return m_bb.x();
+}
+
+void Object::OnHit(EAttackDamageType dmgType, int dmg)
+{
+
 }

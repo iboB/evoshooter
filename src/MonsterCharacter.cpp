@@ -31,6 +31,7 @@ MonsterCharacter::MonsterCharacter(const mathgp::vector3& position, const std::s
 , m_attack(nullptr)
 , m_damagePainFrames(0)
 , m_playerInSightLastFrame(false)
+, m_defenseStrength(0.0f)
 {
     m_MoveDirection = mathgp::vc(0.f, 0.0f, 0.f);
 }
@@ -200,7 +201,7 @@ void MonsterCharacter::useDNA(const MonsterDNA& dna)
         break;
     }
 
-    m_attack->setOwner(this);
+   // m_attack->setOwner(this);
 
     float maxDefense = 0;
     int defense = G_UseSpitter;
@@ -216,10 +217,15 @@ void MonsterCharacter::useDNA(const MonsterDNA& dna)
     switch (defense)
     {
     case G_UseScales:
+        m_defenseStrength = m_dna(G_ScalesPower);
+        m_defenseType = EScales;
         break;
     case G_UseFatness:
+        m_defenseStrength = m_dna(G_FatnessPower);
+        m_defenseType = EFatness;
         break;
     case G_NoDefense:
+        m_defenseType = ENone;
     default:
         break;
     }
@@ -230,14 +236,6 @@ MonsterDNA MonsterCharacter::giveOffspring()
     MonsterDNA newdna = m_dna;
     newdna.mutate();
     return newdna;
-}
-
-void MonsterCharacter::heal(int hp)
-{
-    m_hp += hp;
-
-    if (m_hp > m_maxHp)
-        m_hp = m_maxHp;
 }
 
 point3 MonsterCharacter::randomPointInSight()
@@ -400,7 +398,7 @@ void MonsterCharacter::think(int dt)
             // go towards him
             SetTargetPoint(enemy->position());
 
-            if (distanceToPlayer < m_attack->senseOfRange())
+//            if (distanceToPlayer < m_attack->senseOfRange())
             {
                 // we think we can also attack
                 m_attack->attack(enemy->position(), enemy->position());
@@ -504,3 +502,11 @@ float MonsterCharacter::fitness() const
     return m_damageDealtToPlayer * (float(m_lifetime) / 1000);
 }
 
+
+void MonsterCharacter::OnHit(EAttackDamageType dmgType, int dmg)
+{
+    if (dmgType == EMonsterDamage)
+        return; //not concerned by own dmg
+
+    std::cout << "OW!" << std::endl;
+}

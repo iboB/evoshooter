@@ -21,6 +21,13 @@ enum EObjectType
     EObject_Type_Count
 };
 
+enum EAttackDamageType
+{
+    EMonsterDamage = 0, //full armor from all
+    EPiercing, //bypasses armor
+    EBlunt  //bypasses fatness
+};
+
 class Object
 {
 public:
@@ -50,6 +57,7 @@ public:
     virtual void Die(){}
     virtual void GetDamage(){}
     virtual void Attack(Uint32 attackIndex){}
+    virtual void OnHit(EAttackDamageType dmgType, int dmg);
 
     void type(EObjectType t) { m_type = t; }
     EObjectType type() const { return m_type; }

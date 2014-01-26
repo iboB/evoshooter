@@ -125,6 +125,7 @@
     <ClInclude Include="..\..\..\src\Object.h" />
     <ClInclude Include="..\..\..\src\Overlay.h" />
     <ClInclude Include="..\..\..\src\Platform.h" />
+    <ClInclude Include="..\..\..\src\PlayerWeapon.h" />
     <ClInclude Include="..\..\..\src\RegisteredMonsterDamage.h" />
     <ClInclude Include="..\..\..\src\RenderManager.h" />
     <ClInclude Include="..\..\..\src\ResourceManager.h" />
@@ -167,6 +168,7 @@
     <ClCompile Include="..\..\..\src\MonsterAttacks.cpp" />
     <ClCompile Include="..\..\..\src\MonsterCharacter.cpp" />
     <ClCompile Include="..\..\..\src\Overlay.cpp" />
+    <ClCompile Include="..\..\..\src\PlayerWeapon.cpp" />
     <ClCompile Include="..\..\..\src\RenderManager.cpp" />
     <ClCompile Include="..\..\..\src\Monster.cpp" />
     <ClCompile Include="..\..\..\src\MonsterDNA.cpp" />
