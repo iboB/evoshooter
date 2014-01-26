@@ -4,9 +4,9 @@
 // Borislav Stanimirov, Filip Chorbadzhiev, Nikolay Dimitrov
 // Assen Kanev, Jem Kerim, Stefan Ivanov
 //
-// Distributed under the MIT Software License
-// See accompanying file LICENSE.txt or copy at
-// http://opensource.org/licenses/MIT
+//This game and all content in this file is licensed under  
+//the Attribution-Noncommercial-Share Alike 3.0 version of the Creative Commons License.
+//For reference the license is given below and can also be found at http://creativecommons.org/licenses/by-nc-sa/3.0/
 //
 #pragma once
 
@@ -59,4 +59,9 @@ sc float Close_Distance_In_World = 0.3f; // distance to a place in the world con
 
 sc float Collision_Circle_Scale_Factor = 0.15f; //size * Collision_Circle_Scale_Factor = collision circle radius
 sc float Shadow_Scale_Factor = 0.5f; //scales shadows according to size
-sc float Niki_Constant = 0.008f;  //the scale at which obj texture pixes get scaled to world space NOTE: havn't hooked it, dunno where it's used!
+sc float Niki_Constant = 0.008f;  //the scale at which obj texture pixes get scaled to world space NOTE: havn't hooked it, dunno where it's used!sc float Niki_Constant = 0.008f;  //the scale at which obj texture pixes get scaled to world space NOTE: havn't hooked it, dunno where it's used!
+sc int Player_Starting_Health = 1000;
+sc int Knife_Damage_Min = 50;
+sc int Knife_Damage_Max = 100;
+sc int Pistol_Damage_Min = 10;
+sc int Pistol_Damage_Max = 125;

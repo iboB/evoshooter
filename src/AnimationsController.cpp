@@ -4,9 +4,9 @@
 // Borislav Stanimirov, Filip Chorbadzhiev, Nikolay Dimitrov
 // Assen Kanev, Jem Kerim, Stefan Ivanov
 //
-// Distributed under the MIT Software License
-// See accompanying file LICENSE.txt or copy at
-// http://opensource.org/licenses/MIT
+//This game and all content in this file is licensed under  
+//the Attribution-Noncommercial-Share Alike 3.0 version of the Creative Commons License.
+//For reference the license is given below and can also be found at http://creativecommons.org/licenses/by-nc-sa/3.0/
 //
 
 #include "EvoShooter.pch.h"
@@ -24,6 +24,7 @@ AnimationsController::AnimationsController()
 , m_ActiveAttack(0)
 , m_IsAttacking(false)
 , m_AtackStartTime(0)
+, m_IsReadyForDiscard(false)
 {
 
 }
@@ -264,6 +265,10 @@ void AnimationsController::update(const mathgp::vector3& position, const mathgp:
 
     if (m_IsDead)
     {
+        if (m_Death[m_ActiveMovement]->isDone())
+        {
+            m_IsReadyForDiscard = true;
+        }
         m_Death[m_ActiveMovement]->update(position, camDir);
         updateAttachments(position, camDir);
         return;

@@ -4,9 +4,9 @@
 // Borislav Stanimirov, Filip Chorbadzhiev, Nikolay Dimitrov
 // Assen Kanev, Jem Kerim, Stefan Ivanov
 //
-// Distributed under the MIT Software License
-// See accompanying file LICENSE.txt or copy at
-// http://opensource.org/licenses/MIT
+//This game and all content in this file is licensed under  
+//the Attribution-Noncommercial-Share Alike 3.0 version of the Creative Commons License.
+//For reference the license is given below and can also be found at http://creativecommons.org/licenses/by-nc-sa/3.0/
 //
 #pragma once
 
@@ -43,6 +43,7 @@ public:
 
     void update(const mathgp::vector3& position, const mathgp::vector3& camDir);
 
+    bool isReadyToDiscard() { return m_IsReadyForDiscard; }
 private:
     void updateAttack(const mathgp::vector3& position, const mathgp::vector3& camDir);
     void updateAttachments(const mathgp::vector3& position, const mathgp::vector3& camDir);
@@ -78,4 +79,5 @@ private:
     Uint32 m_ActiveAttack;
     bool m_IsAttacking;
     int m_AtackStartTime;
+    bool m_IsReadyForDiscard;
 };

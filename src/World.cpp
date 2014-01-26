@@ -4,9 +4,9 @@
 // Borislav Stanimirov, Filip Chorbadzhiev, Nikolay Dimitrov
 // Assen Kanev, Jem Kerim, Stefan Ivanov
 //
-// Distributed under the MIT Software License
-// See accompanying file LICENSE.txt or copy at
-// http://opensource.org/licenses/MIT
+//This game and all content in this file is licensed under  
+//the Attribution-Noncommercial-Share Alike 3.0 version of the Creative Commons License.
+//For reference the license is given below and can also be found at http://creativecommons.org/licenses/by-nc-sa/3.0/
 //
 #include "EvoShooter.pch.h"
 #include "World.h"
@@ -21,6 +21,7 @@
 World::World()
     : m_firstFreeId(0)
     , m_mainCharacter(nullptr)
+    , m_update(false)
 {
 }
 
@@ -110,7 +111,7 @@ unsigned int World::spawnBullet(float x, float y, float r, SpritePtr projectile,
     mathgp::vector3 pos = mathgp::v(x, y, 0.01f);
     unsigned int id = m_firstFreeId;
     Bullet* bullet = new Bullet(pos, r);
-
+    bullet->type(EBullet);
     bullet->init(projectile, impact, pos, direction, speed, maxDistance);
 
     bullet->id() = id;
@@ -151,6 +152,11 @@ unsigned int World::spawnStaticObject(float x, float y, float r, SpritePtr sprit
 
 void World::destroyObject(unsigned int id)
 {
+    if (m_update)
+    {
+        queueObjectForDestruction(id);
+        return;
+    }
     ColliderGrid::instance().onObjectDestroyed(object(id));
     m_objects.erase(id);
 }
@@ -168,7 +174,7 @@ void World::queueObjectForDestruction(unsigned int id)
 void World::update(int dt)
 {
     desetroyPendingObjects();
-
+    m_update = true;
     for (auto it = m_objects.begin(); it != m_objects.end(); ++it)
     {
         it->second->update(dt);
@@ -203,7 +209,7 @@ void World::update(int dt)
             }
         }
     }
-
+    m_update = false;
     desetroyPendingObjects();
 }
 

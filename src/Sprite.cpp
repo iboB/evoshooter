@@ -4,9 +4,9 @@
 // Borislav Stanimirov, Filip Chorbadzhiev, Nikolay Dimitrov
 // Assen Kanev, Jem Kerim, Stefan Ivanov
 //
-// Distributed under the MIT Software License
-// See accompanying file LICENSE.txt or copy at
-// http://opensource.org/licenses/MIT
+//This game and all content in this file is licensed under  
+//the Attribution-Noncommercial-Share Alike 3.0 version of the Creative Commons License.
+//For reference the license is given below and can also be found at http://creativecommons.org/licenses/by-nc-sa/3.0/
 //
 
 #include "EvoShooter.pch.h"
@@ -251,4 +251,9 @@ void Sprite::getCurrentFrame(Uint32& x, Uint32& y)
 
     x = m_StartX + ((m_CurrentFrame % m_Cols) * m_CellWidth);
     y = m_StartY + ((m_CurrentFrame / m_Cols) * m_CellHeight);
+}
+bool Sprite::isDone()
+{
+    const Uint32 totalFrames = m_Rows * m_Cols;
+    return (m_CurrentFrame >= totalFrames-1);
 }

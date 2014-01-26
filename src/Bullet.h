@@ -4,9 +4,9 @@
 // Borislav Stanimirov, Filip Chorbadzhiev, Nikolay Dimitrov
 // Assen Kanev, Jem Kerim, Stefan Ivanov
 //
-// Distributed under the MIT Software License
-// See accompanying file LICENSE.txt or copy at
-// http://opensource.org/licenses/MIT
+//This game and all content in this file is licensed under  
+//the Attribution-Noncommercial-Share Alike 3.0 version of the Creative Commons License.
+//For reference the license is given below and can also be found at http://creativecommons.org/licenses/by-nc-sa/3.0/
 //
 #pragma once
 
@@ -27,6 +27,8 @@ public:
     
     virtual void update(int dt);
 
+    void setDamageType(EAttackDamageType in) { m_damageType = in; }
+    void setDamage(int in) { m_damage = in; }
 private:
 
     SpritePtr m_Projectile;
@@ -39,4 +41,7 @@ private:
 
     bool m_IsFlying;
     bool m_IsExploding;
+
+    EAttackDamageType m_damageType;
+    int m_damage;
 };

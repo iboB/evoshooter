@@ -4,9 +4,9 @@
 // Borislav Stanimirov, Filip Chorbadzhiev, Nikolay Dimitrov
 // Assen Kanev, Jem Kerim, Stefan Ivanov
 //
-// Distributed under the MIT Software License
-// See accompanying file LICENSE.txt or copy at
-// http://opensource.org/licenses/MIT
+//This game and all content in this file is licensed under  
+//the Attribution-Noncommercial-Share Alike 3.0 version of the Creative Commons License.
+//For reference the license is given below and can also be found at http://creativecommons.org/licenses/by-nc-sa/3.0/
 //
 #include "EvoShooter.pch.h"
 
@@ -15,6 +15,8 @@
 #include "Application.h"
 #include "GameState.h"
 #include "Camera.h"
+#include "World.h"
+#include "SoundManager.h"
 
 Character::Character(const mathgp::vector3& position, const std::string& name, const std::vector<AttackData>& attacks)
 : Object(position, 1.0f)
@@ -56,6 +58,15 @@ void Character::Move(const mathgp::vector3& position)
 void Character::Die()
 {
     m_AnimationsController.Die();
+    if (m_type == EMonster_Character)
+    {
+        SoundManager::instance().playSound(ESounds_EnemyDeath);
+    }
+    else if (m_type == EPlayer_Character)
+    {
+        SoundManager::instance().playSound(ESounds_PlayerDeath);
+        //should something else happen?
+    }
 }
 
 void Character::GetDamage()
@@ -70,6 +81,11 @@ void Character::Attack(Uint32 attackIndex)
 
 void Character::update(int dt)
 {
+    if (isDead() && m_AnimationsController.isReadyToDiscard())
+    {
+        World::instance().destroyObject(m_id);
+        return;
+    }
     m_AnimationsController.update(m_pos, Application::instance().currentState()->camera()->direction());
 }
 
