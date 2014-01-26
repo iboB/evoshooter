@@ -252,3 +252,8 @@ void Sprite::getCurrentFrame(Uint32& x, Uint32& y)
     x = m_StartX + ((m_CurrentFrame % m_Cols) * m_CellWidth);
     y = m_StartY + ((m_CurrentFrame / m_Cols) * m_CellHeight);
 }
+bool Sprite::isDone()
+{
+    const Uint32 totalFrames = m_Rows * m_Cols;
+    return (m_CurrentFrame >= totalFrames-1);
+}

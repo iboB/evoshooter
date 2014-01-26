@@ -37,7 +37,7 @@ public:
 
     const MonsterDNA& dna() const { return m_dna;  }
 
-    int isDead() { return m_hp <= 0; }
+    
 
     virtual void OnHit(EAttackDamageType dmgType, int dmg);
 
@@ -123,4 +123,6 @@ private:
 
     float m_defenseStrength;
     EMonsterDefenseType m_defenseType;
+
+    int applyArmor(int dmg);
 };

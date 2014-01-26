@@ -47,6 +47,7 @@ public:
 
     bool isRendering() { return m_IsRendering; }
 
+    bool isDone();
 private:
     void getCurrentFrame(Uint32& x, Uint32& y);
 

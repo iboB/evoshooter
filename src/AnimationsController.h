@@ -43,6 +43,7 @@ public:
 
     void update(const mathgp::vector3& position, const mathgp::vector3& camDir);
 
+    bool isReadyToDiscard() { return m_IsReadyForDiscard; }
 private:
     void updateAttack(const mathgp::vector3& position, const mathgp::vector3& camDir);
     void updateAttachments(const mathgp::vector3& position, const mathgp::vector3& camDir);
@@ -78,4 +79,5 @@ private:
     Uint32 m_ActiveAttack;
     bool m_IsAttacking;
     int m_AtackStartTime;
+    bool m_IsReadyForDiscard;
 };

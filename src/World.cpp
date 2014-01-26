@@ -21,6 +21,7 @@
 World::World()
     : m_firstFreeId(0)
     , m_mainCharacter(nullptr)
+    , m_update(false)
 {
 }
 
@@ -151,6 +152,11 @@ unsigned int World::spawnStaticObject(float x, float y, float r, SpritePtr sprit
 
 void World::destroyObject(unsigned int id)
 {
+    if (m_update)
+    {
+        queueObjectForDestruction(id);
+        return;
+    }
     ColliderGrid::instance().onObjectDestroyed(object(id));
     m_objects.erase(id);
 }
@@ -168,7 +174,7 @@ void World::queueObjectForDestruction(unsigned int id)
 void World::update(int dt)
 {
     desetroyPendingObjects();
-
+    m_update = true;
     for (auto it = m_objects.begin(); it != m_objects.end(); ++it)
     {
         it->second->update(dt);
@@ -204,7 +210,7 @@ void World::update(int dt)
             }
         }
     }
-
+    m_update = false;
     desetroyPendingObjects();
 }
 

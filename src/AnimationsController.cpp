@@ -24,6 +24,7 @@ AnimationsController::AnimationsController()
 , m_ActiveAttack(0)
 , m_IsAttacking(false)
 , m_AtackStartTime(0)
+, m_IsReadyForDiscard(false)
 {
 
 }
@@ -264,6 +265,10 @@ void AnimationsController::update(const mathgp::vector3& position, const mathgp:
 
     if (m_IsDead)
     {
+        if (m_Death[m_ActiveMovement]->isDone())
+        {
+            m_IsReadyForDiscard = true;
+        }
         m_Death[m_ActiveMovement]->update(position, camDir);
         updateAttachments(position, camDir);
         return;

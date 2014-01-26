@@ -485,4 +485,23 @@ void MonsterCharacter::OnHit(EAttackDamageType dmgType, int dmg)
         return; //not concerned by own dmg
 
     std::cout << "OW!" << std::endl;
+    
+
+    if ((dmgType == EPiercing && m_defenseType == EScales)
+        || (dmgType == EBlunt && m_defenseType == EFatness)
+        )
+    {
+        dmg = applyArmor(dmg);
+    }
+
+    if (dmg > 0)
+        GetDamage();
+
+    rawDamage(dmg);
+}
+
+int MonsterCharacter::applyArmor(int dmg)
+{
+    dmg = dmg - (m_defenseStrength*dmg);
+    return dmg;
 }

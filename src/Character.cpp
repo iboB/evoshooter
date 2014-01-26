@@ -15,6 +15,7 @@
 #include "Application.h"
 #include "GameState.h"
 #include "Camera.h"
+#include "World.h"
 
 Character::Character(const mathgp::vector3& position, const std::string& name, const std::vector<AttackData>& attacks)
 : Object(position, 1.0f)
@@ -70,6 +71,11 @@ void Character::Attack(Uint32 attackIndex)
 
 void Character::update(int dt)
 {
+    if (isDead() && m_AnimationsController.isReadyToDiscard())
+    {
+        World::instance().destroyObject(m_id);
+        return;
+    }
     m_AnimationsController.update(m_pos, Application::instance().currentState()->camera()->direction());
 }
 

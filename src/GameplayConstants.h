@@ -31,3 +31,4 @@ sc float Close_Distance_In_World = 0.3f; // distance to a place in the world con
 sc float Collision_Circle_Scale_Factor = 0.15f; //size * Collision_Circle_Scale_Factor = collision circle radius
 sc float Shadow_Scale_Factor = 0.5f; //scales shadows according to size
 sc float Niki_Constant = 0.008f;  //the scale at which obj texture pixes get scaled to world space NOTE: havn't hooked it, dunno where it's used!
+sc int Player_Starting_Health = 1000;

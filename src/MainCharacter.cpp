@@ -9,13 +9,14 @@
 // http://opensource.org/licenses/MIT
 //
 #include "EvoShooter.pch.h"
-
 #include "MainCharacter.h"
+#include "GameplayConstants.h"
 
 MainCharacter::MainCharacter(const mathgp::vector3& position, const std::vector<AttackData>& attacks)
 : Character(position, "eye", attacks)
 {
-    m_weapon = new PlayerWeapon(EKnife, 1000);
+    m_weapon = new PlayerWeapon(EKnife, 1000, mathgp::v((unsigned)1,(unsigned)10));
+    m_hp = Player_Starting_Health;
 }
 
 void MainCharacter::update(int dt)
@@ -27,6 +28,8 @@ void MainCharacter::OnHit(EAttackDamageType dmgType, int dmg)
 {
     if (dmgType != EMonsterDamage)
         return; //not concerned by own dmg
+
+    rawDamage(dmg);
 }
 
 void MainCharacter::useWeapon(const mathgp::vector3& worldPoint, Object* objectHit)

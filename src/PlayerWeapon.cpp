@@ -13,6 +13,7 @@
 #include "World.h"
 #include "ColliderGrid.h"
 #include "MainCharacter.h"
+#include "Util.h"
 
 std::string PlayerWeapon::m_weaponNames[EWeaponCount] =
 {
@@ -29,13 +30,14 @@ EAttackType PlayerWeapon::m_weaponAttackTypes[EWeaponCount] =
 
 using namespace mathgp;
 
-PlayerWeapon::PlayerWeapon(EWeaponType t, unsigned attackDelay):
+PlayerWeapon::PlayerWeapon(EWeaponType t, unsigned attackDelay, const uvector2& dmgRange):
 m_type(t)
 {
     m_attackType = m_weaponAttackTypes[m_type];
     m_damageType = m_weaponDamageTypes[m_type];
     m_attackDelay = attackDelay;
     m_lastAttackTimestamp = 0;
+    m_damageRange = dmgRange;
 }
 PlayerWeapon::~PlayerWeapon()
 {
@@ -69,7 +71,8 @@ void PlayerWeapon::meleeAttack(const mathgp::vector3& worldPoint)
     std::vector< std::shared_ptr<Object> >::iterator it = affectedTargets.begin();
     while (it != affectedTargets.end())
     {
-        (*it)->OnHit(m_damageType, 5);
+        unsigned damage = (m_damageRange.y() - m_damageRange.x())*Util::Rnd01() + m_damageRange.x();
+        (*it)->OnHit(m_damageType, damage);
         ++it;
     }
 }

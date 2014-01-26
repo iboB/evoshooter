@@ -56,4 +56,6 @@ private:
     std::vector<unsigned int> m_ObjectsPendingDestruction;
 
     std::list<RegisteredMonsterDamage> m_monsterDamages;
+
+    bool m_update;
 };

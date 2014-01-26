@@ -29,7 +29,7 @@ enum EAttackType
 class PlayerWeapon
 {
 public:
-    PlayerWeapon(EWeaponType t, unsigned attackDelay);
+    PlayerWeapon(EWeaponType t, unsigned attackDelay, const mathgp::uvector2& damageRange);
     ~PlayerWeapon();
 
     void attack(const mathgp::vector3& worldPoint, Object* objectHitWithCursor);
@@ -42,6 +42,8 @@ private:
     unsigned int m_lastAttackTimestamp;
     EAttackType m_attackType;
     EAttackDamageType m_damageType;
+
+    mathgp::uvector2 m_damageRange;
 
     
 

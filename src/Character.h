@@ -39,6 +39,7 @@ public:
     virtual void update(int dt);
     void heal(int hp);
     int rawDamage(int dmg);
+    int isDead() { return m_hp <= 0; }
 protected:
     AnimationsController m_AnimationsController;
     int m_maxHp;
