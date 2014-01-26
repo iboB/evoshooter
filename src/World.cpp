@@ -174,6 +174,27 @@ void World::update(int dt)
         it->second->update(dt);
     }
 
+    // deal monster damages
+    for (auto i = m_monsterDamages.begin(); i != m_monsterDamages.end(); ++i)
+    {
+        i->remainingTime -= dt;
+
+        if (i->remainingTime <= 0)
+        {
+            if (distance(i->position, m_mainCharacter->position()) < i->raidus + m_mainCharacter->r())
+            {
+                // char in range
+                // Phil phil BAAM
+            }
+
+            i = m_monsterDamages.erase(i);
+            if (i == m_monsterDamages.end())
+            {
+                break;
+            }
+        }
+    }
+
     desetroyPendingObjects();
 }
 

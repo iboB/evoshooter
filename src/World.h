@@ -13,6 +13,7 @@
 #include "ExplicitSingleton.h"
 
 #include "MonsterCharacter.h"
+#include "RegisteredMonsterDamage.h"
 
 class Object;
 class MainCharacter;
@@ -43,6 +44,8 @@ public:
 
     void update(int dt);
 
+    void registerMonsterDamage(const RegisteredMonsterDamage& damage);
+
 private:
     void desetroyPendingObjects();
 
@@ -51,4 +54,6 @@ private:
 	unsigned int m_firstFreeId;
 
     std::vector<unsigned int> m_ObjectsPendingDestruction;
+
+    std::list<RegisteredMonsterDamage> m_monsterDamages;
 };

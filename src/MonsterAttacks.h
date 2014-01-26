@@ -12,6 +12,8 @@
 
 #include "MonsterCharacter.h"
 #include "GameplayConstants.h"
+#include "World.h"
+#include "MainCharacter.h"
 
 class MonsterCharacter;
 class MonsterDNA;
@@ -19,78 +21,61 @@ class MonsterDNA;
 class MonsterAttack
 {
 public:
-    MonsterAttack() : m_owner(nullptr) {}
+    MonsterAttack() : m_owner(nullptr), m_lastAttackTime(0) {}
 
     void setOwner(MonsterCharacter* owner);
 
-    virtual float range() const = 0;
-    virtual float senseOfRange() const = 0;
-    virtual void attack(const mathgp::point3& point) = 0;
-    virtual void attack(const mathgp::point3& lastKnownPosition, const mathgp::point3& point) = 0;
+    float range() const { return m_range; }
+    
+    float senseOfRange() const
+    {
+        return m_range / m_owner->dna()(G_SenseOfOwnRange);
+    }
+
+    virtual void attack(const mathgp::point3& lastKnownPosition, const mathgp::point3& point)
+    {
+
+    }
+
+    virtual mathgp::point3 aimAt(const mathgp::point3& prevPoint, const mathgp::point3& curPoint) = 0;    
 
 protected:
     MonsterCharacter* m_owner;
+
+    float m_staminaCostPerHit;
+    int m_cooldownTime;
+    int m_lastAttackTime;
+    float m_range;
+    float m_aoeRange;
+    float m_projectileSpeed;
 };
 
 class RangedAttack : public MonsterAttack
 {
 public:
-    float range() const override { return Close_Distance_In_World; }
-    float senseOfRange() const override { return Close_Distance_In_World; }
-
-    mathgp::point3 aimAt(const mathgp::point3& point)
+    mathgp::point3 aimAt(const mathgp::point3& prevPoint, const mathgp::point3& curPoint) override
     {
-
-    }
-
-    void attack(const mathgp::point3& point)
-    {
-        
-    }
-
-    void attack(const mathgp::point3& lastKnownPosition, const mathgp::point3& point)
-    {
-        attack(point);
+        return curPoint;
     }
 };
 
 class MeleeAttack : public MonsterAttack
 {
 public:
-    float range() const override { return m_range; }
-    float senseOfRange() const override
+    mathgp::point3 aimAt(const mathgp::point3& prevPoint, const mathgp::point3& curPoint) override
     {
-        return m_range / m_owner->dna()(G_SenseOfOwnRange);
+        return curPoint;
     }
-
-    void attack(const mathgp::point3& point)
-    {
-
-    }
-
-    void attack(const mathgp::point3& lastKnownPosition, const mathgp::point3& point)
-    {
-        attack(point);
-    }
-
-
-    float m_range;
 };
 
 class NoAttack : public MonsterAttack
 {
-    float range() const override { return 0; }
-    float senseOfRange() const override { return 0; }
+    mathgp::point3 aimAt(const mathgp::point3& prevPoint, const mathgp::point3& curPoint)
+    {
+        return Vec::zero;
+    }
 
-    mathgp::point3 aimAt(const mathgp::point3& point)
-    {}
-
-    void attack(const mathgp::point3& point)
-    {}
-
-    void attack(const mathgp::point3& lastKnownPosition, const mathgp::point3& point)
-    {}
-
+    void attack(const mathgp::point3& lastKnownPosition, const mathgp::point3& point) override {}
 };
 
 //class Thorns : public RangedAttack

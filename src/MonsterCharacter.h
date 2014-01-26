@@ -107,4 +107,6 @@ private:
     MonsterAttack* m_attack;
 
     int m_damagePainFrames;
+
+    float m_aggroStaminaLoss;
 };
