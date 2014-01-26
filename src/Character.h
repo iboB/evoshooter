@@ -14,10 +14,21 @@
 
 #include "AnimationsController.h"
 
+struct AttackData
+{
+    std::string AttackName;
+    std::string IdleName;
+    mathgp::vector3 Offset;
+    float Scale;
+    bool IsWholeBodyAttack;
+};
+
+typedef std::vector<AttackData> AttacksData;
+
 class Character : public Object
 {
 public:
-    Character(const mathgp::vector3& position, const std::string& name);
+    Character(const mathgp::vector3& position, const std::string& name, const std::vector<AttackData>& attacks);
 
     virtual void Move(const mathgp::vector3& position);
     virtual void Die();

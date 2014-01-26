@@ -27,11 +27,11 @@ class AnimationsController
 public:
     AnimationsController();
     ~AnimationsController();
-    
+
     void SetMovementAnimations(const std::string& fileMove, float scale);
     void SetDeath(const std::string& fileDeath, float scale);
     void SetDamage(const std::string& fileDamage, float scale);
-    void AddAttack(const std::string& fileAttack, const std::string& fileAttackIdle, const mathgp::vector3& offset, float scale);
+    void AddAttack(const std::string& fileAttack, const std::string& fileAttackIdle, const mathgp::vector3& offset, float scale, bool wholeBodyAttack);
 
     void AddAttachment(const std::string& file, const mathgp::vector3& offset, float scale);
     void RemoveAttachment(const std::string& file);
@@ -53,19 +53,20 @@ private:
         SpritePtr Animation[MA_Count];
     };
 
-    struct AnimWithOffsetAndTwoStates
+    struct AttackAnimation
     {
         mathgp::vector3 Offsets[MA_Count];
         SpritePtr Animation[2][MA_Count];
+        bool m_IsWholeBodyAttack;
     };
 
     typedef std::map<std::string, AnimWithOffset> Animations;
-    typedef std::vector<AnimWithOffsetAndTwoStates> AnimationsWithTwoStates;
+    typedef std::vector<AttackAnimation> AttackAnimations;
 
     SpritePtr m_MovementAnimations[MA_Count];
     SpritePtr m_Death[MA_Count];
     SpritePtr m_Damage[MA_Count];
-    AnimationsWithTwoStates m_Attacks;
+    AttackAnimations m_Attacks;
 
     Animations m_Attachments;
 

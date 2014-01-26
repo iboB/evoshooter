@@ -12,8 +12,8 @@
 
 #include "MonsterCharacter.h"
 
-MonsterCharacter::MonsterCharacter(const mathgp::vector3& position, const std::string& name)
-: Character(position, name)
+MonsterCharacter::MonsterCharacter(const mathgp::vector3& position, const std::string& name, const std::vector<AttackData>& attacks)
+: Character(position, name, attacks)
 , m_MoveDirection()
 {
     m_MoveDirection = mathgp::vc(0.f, 0.0f, 0.f);

@@ -96,13 +96,30 @@ void ExperimentState::initialize()
 
     m_overlay = new Overlay;
 
-    unsigned int id = World::instance().spawnMonster(1.f, 1.f, 0.5f, "player");
+    AttacksData attacks;
+    AttackData a1 = { "sprites/attacks/attack_anim_01.png", "sprites/attacks/attack_anim_idle_01.png", Vec::zero, 0.005f, false };
+    AttackData a2 = { "sprites/attacks/attack_anim_02.png", "sprites/attacks/attack_anim_idle_02.png", Vec::zero, 0.005f, false };
+    AttackData a3 = { "sprites/attacks/attack_anim_03.png", "sprites/attacks/attack_anim_idle_03.png", mathgp::vc(0.f, 0.25f, 0.f), 0.005f, false };
+    attacks.push_back(a1);
+    attacks.push_back(a2);
+    attacks.push_back(a3);
 
+    unsigned int id = World::instance().spawnMonster(1.f, 1.f, 0.5f, "player", attacks);
     MonsterCharacter* monster = (MonsterCharacter*)World::instance().object(id).get();
     monster->SetMoveDirection(mathgp::vc(0.0f, 0.0f, 0.f));
     monster->SetMoveSpeed(0.02f);
 
-    World::instance().spawnPlayer(2.f, 1.5f, 0.5f);
+    AttacksData attacks2;
+    AttackData a11 = { "sprites/attacks/attack_anim_01.png", "sprites/attacks/attack_anim_idle_01.png", Vec::zero, 0.005f, false };
+    AttackData a21 = { "sprites/attacks/attack_anim_02.png", "sprites/attacks/attack_anim_idle_02.png", Vec::zero, 0.005f, false };
+    AttackData a31 = { "sprites/attacks/attack_anim_00.png", "sprites/attacks/attack_anim_idle_00.png", Vec::zero, 0.008f, true };
+    attacks2.push_back(a11);
+    attacks2.push_back(a21);
+    attacks2.push_back(a31);
+
+    //id = World::instance().spawnMonster(2.f, 3.f, 0.5f, "eye", attacks);
+    
+    World::instance().spawnPlayer(2.f, 1.5f, 0.5f, attacks2);
 
     m_camera->followObject(World::instance().mainCharacter());
 }
