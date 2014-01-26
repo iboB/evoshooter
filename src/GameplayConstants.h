@@ -23,6 +23,35 @@ sc float Max_Aggro_Time = 6000.f; // max time a mon is in aggro
 sc float Max_Random_Attack_Wait = 3000.f; // wait max 3 secs between attacks
 sc float Max_Loiter_Time = 3000.f; // max time a monster will do nothing
 
+// monster skillz
+sc float Base_Spitter_Range = 5.f;
+sc float Spitter_AOE_Radius = 0.3f;
+sc float Base_Spitter_Damage = 80.f;
+sc float Base_Spitter_Cooldown = 100; //ms
+sc float Base_Spitter_Projectile_Speed = 10; // m/s
+sc float Base_Spitter_Stamina_Cost = 20; 
+
+sc float Base_Grapple_Range = 5.f;
+sc float Grapple_AOE_Radius = 0.3f;
+sc float Base_Grapple_Damage = 80.f;
+sc float Base_Grapple_Cooldown = 100; //ms
+sc float Base_Grapple_Projectile_Speed = 10; // m/s
+sc float Base_Grapple_Stamina_Cost = 20;
+
+sc float Base_Thorns_Range = 5.f;
+sc float Thorns_AOE_Radius = 0.3f;
+sc float Base_Thorns_Damage = 80.f;
+sc float Base_Thorns_Cooldown = 100; //ms
+sc float Base_Thorns_Projectile_Speed = 10; // m/s
+sc float Base_Thorns_Stamina_Cost = 20;
+
+sc float Base_Claws_Range = 5.f;
+sc float Claws_AOE_Radius = 0.3f;
+sc float Base_Claws_Damage = 80.f;
+sc float Base_Claws_Cooldown = 100; //ms
+sc float Base_Claws_Projectile_Speed = 10; // m/s
+sc float Base_Claws_Stamina_Cost = 20;
+
 sc float Stamina_Loss_Per_Aggro_Second = 10;
 sc float Time_To_Lose_1_Stamina_In_Aggro = 1000 / Stamina_Loss_Per_Aggro_Second; //ms
 

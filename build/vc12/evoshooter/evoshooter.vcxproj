@@ -108,6 +108,7 @@
     <ClInclude Include="..\..\..\src\GUILayer.h" />
     <ClInclude Include="..\..\..\src\GUIRenderInterface.h" />
     <ClInclude Include="..\..\..\src\GUISystemInterface.h" />
+    <ClInclude Include="..\..\..\src\Hud.h" />
     <ClInclude Include="..\..\..\src\ImplicitSingleton.h" />
     <ClInclude Include="..\..\..\src\InGameState.h" />
     <ClInclude Include="..\..\..\src\Level.h" />
@@ -157,6 +158,7 @@
     <ClCompile Include="..\..\..\src\GUILayer.cpp" />
     <ClCompile Include="..\..\..\src\GUIRenderInterface.cpp" />
     <ClCompile Include="..\..\..\src\GUISystemInterface.cpp" />
+    <ClCompile Include="..\..\..\src\Hud.cpp" />
     <ClCompile Include="..\..\..\src\InGameState.cpp" />
     <ClCompile Include="..\..\..\src\Level.cpp" />
     <ClCompile Include="..\..\..\src\MainCharacter.cpp" />

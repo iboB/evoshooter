@@ -218,3 +218,7 @@ void World::desetroyPendingObjects()
     m_ObjectsPendingDestruction.clear();
 }
 
+void World::registerMonsterDamage(const RegisteredMonsterDamage& damage)
+{
+    m_monsterDamages.push_back(damage);
+}
