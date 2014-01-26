@@ -46,6 +46,7 @@ public:
 
     void registerMonsterDamage(const RegisteredMonsterDamage& damage);
 
+    void reset();
 private:
     void desetroyPendingObjects();
 
@@ -58,4 +59,5 @@ private:
     std::list<RegisteredMonsterDamage> m_monsterDamages;
 
     bool m_update;
+    bool m_pendingReset;
 };

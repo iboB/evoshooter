@@ -228,3 +228,12 @@ void World::registerMonsterDamage(const RegisteredMonsterDamage& damage)
 {
     m_monsterDamages.push_back(damage);
 }
+
+void World::reset()
+{
+    m_objects.clear();
+
+    m_monsterDamages.clear();
+    ColliderGrid::instance().resest();
+    m_firstFreeId = 0;
+}

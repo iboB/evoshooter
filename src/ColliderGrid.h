@@ -41,6 +41,8 @@ public:
     void                    initialize();
 
     std::vector<std::shared_ptr<Object> > collideWithCircle(mathgp::vector2 origin, float r);
+
+    void                    resest();
 private:
     mathgp::uvector2		getObjectCell(Object* obj);
     mathgp::uvector2		getObjectCell(float x, float y);

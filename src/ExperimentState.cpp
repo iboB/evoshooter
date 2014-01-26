@@ -223,6 +223,11 @@ void ExperimentState::handleEvent(const SDL_Event& event)
                 Application::instance().pushState(state);
             }
             break;
+        case SDLK_F2:
+            {
+                World::instance().mainCharacter()->rawDamage(90000);
+            }
+            break;
         case SDLK_b:
             World::instance().mainCharacter()->Attack(0);
             break;
