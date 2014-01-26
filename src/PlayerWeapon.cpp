@@ -95,7 +95,7 @@ void PlayerWeapon::meleeAttack(const mathgp::vector3& worldPoint)
 
 void PlayerWeapon::rangedAttack(const mathgp::vector3& worldPoint)
 {
-    SpritePtr projectile = ResourceManager::instance().createSpriteFromSingleFrameTexture("sprites/projectiles/bullet.png");
+    SpritePtr projectile = ResourceManager::instance().createSpriteFromSingleFrameTexture("sprites/projectiles/rocket.png");
     SpritePtr impact = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/projectiles/explosion.png", 1, 4, 400);
     vector3 playerPos = World::instance().mainCharacter()->position();
     vector3 directionOfAttack = normalized(worldPoint - playerPos);
