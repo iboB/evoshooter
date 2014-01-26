@@ -34,6 +34,10 @@ public:
 
     void loseStamina(int n);
 
+    void onDealtDamage(int dmgDealt) { m_damageDealtToPlayer += dmgDealt; }
+
+    float fitness() const;
+
 private:
     mathgp::vector3 m_MoveDirection;
     

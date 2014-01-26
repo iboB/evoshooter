@@ -474,3 +474,9 @@ void MonsterCharacter::hear()
         }
     }
 }
+
+float MonsterCharacter::fitness() const
+{
+    return m_damageDealtToPlayer * (float(m_lifetime) / 1000);
+}
+

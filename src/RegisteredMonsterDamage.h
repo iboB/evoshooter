@@ -18,4 +18,6 @@ struct RegisteredMonsterDamage
 
     int damage;
     int damageType; // ????
+
+    int ownerId;
 };

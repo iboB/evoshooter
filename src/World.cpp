@@ -185,6 +185,16 @@ void World::update(int dt)
             {
                 // char in range
                 // Phil phil BAAM
+                int dmgDealt = 0;
+
+                // notify monster about his damage
+                auto dealer = object(i->ownerId);
+                if (dealer)
+                {
+                    assert(dealer->type() == EMonster_Character);
+                    auto monster = static_cast<MonsterCharacter*>(dealer.get());
+                    monster->onDealtDamage(dmgDealt);
+                }
             }
 
             i = m_monsterDamages.erase(i);
