@@ -203,6 +203,7 @@ void World::update(int dt)
             if (distance(i->position, m_mainCharacter->position()) < i->raidus + m_mainCharacter->r())
             {
                 int dmgDealt = i->damage;
+                std::cout << "Hitting player, from :" << i->ownerId << " @" << SDL_GetTicks() << std::endl;
                 m_mainCharacter->OnHit(EMonsterDamage, dmgDealt);
 
                 // notify monster about his damage

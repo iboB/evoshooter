@@ -101,7 +101,7 @@ std::vector<std::shared_ptr<Object> > ColliderGrid::collideWithCircle(mathgp::ve
 
 std::shared_ptr<Object> ColliderGrid::requestMoveTo(Object* obj, float newX, float newY)
 {
-    if (newY >= (g_worldSize - g_worldBorderOffset) || newY <= g_worldBorderOffset || newX >= (g_worldSize - g_worldBorderOffset) || newX <= g_worldBorderOffset)
+    if (newY >= (g_worldSize - g_worldBorderOffset) || newY <= g_worldBorderOffset || newX + obj->bb_w() >= (g_worldSize - g_worldBorderOffset) || newX  <= g_worldBorderOffset)
     {
         //disallow move, return dummy obj, use isWall to test;
         return m_dummyObject;
