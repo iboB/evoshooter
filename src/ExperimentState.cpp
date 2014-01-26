@@ -231,7 +231,7 @@ void ExperimentState::handleEvent(const SDL_Event& event)
                 SpritePtr projectile = ResourceManager::instance().createSpriteFromSingleFrameTexture("sprites/projectiles/bullet.png");
                 SpritePtr impact = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/projectiles/explosion.png", 1, 4, 400);
 
-                unsigned int id = World::instance().spawnBullet(0.f, 0.f, 0.1f, projectile, impact, mathgp::vc(0.5f, 0.5f, 0.0f), 3.f, 5.f);
+                unsigned int id = World::instance().spawnBullet(0.5f, 0.5f, 0.1f, projectile, impact, mathgp::vc(0.5f, 0.5f, 0.0f), 3.f, 5.f);
 
                 ((Bullet*)(World::instance().object(id).get()))->shoot();
             }
