@@ -35,6 +35,20 @@
     <ClCompile Include="..\..\..\src\World.cpp" />
     <ClCompile Include="..\..\..\src\AboutState.cpp" />
     <ClCompile Include="..\..\..\src\Bullet.cpp" />
+    <ClCompile Include="..\..\..\src\ShadowManager.cpp" />
+    <ClCompile Include="..\..\..\src\AboutState.cpp" />
+    <ClCompile Include="..\..\..\src\Effect.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\EvoShooter.pch.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Monster.cpp">
+      <Filter>Evo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\MonsterDNA.cpp">
+      <Filter>Evo</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\AnimationsController.h" />
@@ -80,5 +94,19 @@
     <ClInclude Include="..\..\..\src\World.h" />
     <ClInclude Include="..\..\..\src\AboutState.h" />
     <ClInclude Include="..\..\..\src\Bullet.h" />
+    <ClInclude Include="..\..\..\src\ShadowManager.h" />
+    <ClInclude Include="..\..\..\src\AboutState.h" />
+    <ClInclude Include="..\..\..\src\Effect.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\EvoShooter.pch.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Monster.h">
+      <Filter>Evo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\MonsterDNA.h">
+      <Filter>Evo</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

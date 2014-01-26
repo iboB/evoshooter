@@ -19,6 +19,7 @@
 Character::Character(const mathgp::vector3& position, const std::string& name, const std::vector<AttackData>& attacks)
 : Object(position, 0.3f)
 {
+    m_renderShadow = true;
     m_AnimationsController.SetMovementAnimations(std::string("sprites/")  + name + "_walk_anim.png", 0.008f);
     m_AnimationsController.SetDamage(std::string("sprites/") + name + "_dmg_anim.png", 0.008f);
     m_AnimationsController.SetDeath(std::string("sprites/") + name + "_die_anim.png", 0.008f);
