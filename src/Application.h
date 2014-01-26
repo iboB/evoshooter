@@ -30,6 +30,7 @@ public:
 
     MainWindow* mainWindow() const { return m_mainWindow; }
     GameState* currentState() const { return m_stateStack[m_stateStack.size()-1]; }
+    GameState* baseState() const { return m_baseState;  }
     void popLastState();
     void pushState(GameState* state);
 private:

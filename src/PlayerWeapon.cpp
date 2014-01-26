@@ -47,6 +47,7 @@ PlayerWeapon::~PlayerWeapon()
 
 void PlayerWeapon::attack(const mathgp::vector3& worldPoint, Object* objectHit)
 {
+
     unsigned int now = SDL_GetTicks();
     if (now >= m_lastAttackTimestamp + m_attackDelay)
     {
@@ -58,7 +59,7 @@ void PlayerWeapon::attack(const mathgp::vector3& worldPoint, Object* objectHit)
             break;
         case EPistol:
         {
-            if (objectHit)
+            if (objectHit && objectHit->type() != EPlayer_Character)
             {
                 rangedAttack(objectHit->position());
             }

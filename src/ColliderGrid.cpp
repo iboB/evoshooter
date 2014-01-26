@@ -375,6 +375,18 @@ std::vector<std::shared_ptr<Object> > ColliderGrid::collideWithQuadsOnClick(cons
     }
     return out;
 }
+
+void ColliderGrid::resest()
+{
+    for (int i = 0; i < m_sizeX; ++i)
+    {
+        for (int j = 0; j < m_sizeY; ++j)
+        {
+            m_grid[i][j].clear();
+        }
+    }
+}
+
 /*
 bool ColliderGrid::collideAABBWith3dRay(const std::shared_ptr<Object> obj, const mathgp::vector3& rayStart, const mathgp::vector3& rayDir)
 {

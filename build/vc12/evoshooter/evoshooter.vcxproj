@@ -93,6 +93,7 @@
     <ClInclude Include="..\..\..\src\Camera.h" />
     <ClInclude Include="..\..\..\src\Character.h" />
     <ClInclude Include="..\..\..\src\Constants.h" />
+    <ClInclude Include="..\..\..\src\DeathState.h" />
     <ClInclude Include="..\..\..\src\Effect.h" />
     <ClInclude Include="..\..\..\src\ColliderGrid.h" />
     <ClInclude Include="..\..\..\src\ExperimentState.h" />
@@ -146,6 +147,7 @@
     <ClCompile Include="..\..\..\src\Camera.cpp" />
     <ClCompile Include="..\..\..\src\Character.cpp" />
     <ClCompile Include="..\..\..\src\Constants.cpp" />
+    <ClCompile Include="..\..\..\src\DeathState.cpp" />
     <ClCompile Include="..\..\..\src\Effect.cpp" />
     <ClCompile Include="..\..\..\src\ColliderGrid.cpp" />
     <ClCompile Include="..\..\..\src\EntryPoint.cpp" />

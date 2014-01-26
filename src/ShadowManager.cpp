@@ -92,6 +92,9 @@ void ShadowManager::update()
 
 void ShadowManager::draw(const mathgp::matrix4& viewProj)
 {    
+    if (m_indexBuffer.size() == 0)
+        return;
+
     SENTRY(GLEnableSentry, GL_BLEND);
     SENTRY(GLDisableSentry, GL_DEPTH_TEST);
     //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

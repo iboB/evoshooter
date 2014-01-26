@@ -18,6 +18,8 @@
 #include "World.h"
 #include "SoundManager.h"
 
+#include "DeathState.h"
+
 Character::Character(const mathgp::vector3& position, const std::string& name, const std::vector<AttackData>& attacks)
 : Object(position, 1.0f)
 {
@@ -77,6 +79,8 @@ void Character::Die()
     {
         SoundManager::instance().playSound(ESounds_PlayerDeath);
         //should something else happen?
+        GameState* state = new DeathState;
+        Application::instance().pushState(state);
     }
 }
 
