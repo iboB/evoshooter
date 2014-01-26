@@ -42,6 +42,8 @@ public:
             return;
         }
 
+        m_owner->Attack(0);
+
         using namespace mathgp;
         
         point3 at = aimAt(lastKnownPosition, point);

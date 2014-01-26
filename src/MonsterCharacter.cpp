@@ -162,43 +162,113 @@ void MonsterCharacter::useDNA(const MonsterDNA& dna)
         }
     }
 
+    static const std::pair<std::string, std::string> spitters[] =
+    {
+        std::make_pair("sprites/attacks/attack_anim_03.png", "sprites/attacks/attack_anim_idle_03.png"),
+        std::make_pair("sprites/attacks/attack_anim_04.png", "sprites/attacks/attack_anim_idle_04.png"),
+        std::make_pair("sprites/attacks/attack_anim_05.png", "sprites/attacks/attack_anim_idle_05.png")
+    };
+
+    static const std::pair<std::string, std::string> grapples[] =
+    {
+        std::make_pair("sprites/attacks/attack_anim_06.png", "sprites/attacks/attack_anim_idle_06.png"),
+        std::make_pair("sprites/attacks/attack_anim_07.png", "sprites/attacks/attack_anim_idle_07.png")
+    };
+
+    static const std::pair<std::string, std::string> claws[] =
+    {
+        std::make_pair("sprites/attacks/attack_anim_02.png", "sprites/attacks/attack_anim_idle_02.png")
+    };
+
+    static const std::pair<std::string, std::string> thorns[] =
+    {
+        std::make_pair("sprites/attacks/attack_anim_09.png", "sprites/attacks/attack_anim_idle_09.png"),
+        std::make_pair("sprites/attacks/attack_anim_10.png", "sprites/attacks/attack_anim_idle_10.png")
+    };
+
+    std::vector<AttackData> attacks;
+
     switch (weapon)
     {
     case G_UseSpitter:
-        m_attack = new RangedAttack;
-        m_attack->m_range = Base_Spitter_Range * m_dna(G_SpitterPower) + (Base_Spitter_Range * m_dna(G_Size)) / 2;
-        m_attack->m_aoeRange = Spitter_AOE_Radius;
-        m_attack->m_damage = int(Base_Spitter_Damage * m_dna(G_SpitterPower));
-        m_attack->m_cooldownTime = int(Base_Spitter_Cooldown - (Base_Spitter_Cooldown * m_dna(G_Size)) / 2);
-        m_attack->m_projectileSpeed = Base_Spitter_Projectile_Speed + (Base_Spitter_Range * m_dna(G_Size)) / 2;
-        m_attack->m_staminaCostPerHit = Base_Spitter_Stamina_Cost + (Base_Spitter_Stamina_Cost * m_dna(G_SpitterPower)) / 2;
-        break;
+            {
+                         m_attack = new RangedAttack;
+                         m_attack->m_range = Base_Spitter_Range * m_dna(G_SpitterPower) + (Base_Spitter_Range * m_dna(G_Size)) / 2;
+                         m_attack->m_aoeRange = Spitter_AOE_Radius;
+                         m_attack->m_damage = int(Base_Spitter_Damage * m_dna(G_SpitterPower));
+                         m_attack->m_cooldownTime = int(Base_Spitter_Cooldown - (Base_Spitter_Cooldown * m_dna(G_Size)) / 2);
+                         m_attack->m_projectileSpeed = Base_Spitter_Projectile_Speed + (Base_Spitter_Range * m_dna(G_Size)) / 2;
+                         m_attack->m_staminaCostPerHit = Base_Spitter_Stamina_Cost + (Base_Spitter_Stamina_Cost * m_dna(G_SpitterPower)) / 2;
+
+                         AttackData attack;
+                         int r = rand() % 3;
+                         attack.AttackName = spitters[r].first;
+                         attack.IdleName = spitters[r].second;
+                         attack.IsWholeBodyAttack = false;
+                         attack.Offset = mathgp::vc(0.3f, 0.7f, 0.f);
+                         attack.Scale = 0.002f;
+                         attacks.push_back(attack);
+            }
+            break;
     case G_UseGrapple:
-        m_attack = new MeleeAttack;
-        m_attack->m_range = Base_Grapple_Range * m_dna(G_GrapplePower) + (Base_Grapple_Range * m_dna(G_Size)) / 2;
-        m_attack->m_aoeRange = Grapple_AOE_Radius;
-        m_attack->m_damage = int(Base_Grapple_Damage * m_dna(G_GrapplePower));
-        m_attack->m_cooldownTime = int(Base_Grapple_Cooldown - (Base_Grapple_Cooldown * m_dna(G_Size)) / 2);
-        m_attack->m_projectileSpeed = Base_Grapple_Projectile_Speed + (Base_Grapple_Range * m_dna(G_Size)) / 2;
-        m_attack->m_staminaCostPerHit = Base_Grapple_Stamina_Cost + (Base_Grapple_Stamina_Cost * m_dna(G_GrapplePower)) / 2;
+    {
+                         m_attack = new MeleeAttack;
+                         m_attack->m_range = Base_Grapple_Range * m_dna(G_GrapplePower) + (Base_Grapple_Range * m_dna(G_Size)) / 2;
+                         m_attack->m_aoeRange = Grapple_AOE_Radius;
+                         m_attack->m_damage = int(Base_Grapple_Damage * m_dna(G_GrapplePower));
+                         m_attack->m_cooldownTime = int(Base_Grapple_Cooldown - (Base_Grapple_Cooldown * m_dna(G_Size)) / 2);
+                         m_attack->m_projectileSpeed = Base_Grapple_Projectile_Speed + (Base_Grapple_Range * m_dna(G_Size)) / 2;
+                         m_attack->m_staminaCostPerHit = Base_Grapple_Stamina_Cost + (Base_Grapple_Stamina_Cost * m_dna(G_GrapplePower)) / 2;
+
+                         AttackData attack;
+                         int r = rand() % 2;
+                         attack.AttackName = grapples[r].first;
+                         attack.IdleName = grapples[r].second;
+                         attack.IsWholeBodyAttack = false;
+                         attack.Offset = mathgp::vc(0.3f, 0.7f, 0.f);
+                         attack.Scale = 0.002f;
+                         attacks.push_back(attack);
+    }
         break;
     case G_UseClaws:
-        m_attack = new MeleeAttack;
-        m_attack->m_range = Base_Claws_Range * m_dna(G_ClawsPower) + (Base_Claws_Range * m_dna(G_Size)) / 2;
-        m_attack->m_aoeRange = Claws_AOE_Radius;
-        m_attack->m_damage = int(Base_Claws_Damage * m_dna(G_ClawsPower));
-        m_attack->m_cooldownTime = int(Base_Claws_Cooldown - (Base_Claws_Cooldown * m_dna(G_Size)) / 2);
-        m_attack->m_projectileSpeed = Base_Claws_Projectile_Speed + (Base_Claws_Range * m_dna(G_Size)) / 2;
-        m_attack->m_staminaCostPerHit = Base_Claws_Stamina_Cost + (Base_Claws_Stamina_Cost * m_dna(G_ClawsPower)) / 2;
+    {
+                       m_attack = new MeleeAttack;
+                       m_attack->m_range = Base_Claws_Range * m_dna(G_ClawsPower) + (Base_Claws_Range * m_dna(G_Size)) / 2;
+                       m_attack->m_aoeRange = Claws_AOE_Radius;
+                       m_attack->m_damage = int(Base_Claws_Damage * m_dna(G_ClawsPower));
+                       m_attack->m_cooldownTime = int(Base_Claws_Cooldown - (Base_Claws_Cooldown * m_dna(G_Size)) / 2);
+                       m_attack->m_projectileSpeed = Base_Claws_Projectile_Speed + (Base_Claws_Range * m_dna(G_Size)) / 2;
+                       m_attack->m_staminaCostPerHit = Base_Claws_Stamina_Cost + (Base_Claws_Stamina_Cost * m_dna(G_ClawsPower)) / 2;
+
+                       AttackData attack;
+                       int r = 0;
+                       attack.AttackName = claws[r].first;
+                       attack.IdleName = claws[r].second;
+                       attack.IsWholeBodyAttack = false;
+                       attack.Offset = mathgp::vc(0.3f, 0.7f, 0.f);
+                       attack.Scale = 0.002f;
+                       attacks.push_back(attack);
+    }
         break;
     case G_UseThorns:
-        m_attack = new RangedAttack;
-        m_attack->m_range = Base_Thorns_Range * m_dna(G_ThornsPower) + (Base_Thorns_Range * m_dna(G_Size)) / 2;
-        m_attack->m_aoeRange = Thorns_AOE_Radius;
-        m_attack->m_damage = int(Base_Thorns_Damage * m_dna(G_ThornsPower));
-        m_attack->m_cooldownTime = int(Base_Thorns_Cooldown - (Base_Thorns_Cooldown * m_dna(G_Size)) / 2);
-        m_attack->m_projectileSpeed = Base_Thorns_Projectile_Speed + (Base_Thorns_Range * m_dna(G_Size)) / 2;
-        m_attack->m_staminaCostPerHit = Base_Thorns_Stamina_Cost + (Base_Thorns_Stamina_Cost * m_dna(G_ThornsPower)) / 2;
+    {
+                        m_attack = new RangedAttack;
+                        m_attack->m_range = Base_Thorns_Range * m_dna(G_ThornsPower) + (Base_Thorns_Range * m_dna(G_Size)) / 2;
+                        m_attack->m_aoeRange = Thorns_AOE_Radius;
+                        m_attack->m_damage = int(Base_Thorns_Damage * m_dna(G_ThornsPower));
+                        m_attack->m_cooldownTime = int(Base_Thorns_Cooldown - (Base_Thorns_Cooldown * m_dna(G_Size)) / 2);
+                        m_attack->m_projectileSpeed = Base_Thorns_Projectile_Speed + (Base_Thorns_Range * m_dna(G_Size)) / 2;
+                        m_attack->m_staminaCostPerHit = Base_Thorns_Stamina_Cost + (Base_Thorns_Stamina_Cost * m_dna(G_ThornsPower)) / 2;
+
+                        AttackData attack;
+                        int r = rand() % 2;
+                        attack.AttackName = thorns[r].first;
+                        attack.IdleName = thorns[r].second;
+                        attack.IsWholeBodyAttack = false;
+                        attack.Offset = mathgp::vc(0.3f, 0.7f, 0.f);
+                        attack.Scale = 0.002f;
+                        attacks.push_back(attack);
+    }
         break;
     default:
         // no weapon!
@@ -239,6 +309,62 @@ void MonsterCharacter::useDNA(const MonsterDNA& dna)
     if (m_size < Max_Monster_Size / 3)
     {
         name = "eye";
+
+        /*if (attacks[0].AttackName == "sprites/attacks/attack_anim_01.png")
+        {
+            attacks[0].Offset = mathgp::vc(0.16, 0.9, 0.0);
+        }
+        else
+        if (attacks[0].AttackName == "sprites/attacks/attack_anim_02.png")
+        {
+            attacks[0].Offset = mathgp::vc(0.15, 0.9, 0.0);
+        }
+        else
+        if (attacks[0].AttackName == "sprites/attacks/attack_anim_03.png")
+        {
+            attacks[0].Offset = mathgp::vc(0.16, 0.9, 0.0);
+        }
+        else
+        if (attacks[0].AttackName == "sprites/attacks/attack_anim_04.png")
+        {
+            attacks[0].Offset = mathgp::vc(0.6, 0.9, 0.0);
+        }
+        else
+        if (attacks[0].AttackName == "sprites/attacks/attack_anim_05.png")
+        {
+            attacks[0].Offset = mathgp::vc(0.15, 1.4, 0.0);
+        }
+        else
+        if (attacks[0].AttackName == "sprites/attacks/attack_anim_06.png")
+        {
+            attacks[0].Offset = mathgp::vc(0.16, 0.9, 0.0);
+        }
+        else
+        if (attacks[0].AttackName == "sprites/attacks/attack_anim_07.png")
+        {
+            attacks[0].Offset = mathgp::vc(0.16, 0.9, 0.0);
+        }
+        else
+        if (attacks[0].AttackName == "sprites/attacks/attack_anim_08.png")
+        {
+            attacks[0].Offset = mathgp::vc(0.16, 0.9, 0.0);
+        }
+        else
+        if (attacks[0].AttackName == "sprites/attacks/attack_anim_09.png")
+        {
+            attacks[0].Offset = mathgp::vc(0.16, 0.9, 0.0);
+        }
+        else
+        if (attacks[0].AttackName == "sprites/attacks/attack_anim_10.png")
+        {
+            attacks[0].Offset = mathgp::vc(0.16, 0.9, 0.0);
+        }*/
+
+        attacks[0].AttackName = "sprites/attacks/attack_anim_01.png";
+        attacks[0].IdleName = "sprites/attacks/attack_anim_idle_01.png";
+        attacks[0].IsWholeBodyAttack = true;
+        attacks[0].Offset = mathgp::vc(0.f, 0.f, 0.f);
+        attacks[0].Scale = 0.008f;
     }
     else if (m_size < (2 * Max_Monster_Size) / 3)
     {
@@ -249,7 +375,6 @@ void MonsterCharacter::useDNA(const MonsterDNA& dna)
         name = "pudge";
     }
 
-    std::vector<AttackData> attacks;
     init(name, attacks);
 }
 

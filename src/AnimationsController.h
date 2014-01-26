@@ -115,6 +115,7 @@ public:
     void update(const mathgp::vector3& position, const mathgp::vector3& camDir);
 
     bool isReadyToDiscard() { return m_IsReadyForDiscard; }
+    bool isDead() { return m_IsDead; }
 
 private:
     
