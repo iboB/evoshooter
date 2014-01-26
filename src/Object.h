@@ -33,6 +33,8 @@ public:
 
     virtual void update(int dt){}
 
+    unsigned int& id() { return m_id; }
+
 protected:
 
 	mathgp::vector3 m_pos;
@@ -40,4 +42,5 @@ protected:
     mathgp::vector2 m_bb; //w,h of the bounding quad
     bool m_renderShadow;
     float m_size;
+    unsigned int m_id;
 };
