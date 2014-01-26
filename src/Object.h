@@ -10,6 +10,17 @@
 //
 #pragma once
 
+enum EObjectType
+{
+    EBase_Object = 0,
+    EBase_Character,
+    EMonster_Character,
+    EPlayer_Character,
+    EBullet,
+    EStatic,
+    EObject_Type_Count
+};
+
 class Object
 {
 public:
@@ -35,6 +46,8 @@ public:
 
     unsigned int& id() { return m_id; }
 
+    void type(EObjectType t) { m_type = t; }
+    EObjectType type() const { return m_type; }
 protected:
 
 	mathgp::vector3 m_pos;
@@ -43,4 +56,6 @@ protected:
     bool m_renderShadow;
     float m_size;
     unsigned int m_id;
+
+    EObjectType m_type;
 };

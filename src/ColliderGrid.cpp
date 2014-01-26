@@ -20,6 +20,17 @@
 
 using namespace mathgp;
 
+bool ColliderGrid::m_collisionMatrix[EObject_Type_Count][EObject_Type_Count] = {
+   //                   EBase_Object ,EBase_Character, EMonster_Character,EPlayer_Character,EBullet,EStatic, 
+    /*EBase_Object,*/       { true,     true,           true,               true,           true, true },
+    /*EBase_Character,*/    { true,     true,           true,               true,           true, true },
+    /*EMonster_Character,*/ { true,     true,           true,               false,          true, true },
+    /*EPlayer_Character,*/  { true,     true,           false,              false,          true, true },
+    /*EBullet,*/            { true,     true,           true,               true,           false, true },
+    /*EStatic,*/            { true,     true,           true,               true,           true, true }
+    
+};
+
 ColliderGrid::ColliderGrid():
 m_sizeX(g_gridCells),
 m_sizeY(g_gridCells),
@@ -119,7 +130,7 @@ std::shared_ptr<Object> ColliderGrid::requestMoveTo(Object* obj, float newX, flo
             it = m_grid[x][y].begin();
             while (it != m_grid[x][y].end())
             {
-                if ((*it).get() != obj)
+                if ((*it).get() != obj && m_collisionMatrix[(*it)->type()][obj->type()])
                 {                    
                     if (std::sqrt(((*it)->x() - newX) * ((*it)->x() - newX) + ((*it)->y() - newY) * ((*it)->y() - newY)) < obj->r() + (*it)->r())
                     {
@@ -318,7 +329,7 @@ std::vector<std::shared_ptr<Object> > ColliderGrid::collideWithQuadsOnClick(cons
         {
             continue;
         }
-        for (int j = -1; j + id.y() <= 1; ++j)
+        for (int j = -1; j <= 1; ++j)
         {
             y = id.y() + j;
             if (y < 0 || y >= m_sizeY)
@@ -329,8 +340,9 @@ std::vector<std::shared_ptr<Object> > ColliderGrid::collideWithQuadsOnClick(cons
             it = m_grid[x][y].begin();
             while (it != m_grid[x][y].end())
             {
-                topLeftWorld = (*it)->position() + (up*(*it)->bb_h()) + (left*((*it)->bb_w() / 2.0f));
-                botRightWorld = (*it)->position() + ((-1.0f*left)*((*it)->bb_w() / 2.0f));
+                //topLeftWorld = (*it)->position() + (up*(*it)->bb_h()) + (left*((*it)->bb_w() / 2.0f));
+                topLeftWorld = (*it)->position() + up*(*it)->bb_h();
+                botRightWorld = (*it)->position() + (-1.0f*left)*(*it)->bb_w();
 
                 topLeftScreen = transform_coord(topLeftWorld, projectionView);
                 

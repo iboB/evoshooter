@@ -11,8 +11,8 @@
 #pragma once
 
 #include "ExplicitSingleton.h"
-
-class Object;
+#include "Object.h"
+//class Object;
 
 typedef std::vector<std::vector<std::list<std::shared_ptr<Object> > > > gridContainer;
 
@@ -53,4 +53,6 @@ private:
 	int m_sizeY;
     std::shared_ptr<Object> m_dummyObject; //dummy obj to simulate wall collisions;
     unsigned int m_dummyObjectId;
+public:
+    static bool m_collisionMatrix[EObject_Type_Count][EObject_Type_Count];
 };

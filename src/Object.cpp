@@ -22,13 +22,14 @@ m_id(0)
 {
 }
 
-Object::Object(const mathgp::vector3& pos, float bc):
+Object::Object(const mathgp::vector3& pos, float halfSize):
 m_pos(pos),
-m_boundingCircle(bc),
-m_bb(mathgp::v(10.0f, 10.0f)),
+m_boundingCircle(halfSize),
+m_bb(mathgp::v(halfSize*2, halfSize*2)),
 m_renderShadow(false),
-m_size(bc*2)
+m_size(halfSize*2)
 {
+
 }
 
 Object::~Object()
