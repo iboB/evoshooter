@@ -302,7 +302,7 @@ std::vector<std::shared_ptr<Object> > ColliderGrid::collideCirclesWith2dRay(math
 #include <iostream>
 std::vector<std::shared_ptr<Object> > ColliderGrid::collideWithQuadsOnClick(const mathgp::uvector2& screenPos, const mathgp::vector3& worldPoint)
 {
-    m_currentCollisionRayStart = v(0.0f, 0.0f, 0.0f); //todo: make this player pos;
+    //m_currentCollisionRayStart = v(0.0f, 0.0f, 0.0f); //todo: make this player pos;
     const vector3 up = v(0.0f, 0.0f, 1.0f);
     const vector3 left = v(-1.0f, 0.0f, 0.0f);
     std::vector<std::shared_ptr<Object> > out;
@@ -368,7 +368,7 @@ std::vector<std::shared_ptr<Object> > ColliderGrid::collideWithQuadsOnClick(cons
         }
     }
 
-    std::sort(out.begin(), out.end(), SortComparer(this));
+    //std::sort(out.begin(), out.end(), SortComparer(this));
     if (out.size() > 0)
     {
         std::cout << "hit!" << std::endl;

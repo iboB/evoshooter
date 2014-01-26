@@ -63,8 +63,10 @@ sc float Target_World_Cost_Rise_Per_Second = 2;
 sc float Collision_Circle_Scale_Factor = 0.15f; //size * Collision_Circle_Scale_Factor = collision circle radius
 sc float Shadow_Scale_Factor = 0.5f; //scales shadows according to size
 sc float Niki_Constant = 0.008f;  //the scale at which obj texture pixes get scaled to world space NOTE: havn't hooked it, dunno where it's used!sc float Niki_Constant = 0.008f;  //the scale at which obj texture pixes get scaled to world space NOTE: havn't hooked it, dunno where it's used!
-sc int Player_Starting_Health = 1000;
+sc int Player_Starting_Health = 9999;
 sc int Knife_Damage_Min = 50;
 sc int Knife_Damage_Max = 100;
 sc int Pistol_Damage_Min = 10;
 sc int Pistol_Damage_Max = 125;
+sc int Shotgun_Damage_Min = 100;
+sc int Shotgun_Damage_Max = 225;

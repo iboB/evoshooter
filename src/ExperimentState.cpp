@@ -194,16 +194,18 @@ void ExperimentState::handleEvent(const SDL_Event& event)
             SoundManager::instance().playSound((ESounds)0);
             break;
         case SDLK_1:
-            SoundManager::instance().playSound((ESounds)1);
+            //SoundManager::instance().playSound((ESounds)1);
+            World::instance().mainCharacter()->previousWeapon();
             break;
         case SDLK_2:
-            SoundManager::instance().playSound((ESounds)2);
+            //SoundManager::instance().playSound((ESounds)2);
+            World::instance().mainCharacter()->nextWeapon();
             break;
         case SDLK_3:
-            SoundManager::instance().playSound((ESounds)3);
+            //SoundManager::instance().playSound((ESounds)3);
             break;
         case SDLK_SPACE:
-            World::instance().mainCharacter()->Die();
+            //World::instance().mainCharacter()->Die();
             break;
         case SDLK_l:
             World::instance().mainCharacter()->GetDamage();
