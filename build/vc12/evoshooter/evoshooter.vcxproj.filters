@@ -48,9 +48,8 @@
     <ClCompile Include="..\..\..\src\MonsterDNA.cpp">
       <Filter>Evo</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\MonsterCharacter.cpp">
-      <Filter>Evo</Filter>
-    </ClCompile>
+    <ClCompile Include="..\..\..\src\MonsterCharacter.cpp" />
+    <ClCompile Include="..\..\..\src\MonsterAttacks.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\AnimationsController.h" />
@@ -102,14 +101,11 @@
     <ClInclude Include="..\..\..\src\EvoShooter.pch.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\Monster.h">
-      <Filter>Evo</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\MonsterDNA.h">
       <Filter>Evo</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\MonsterCharacter.h">
-      <Filter>Evo</Filter>
-    </ClInclude>
+    <ClInclude Include="..\..\..\src\Monster.h" />
+    <ClInclude Include="..\..\..\src\MonsterCharacter.h" />
+    <ClInclude Include="..\..\..\src\MonsterAttacks.h" />
   </ItemGroup>
 </Project>

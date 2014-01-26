@@ -13,10 +13,13 @@
 #include "Character.h"
 #include "MonsterDNA.h"
 
+class MonsterAttack;
+
 class MonsterCharacter : public Character
 {
 public:
     MonsterCharacter(const mathgp::vector3& position, const std::string& name, const std::vector<AttackData>& attacks);
+    ~MonsterCharacter();
 
     void SetMoveDirection(const mathgp::vector3& dir);
     void SetTargetPoint(const mathgp::point3& point);
@@ -44,7 +47,7 @@ private:
     void think(int dt);
     MonsterDNA m_dna;
 
-    void aggravate() { m_currentAggro = m_aggroCooldown;  }
+    void aggravate();
 
     // stats
     int m_maxHp;
@@ -59,9 +62,12 @@ private:
     bool isTired() const { return m_restCooldown != 0; }
     
     float m_speed; // m/s
+    float m_regularSpeed;
+    float m_aggroSpeed;
+
     float m_size;
 
-    float m_aggroRange;
+    float m_chanceToAggroOnSight;
     int m_aggroCooldown;
     int m_currentAggro;
 
@@ -85,4 +91,6 @@ private:
 
     mathgp::point3 m_lastOwnPosition;
     int m_timeAtLastPosition;
+
+    MonsterAttack* m_attack;
 };
