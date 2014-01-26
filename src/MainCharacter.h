@@ -15,7 +15,7 @@
 class MainCharacter : public Character
 {
 public:
-    MainCharacter(const mathgp::vector3& position);
+    MainCharacter(const mathgp::vector3& position, const std::vector<AttackData>& attacks);
 
     virtual void update(int dt);
 };

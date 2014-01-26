@@ -12,6 +12,8 @@
 
 #include "ExplicitSingleton.h"
 
+#include "MonsterCharacter.h"
+
 class Object;
 class MainCharacter;
 
@@ -28,8 +30,8 @@ public:
 
 	std::shared_ptr<Object> object(unsigned int id);
     unsigned int spawnObject(float x, float y, float r);
-    unsigned int spawnMonster(float x, float y, float r, const std::string& name);
-    unsigned int spawnPlayer(float x, float y, float r);
+    unsigned int spawnMonster(float x, float y, float r, const std::string& name, const AttacksData& attacks);
+    unsigned int spawnPlayer(float x, float y, float r, const AttacksData& attacks);
     void destroyObject(unsigned int id);
     objectsContainer& objects();
     MainCharacter* mainCharacter() { return m_mainCharacter; }

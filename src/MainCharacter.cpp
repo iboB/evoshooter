@@ -12,8 +12,8 @@
 
 #include "MainCharacter.h"
 
-MainCharacter::MainCharacter(const mathgp::vector3& position)
-: Character(position, "player")
+MainCharacter::MainCharacter(const mathgp::vector3& position, const std::vector<AttackData>& attacks)
+: Character(position, "eye", attacks)
 {
 
 }

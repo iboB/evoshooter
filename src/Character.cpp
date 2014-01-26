@@ -16,16 +16,18 @@
 #include "GameState.h"
 #include "Camera.h"
 
-Character::Character(const mathgp::vector3& position, const std::string& name)
+Character::Character(const mathgp::vector3& position, const std::string& name, const std::vector<AttackData>& attacks)
 : Object(position, 0.3f)
 {
     m_renderShadow = true;
     m_AnimationsController.SetMovementAnimations(std::string("sprites/")  + name + "_walk_anim.png", 0.008f);
     m_AnimationsController.SetDamage(std::string("sprites/") + name + "_dmg_anim.png", 0.008f);
     m_AnimationsController.SetDeath(std::string("sprites/") + name + "_die_anim.png", 0.008f);
-    m_AnimationsController.AddAttack("sprites/attacks/attack_anim_01.png", "sprites/attacks/attack_anim_idle_01.png", Vec::zero, 0.005f);
-    m_AnimationsController.AddAttack("sprites/attacks/attack_anim_02.png", "sprites/attacks/attack_anim_idle_02.png", Vec::zero, 0.005f);
-    m_AnimationsController.AddAttack("sprites/attacks/attack_anim_03.png", "sprites/attacks/attack_anim_idle_03.png", mathgp::vc(0.f, 0.25f, 0.f), 0.005f);
+
+    for (auto it = attacks.begin(); it != attacks.end(); ++it)
+    {
+        m_AnimationsController.AddAttack(it->AttackName, it->IdleName, it->Offset, it->Scale, it->IsWholeBodyAttack);
+    }
 }
 
 void Character::Move(const mathgp::vector3& position)

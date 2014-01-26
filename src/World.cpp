@@ -53,11 +53,12 @@ unsigned int World::spawnObject(float x, float y, float r)
     return id;
 }
 
-unsigned int World::spawnMonster(float x, float y, float r, const std::string& name)
+unsigned int World::spawnMonster(float x, float y, float r, const std::string& name, const AttacksData& attacks)
 {
     mathgp::vector3 pos = mathgp::v(x, y, 0.0f);
     unsigned int id = m_firstFreeId;
-    MonsterCharacter* monster = new MonsterCharacter(pos, name);
+
+    MonsterCharacter* monster = new MonsterCharacter(pos, name, attacks);
     monster->Move(pos);
 
     m_objects[id] = std::shared_ptr<Object>(monster);
@@ -73,11 +74,11 @@ unsigned int World::spawnMonster(float x, float y, float r, const std::string& n
     return id;
 }
 
-unsigned int World::spawnPlayer(float x, float y, float r)
+unsigned int World::spawnPlayer(float x, float y, float r, const AttacksData& attacks)
 {
     mathgp::vector3 pos = mathgp::v(x, y, 0.0f);
     unsigned int id = m_firstFreeId;
-    MainCharacter* player = new MainCharacter(pos);
+    MainCharacter* player = new MainCharacter(pos, attacks);
     player->Move(pos);
 
     m_objects[id] = std::shared_ptr<Object>(player);
