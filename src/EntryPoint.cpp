@@ -42,7 +42,7 @@ int main(int argc, char* argv[])
 
 
     ////srand(10);
-    //for (int i = 0; i < MonsterDNA::Num_Genes; ++i)
+    //for (int i = 0; i < Num_Genes; ++i)
     //{
     //    for (auto& dd : d)
     //    {
@@ -50,6 +50,10 @@ int main(int argc, char* argv[])
     //    }
 
     //    cout << endl;
+    //}
+    //for (auto& dd : d)
+    //{
+    //    cout << dd.calculateCost() << "\t";
     //}
 
     return 0;

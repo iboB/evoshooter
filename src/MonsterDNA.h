@@ -12,14 +12,14 @@
 
 enum GeneType
 {
-    G_AggroRange, // 0 - only when hit, 1 - entire map
+    G_Aggresiveness, // 0 - none, 1 - 100%
     G_AggroCooldown, // aggro cooldown - 0 immediately - 1: minutes
     G_Sight, // 0 blind - 1 sees entire map
     G_Hearing, // 0 deaf - 1 hears entire map
     G_Empathy, // 0 doesn't care if not hit - 1 aggro on every attack in sight/hearing
     G_SenseOfOwnRange, // 0 random attacks - 1 attack only in range
     G_AttackDesire, // 1 only when player is in range - 0 total randomness (ie 1 - chance to perform random attack)
-    G_Aim, // 1 shoots for player, 0.5 interpolates player position, 1 extrapolates player position
+    G_Aim, // no clear cost???? extrapolate a part of a unit in front of a player
     G_Precision, // 1 exactly as needed, 0 - wide range (meaningless for mellee)
     G_HP, // percent of max - guideline
     G_Speed, // percent of max - guideline

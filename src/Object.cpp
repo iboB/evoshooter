@@ -82,7 +82,7 @@ void Object::y(float val)
 
 float Object::r() const
 {
-	return m_size*0.15;
+	return m_size*0.15f;
 }
 bool Object::collidesWith(std::shared_ptr<Object> otherGuy)
 {

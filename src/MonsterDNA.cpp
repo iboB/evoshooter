@@ -67,6 +67,13 @@ MonsterDNA::MonsterDNA()
         g.setMutationLevel(commonMutationLevel);
         g.setCostFactor(1);
     }
+
+    // no clear cost here
+    m[G_Aim].setCostFactor(0);
+    m[G_UseClaws].setCostFactor(0);
+    m[G_UseSpitter].setCostFactor(0);
+    m[G_UseGrapple].setCostFactor(0);
+    m[G_UseThorns].setCostFactor(0);
 }
 
 float MonsterDNA::calculateCost() const

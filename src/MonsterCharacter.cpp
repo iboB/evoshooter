@@ -17,14 +17,26 @@
 
 #include "World.h"
 #include "MainCharacter.h"
+#include "ColliderGrid.h"
+
+#include "MonsterAttacks.h"
 
 using namespace mathgp;
 
 MonsterCharacter::MonsterCharacter(const mathgp::vector3& position, const std::string& name, const std::vector<AttackData>& attacks)
 : Character(position, name, attacks)
 , m_MoveDirection()
+, m_attack(nullptr)
+, m_damagePainFrames(0)
+, m_playerInSightLastFrame(false)
 {
     m_MoveDirection = mathgp::vc(0.f, 0.0f, 0.f);
+
+}
+
+MonsterCharacter::~MonsterCharacter()
+{
+    delete m_attack;
 }
 
 void MonsterCharacter::SetMoveDirection(const mathgp::vector3& dir)
@@ -40,6 +52,15 @@ void MonsterCharacter::SetTargetPoint(const point3& point)
 {
     vector3 direction = point - position();
     SetMoveDirection(direction);
+}
+
+void MonsterCharacter::GetDamage()
+{
+    //armor...
+
+    m_damagePainFrames = 2;
+
+    Character::GetDamage();
 }
 
 void MonsterCharacter::update(int dt)
@@ -84,6 +105,8 @@ void MonsterCharacter::useDNA(const MonsterDNA& dna)
     // reduce speed by up to 40% based on size
     m_speed = Max_Speed *
         saturate(dna(G_Speed) - dna(G_Size) * 0.4f);
+    m_regularSpeed = m_speed;
+    m_aggroSpeed = m_speed * 1.5f;
 
     // increase hp by up to 20% based on size
     m_hp = m_maxHp = int(Max_HP *
@@ -95,12 +118,12 @@ void MonsterCharacter::useDNA(const MonsterDNA& dna)
     m_restCooldown = 0;
     m_neededRestTime = 500 + int(dna(G_Size) * 4000);
 
-    m_aggroRange = g_worldSize * dna(G_AggroRange);
-    m_aggroCooldown = int(dna(G_AggroCooldown) * 60000); // 1 minute
-    m_currentAggro = 0;
+    m_chanceToAggroOnSight = 0.25f * g_worldSize * dna(G_Aggresiveness);
+    m_aggroCooldown = 0;
+    m_aggroTime = int(dna(G_Aggresiveness) * 60000); // 1 minute;
 
-    m_sightRange = g_worldSize * dna(G_Sight);
-    m_hearingRange = g_worldSize * dna(G_Hearing);
+    m_sightRange = 0.25f * g_worldSize * dna(G_Sight);
+    m_hearingRange = 0.25f * g_worldSize * dna(G_Hearing);
 
     // 100 hp per 10 seconds
     // means 1 hp per 100 ms
@@ -111,7 +134,6 @@ void MonsterCharacter::useDNA(const MonsterDNA& dna)
 
     m_hasLastKnownPlayerPosition = false;
     m_lastKnownPlayerPosition = Vec::zero;
-
     
     // idle 
     m_loiterCooldown = 0;
@@ -137,17 +159,24 @@ void MonsterCharacter::useDNA(const MonsterDNA& dna)
     switch (weapon)
     {
     case G_UseSpitter:
+        //m_attack = new Spit;
         break;
     case G_UseGrapple:
+        //m_attack = new Grapple;
         break;
     case G_UseClaws:
+        //m_attack = new Claws;
         break;
     case G_UseThorns:
+        //m_attack = new Thorns;
         break;
     default:
         // no weapon!
+        //m_attack = new NoAttack;
         break;
     }
+
+    m_attack->setOwner(this);
 
     float maxDefense = 0;
     int defense = G_UseSpitter;
@@ -195,10 +224,12 @@ void MonsterCharacter::think(int dt)
         return; // duh
     }
 
+    m_lifetime += dt;
+
     ////////////////////////////////////////////
     // do cooldowns
     
-    // regen
+    // hp regen
     m_regenPer100ms += float(dt) / 100;
     while (m_regenPer100ms >= 1)
     {
@@ -226,16 +257,33 @@ void MonsterCharacter::think(int dt)
         if (m_loiterCooldown < 0) m_loiterCooldown = 0;
     }
 
+    if (m_damagePainFrames > 0)
+    {
+        --m_damagePainFrames;
+    }
+
     ////////////////////////////////////////////
     // senses
+    see();
 
+    hear();
 
     ////////////////////////////////////////////
     // behave
+    if (isTired())
+    {
+        // we're resting
+        SetMoveDirection(Vec::zero);
+        return;
+    }
+
     if (!hasAggro())
     {
         // no aggro -> stroll aimlessly around the world
         // or loiter
+
+        m_speed = m_regularSpeed;
+
         if (isLoitering())
         {
             return;
@@ -259,6 +307,7 @@ void MonsterCharacter::think(int dt)
         {
             // loiter up to 3 seconds
             m_loiterCooldown = int(Util::Rnd01() * 3000);
+            m_hasPointToGoTo = false;
         }
         else
         {
@@ -268,15 +317,124 @@ void MonsterCharacter::think(int dt)
             point *= m_sightRange;
             point += position();
 
+            m_pointToGoTo = point;
+            m_hasPointToGoTo = true;
+
             SetTargetPoint(point);
         }
     }
+    else // we have aggro!
+    {
+        // check if the wretched player is within our sight
 
+        m_speed = m_aggroSpeed;
 
+        World& world = World::instance();
+        MainCharacter* enemy = world.mainCharacter();
 
-    World& world = World::instance();
+        float distanceToPlayer = distance(position(), enemy->position());
 
-    MainCharacter* enemy = world.mainCharacter();
+        if (distanceToPlayer < m_sightRange)
+        {
+            // we see him
+            // go towards him
+            SetTargetPoint(enemy->position());
 
-    //if (no)
+            //if (distanceToPlayer < m_attack->senseOfRange())
+            //{
+            //    // we think we can also attack
+            //    m_attack->attack(enemy->position());
+            //}
+            
+            // should we only care about this when in aggro?
+            m_hasLastKnownPlayerPosition = true;
+            m_lastKnownPlayerPosition = enemy->position();
+        }
+        else
+        {
+            if (m_hasLastKnownPlayerPosition)
+            {
+                if (distance(position(), m_lastKnownPlayerPosition) > 0.3f)
+                {
+                    // go there
+                    SetTargetPoint(m_lastKnownPlayerPosition);
+                    return;
+                }
+                
+                // we're there and he isnt
+                // angrily go to random point in own range
+            }
+        }
+    }
+}
+
+void MonsterCharacter::aggravate()
+{
+    m_aggroCooldown = m_aggroTime;
+
+    // remove some meaninless stuff now
+    m_hasPointToGoTo = false;
+}
+
+void MonsterCharacter::loseStamina(int n)
+{
+    m_stamina -= n;
+    if (m_stamina <= 0)
+    {
+        m_stamina = 0;
+        m_restCooldown = m_neededRestTime;
+    }
+}
+
+void MonsterCharacter::see()
+{
+    std::vector<std::shared_ptr<Object> > objects = ColliderGrid::instance().collideWithCircle(mathgp::vc(m_pos.x(), m_pos.y()), m_sightRange);
+
+    bool playerNear = false;
+
+    for (auto it = objects.begin(); it != objects.end(); ++it)
+    {
+        if ((*it)->type() == EMonster_Character && (*it).get() != this)
+        {
+            MonsterCharacter* monster = (MonsterCharacter*)((*it).get());
+
+            if (monster->m_damagePainFrames > 0)
+            {
+                aggravate();
+            }
+        }
+        
+        if ((*it)->type() == EPlayer_Character)
+        {
+            playerNear = true;
+            if (!m_playerInSightLastFrame)
+            {
+                aggravate();
+            }
+        }
+    }
+
+    m_playerInSightLastFrame = playerNear;
+}
+
+void MonsterCharacter::hear()
+{
+    std::vector<std::shared_ptr<Object> > objects = ColliderGrid::instance().collideWithCircle(mathgp::vc(m_pos.x(), m_pos.y()), m_hearingRange);
+
+    for (auto it = objects.begin(); it != objects.end(); ++it)
+    {
+        if ((*it)->type() != EMonster_Character || (*it).get() == this)
+        {
+            continue;
+        }
+
+        MonsterCharacter* monster = (MonsterCharacter*)((*it).get());
+
+        if (monster->hasAggro())
+        {
+            aggravate();
+
+            break;
+        }
+    }
 }

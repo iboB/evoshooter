@@ -127,7 +127,7 @@ void ExperimentState::initialize()
     
     World::instance().spawnPlayer(2.f, 1.5f, 0.5f, attacks2);
 
-    m_camera->followObject(World::instance().mainCharacter());
+    m_camera->followObject(monster);
     ShadowManager::instance().initialize();
     ColliderGrid::instance().initialize();
 }
