@@ -59,12 +59,14 @@ unsigned int World::spawnObject(float x, float y, float r)
     return id;
 }
 
-unsigned int World::spawnMonster(float x, float y, float r, const std::string& name, const AttacksData& attacks)
+//unsigned int World::spawnMonster(float x, float y, float r, const std::string& name, const AttacksData& attacks)
+unsigned int World::spawnMonster(const MonsterDNA& dna)
 {
+    float x = 0, y = 0;
     mathgp::vector3 pos = mathgp::v(x, y, 0.0f);
     unsigned int id = m_firstFreeId;
 
-    MonsterCharacter* monster = new MonsterCharacter(pos, name, attacks);
+    MonsterCharacter* monster = new MonsterCharacter(pos, dna);
     monster->id() = id;
     monster->type(EMonster_Character);
     monster->Move(pos);

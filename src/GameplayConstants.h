@@ -57,6 +57,9 @@ sc float Time_To_Lose_1_Stamina_In_Aggro = 1000 / Stamina_Loss_Per_Aggro_Second;
 
 sc float Close_Distance_In_World = 0.3f; // distance to a place in the world considered "there"
 
+sc float Initial_Target_World_Cost = 150;
+sc float Target_World_Cost_Rise_Per_Second = 2;
+
 sc float Collision_Circle_Scale_Factor = 0.15f; //size * Collision_Circle_Scale_Factor = collision circle radius
 sc float Shadow_Scale_Factor = 0.5f; //scales shadows according to size
 sc float Niki_Constant = 0.008f;  //the scale at which obj texture pixes get scaled to world space NOTE: havn't hooked it, dunno where it's used!sc float Niki_Constant = 0.008f;  //the scale at which obj texture pixes get scaled to world space NOTE: havn't hooked it, dunno where it's used!

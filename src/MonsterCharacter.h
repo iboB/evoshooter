@@ -25,7 +25,7 @@ enum EMonsterDefenseType
 class MonsterCharacter : public Character
 {
 public:
-    MonsterCharacter(const mathgp::vector3& position, const std::string& name, const std::vector<AttackData>& attacks);
+    MonsterCharacter(const mathgp::vector3& position, const MonsterDNA& dna);
     ~MonsterCharacter();
 
     void SetMoveDirection(const mathgp::vector3& dir);
@@ -47,6 +47,8 @@ public:
 
     float fitness() const;
 
+    void Die() override;
+
 private:
     mathgp::vector3 m_MoveDirection;
     
@@ -56,7 +58,6 @@ public:
     void useDNA(const MonsterDNA& dna);
     MonsterDNA giveOffspring();
 
-    float calculateFitness() const; // damage * lifetime
 
     bool hasAggro() { return m_aggroCooldown != 0; }
 

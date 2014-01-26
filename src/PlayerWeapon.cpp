@@ -79,8 +79,7 @@ void PlayerWeapon::meleeAttack(const mathgp::vector3& worldPoint)
 {
     vector3 playerPos = World::instance().mainCharacter()->position();
     vector3 directionOfAttack = normalized(worldPoint - playerPos);
-    vector3 pointOfAttack = directionOfAttack*0.4 + playerPos;
-
+    vector3 pointOfAttack = directionOfAttack * 0.4f + playerPos;
 
     std::vector< std::shared_ptr<Object> > affectedTargets = ColliderGrid::instance().collideWithCircle(pointOfAttack.xy(), 0.5f);
     std::vector< std::shared_ptr<Object> >::iterator it = affectedTargets.begin();

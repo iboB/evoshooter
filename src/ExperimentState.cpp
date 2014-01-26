@@ -22,6 +22,7 @@
 #include "GLSentries.h"
 #include "Level.h"
 #include "GUILayer.h"
+#include "SpawnManager.h"
 #include "Application.h"
 #include "Util.h"
 #include "Overlay.h"
@@ -39,7 +40,7 @@
 
 using namespace mathgp;
 
-SpritePtr g_Sprite;
+//SpritePtr g_Sprite;
 MonsterCharacter* g_Monster;
 
 void GameHud::health(int health, int maxHealth)
@@ -84,7 +85,7 @@ void ExperimentState::initialize()
 
     m_moveWeight = Vec::zero;
 
-    g_Sprite = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/sprite.png", 2, 4, 8000);
+    //g_Sprite = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/sprite.png", 2, 4, 8000);
     //g_Sprite = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/sprite.png", 2, 4, 8000);
 
     //g_Sprite.reset(new Sprite());
@@ -106,19 +107,6 @@ void ExperimentState::initialize()
     attacks.push_back(a1);
     attacks.push_back(a2);
     attacks.push_back(a3);
-
-    srand(105);
-    for (int i = 0; i < 10; ++i)
-    {
-        float2 pos = v(Util::Rnd01(), Util::Rnd01()) * g_worldSize;
-
-        unsigned int id = World::instance().spawnMonster(pos.x(), pos.y(), 0.5f, "player", attacks);
-        MonsterCharacter* monster = (MonsterCharacter*)World::instance().object(id).get();
-        monster->SetMoveDirection(mathgp::vc(0.0f, 0.0f, 0.f));
-        MonsterDNA dna;
-        dna.randomize();
-        monster->useDNA(dna);
-    }
 
     AttacksData attacks2;
     AttackData a11 = { "sprites/attacks/attack_anim_01.png", "sprites/attacks/attack_anim_idle_01.png", Vec::zero, 0.005f, false };
@@ -345,6 +333,7 @@ void ExperimentState::update(int dt)
         World::instance().mainCharacter()->Move(World::instance().mainCharacter()->position() + unitsPerSecond * frameTime * normalized(m_moveWeight));
     }
 
+    SpawnManager::instance().update(dt);
     World::instance().update(dt);
     //g_Sprite->update(vc(2.f, 4.f, 0.0f), m_camDirection);
 
