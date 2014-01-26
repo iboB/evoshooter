@@ -84,7 +84,7 @@ void Character::OnHit(EAttackDamageType dmgType, int dmg)
 {
 
 }
-void Character::rawDamage(int dmg)
+int Character::rawDamage(int dmg)
 {
     m_hp -= dmg;
 
@@ -97,4 +97,6 @@ void Character::rawDamage(int dmg)
     {
         GetDamage();
     }
+
+    return dmg;
 }

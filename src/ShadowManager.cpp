@@ -15,6 +15,7 @@
 #include "ResourceManager.h"
 #include "Effect.h"
 #include "GLSentries.h"
+#include "GameplayConstants.h"
 
 using namespace mathgp;
 
@@ -77,7 +78,7 @@ void ShadowManager::update()
             quad.vertices[3].texCoord = v(1.0f, 0.0f);
             for (int i = 0; i < 4; ++i)
             {
-                quad.vertices[i].position *= (obj->size()*0.5f);
+                quad.vertices[i].position *= (obj->size()*Shadow_Scale_Factor);
                 //quad.vertices[i].position = (quad.vertices[i].position - obj->position()) + obj->position();
                 quad.vertices[i].position += obj->position();
                 quad.vertices[i].position.z() = 0.001f;

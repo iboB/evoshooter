@@ -38,7 +38,7 @@ public:
 
     virtual void update(int dt);
     void heal(int hp);
-    void rawDamage(int dmg);
+    int rawDamage(int dmg);
 protected:
     AnimationsController m_AnimationsController;
     int m_maxHp;
