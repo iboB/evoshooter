@@ -17,6 +17,8 @@
 #include "MonsterCharacter.h"
 #include "MainCharacter.h"
 #include "Camera.h"
+#include "Bullet.h"
+#include "StaticObject.h"
 #include "GLSentries.h"
 #include "Level.h"
 #include "GUILayer.h"
@@ -224,6 +226,23 @@ void ExperimentState::handleEvent(const SDL_Event& event)
             break;
         case SDLK_m:
             World::instance().mainCharacter()->Attack(2);
+            break;
+        case SDLK_o:
+            {
+                SpritePtr projectile = ResourceManager::instance().createSpriteFromSingleFrameTexture("sprites/projectiles/bullet.png");
+                SpritePtr impact = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/projectiles/explosion.png", 1, 4, 400);
+
+                unsigned int id = World::instance().spawnBullet(0.5f, 0.5f, 0.1f, projectile, impact, mathgp::vc(0.5f, 0.5f, 0.0f), 3.f, 5.f);
+
+                ((Bullet*)(World::instance().object(id).get()))->shoot();
+            }
+            break;
+        case SDLK_v:
+            {
+                SpritePtr sprite  = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/projectiles/explosion.png", 1, 4, 4000);
+                sprite->setScale(0.01f);
+                World::instance().spawnStaticObject(3.5f, 3.5f, 0.1f, sprite);
+            }
             break;
         case SDLK_4:
         {

@@ -18,12 +18,10 @@ typedef std::shared_ptr<Sprite> SpritePtr;
 class Bullet : public Object
 {
 public:
-    Bullet();
+    Bullet(const mathgp::vector3& pos, float bc);
     ~Bullet();
 
-    void init(const std::string& projectile, Uint32 projectileFrames, Uint32 projectileDuration,
-        const std::string& impact, Uint32 impactFrames, Uint32 impactDuration,
-        const mathgp::vector3& startPosition, const mathgp::vector3& direction, float speed);
+    void init(SpritePtr projectile, SpritePtr impact, const mathgp::vector3& startPosition, const mathgp::vector3& direction, float speed, float maxDistance);
     
     void shoot();
     
@@ -34,8 +32,10 @@ private:
     SpritePtr m_Projectile;
     SpritePtr m_Impact;
 
+    mathgp::vector3 m_StartPosition;
     mathgp::vector3 m_Direction;
     float m_Speed;
+    float m_MaxDistanceSq;
 
     bool m_IsFlying;
     bool m_IsExploding;

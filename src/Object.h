@@ -46,6 +46,11 @@ public:
 
     unsigned int& id() { return m_id; }
 
+    virtual void Move(const mathgp::vector3& position){}
+    virtual void Die(){}
+    virtual void GetDamage(){}
+    virtual void Attack(Uint32 attackIndex){}
+
     void type(EObjectType t) { m_type = t; }
     EObjectType type() const { return m_type; }
 protected:
