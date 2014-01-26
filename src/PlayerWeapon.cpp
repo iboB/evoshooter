@@ -4,9 +4,9 @@
 // Borislav Stanimirov, Filip Chorbadzhiev, Nikolay Dimitrov
 // Assen Kanev, Jem Kerim, Stefan Ivanov
 //
-// Distributed under the MIT Software License
-// See accompanying file LICENSE.txt or copy at
-// http://opensource.org/licenses/MIT
+//This game and all content in this file is licensed under  
+//the Attribution-Noncommercial-Share Alike 3.0 version of the Creative Commons License.
+//For reference the license is given below and can also be found at http://creativecommons.org/licenses/by-nc-sa/3.0/
 //
 #include "EvoShooter.pch.h"
 #include "PlayerWeapon.h"
@@ -14,6 +14,8 @@
 #include "ColliderGrid.h"
 #include "MainCharacter.h"
 #include "Util.h"
+#include "Bullet.h"
+#include "ResourceManager.h"
 
 std::string PlayerWeapon::m_weaponNames[EWeaponCount] =
 {
@@ -45,6 +47,7 @@ PlayerWeapon::~PlayerWeapon()
 
 void PlayerWeapon::attack(const mathgp::vector3& worldPoint, Object* objectHit)
 {
+
     unsigned int now = SDL_GetTicks();
     if (now >= m_lastAttackTimestamp + m_attackDelay)
     {
@@ -55,24 +58,51 @@ void PlayerWeapon::attack(const mathgp::vector3& worldPoint, Object* objectHit)
             meleeAttack(worldPoint);
             break;
         case EPistol:
+        {
+            if (objectHit && objectHit->type() != EPlayer_Character)
+            {
+                rangedAttack(objectHit->position());
+            }
+            else
+            {
+                rangedAttack(worldPoint);
+            }
+        }
             break;
         }
     }
 }
-
+unsigned PlayerWeapon::damage()
+{
+    return (unsigned)((m_damageRange.y() - m_damageRange.x())*Util::Rnd01() + m_damageRange.x());
+}
 void PlayerWeapon::meleeAttack(const mathgp::vector3& worldPoint)
 {
     vector3 playerPos = World::instance().mainCharacter()->position();
     vector3 directionOfAttack = normalized(worldPoint - playerPos);
-    vector3 pointOfAttack = directionOfAttack*0.4 + playerPos;
+    vector3 pointOfAttack = directionOfAttack*0.4f + playerPos;
 
 
     std::vector< std::shared_ptr<Object> > affectedTargets = ColliderGrid::instance().collideWithCircle(pointOfAttack.xy(), 0.5f);
     std::vector< std::shared_ptr<Object> >::iterator it = affectedTargets.begin();
     while (it != affectedTargets.end())
     {
-        unsigned damage = (m_damageRange.y() - m_damageRange.x())*Util::Rnd01() + m_damageRange.x();
-        (*it)->OnHit(m_damageType, damage);
+       
+        (*it)->OnHit(m_damageType, damage());
         ++it;
     }
+}
+
+void PlayerWeapon::rangedAttack(const mathgp::vector3& worldPoint)
+{
+    SpritePtr projectile = ResourceManager::instance().createSpriteFromSingleFrameTexture("sprites/projectiles/bullet.png");
+    SpritePtr impact = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/projectiles/explosion.png", 1, 4, 400);
+    vector3 playerPos = World::instance().mainCharacter()->position();
+    vector3 directionOfAttack = normalized(worldPoint - playerPos);
+
+    unsigned int id = World::instance().spawnBullet(playerPos.x(), playerPos.y(), 0.1f, projectile, impact, directionOfAttack, 3.f, 5.f);
+    Bullet* bullet = (Bullet*)(World::instance().object(id).get());
+    bullet->setDamage(damage());
+    bullet->setDamageType(m_damageType);
+    bullet->shoot();
 }

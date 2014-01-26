@@ -9,30 +9,36 @@
 //For reference the license is given below and can also be found at http://creativecommons.org/licenses/by-nc-sa/3.0/
 //
 #include "EvoShooter.pch.h"
-#include "AboutState.h"
+#include "DeathState.h"
 #include "GUILayer.h"
 #include "Application.h"
+#include "World.h"
 
-AboutState::AboutState()
+DeathState::DeathState()
     : m_guiLayer(nullptr)
 {
 
 }
 
-void AboutState::initialize()
+void DeathState::initialize()
 {
-    m_guiLayer = new GUILayer("about layer");
+    m_guiLayer = new GUILayer("death layer");
     m_guiLayer->initialize();
-    m_guiLayer->loadRootRml("gui/about.xml");
+    m_guiLayer->loadRootRml("gui/death.xml");
 }
 
-void AboutState::deinitialize()
+void DeathState::deinitialize()
 {
     m_guiLayer->deinitialize();
+    World::instance().reset();
+
     delete m_guiLayer;
+    
+    Application::instance().baseState()->deinitialize();
+    Application::instance().baseState()->initialize();
 }
 
-void AboutState::handleEvent(const SDL_Event& event)
+void DeathState::handleEvent(const SDL_Event& event)
 {
     if (event.type == SDL_KEYUP || event.type == SDL_MOUSEBUTTONDOWN)
     {
@@ -41,12 +47,12 @@ void AboutState::handleEvent(const SDL_Event& event)
     }
 }
 
-void AboutState::update(int dt)
+void DeathState::update(int dt)
 {
     m_guiLayer->update();
 }
 
-void AboutState::draw()
+void DeathState::draw()
 {
     m_guiLayer->draw();
 }

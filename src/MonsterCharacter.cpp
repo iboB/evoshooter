@@ -4,9 +4,9 @@
 // Borislav Stanimirov, Filip Chorbadzhiev, Nikolay Dimitrov
 // Assen Kanev, Jem Kerim, Stefan Ivanov
 //
-// Distributed under the MIT Software License
-// See accompanying file LICENSE.txt or copy at
-// http://opensource.org/licenses/MIT
+//This game and all content in this file is licensed under  
+//the Attribution-Noncommercial-Share Alike 3.0 version of the Creative Commons License.
+//For reference the license is given below and can also be found at http://creativecommons.org/licenses/by-nc-sa/3.0/
 //
 #include "EvoShooter.pch.h"
 
@@ -22,6 +22,8 @@
 #include "MonsterAttacks.h"
 
 #include "GameplayConstants.h"
+
+#include "SoundManager.h"
 
 using namespace mathgp;
 
@@ -201,7 +203,7 @@ void MonsterCharacter::useDNA(const MonsterDNA& dna)
         break;
     }
 
-   // m_attack->setOwner(this);
+    m_attack->setOwner(this);
 
     float maxDefense = 0;
     int defense = G_UseSpitter;
@@ -519,13 +521,16 @@ void MonsterCharacter::OnHit(EAttackDamageType dmgType, int dmg)
     }
 
     if (dmg > 0)
-        GetDamage();
+    {
 
-    rawDamage(dmg);
+        GetDamage();
+        rawDamage(dmg);
+        SoundManager::instance().playSound(ESounds_EnemyOnHit);
+    }
 }
 
 int MonsterCharacter::applyArmor(int dmg)
 {
-    dmg = dmg - (m_defenseStrength*dmg);
+    dmg = dmg - (int)(m_defenseStrength*dmg);
     return dmg;
 }

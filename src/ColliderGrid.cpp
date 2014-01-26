@@ -4,9 +4,9 @@
 // Borislav Stanimirov, Filip Chorbadzhiev, Nikolay Dimitrov
 // Assen Kanev, Jem Kerim, Stefan Ivanov
 //
-// Distributed under the MIT Software License
-// See accompanying file LICENSE.txt or copy at
-// http://opensource.org/licenses/MIT
+//This game and all content in this file is licensed under  
+//the Attribution-Noncommercial-Share Alike 3.0 version of the Creative Commons License.
+//For reference the license is given below and can also be found at http://creativecommons.org/licenses/by-nc-sa/3.0/
 //
 #include "EvoShooter.pch.h"
 #include "ColliderGrid.h"
@@ -25,8 +25,8 @@ bool ColliderGrid::m_collisionMatrix[EObject_Type_Count][EObject_Type_Count] = {
     /*EBase_Object,*/       { true,     true,           true,               true,           true, true },
     /*EBase_Character,*/    { true,     true,           true,               true,           true, true },
     /*EMonster_Character,*/ { true,     true,           true,               false,          true, true },
-    /*EPlayer_Character,*/  { true,     true,           false,              false,          true, true },
-    /*EBullet,*/            { true,     true,           true,               true,           false, true },
+    /*EPlayer_Character,*/  { true,     true,           false,              false,          false, true },
+    /*EBullet,*/            { true,     true,           true,               false,           false, true },
     /*EStatic,*/            { true,     true,           true,               true,           true, true }
     
 };
@@ -375,6 +375,18 @@ std::vector<std::shared_ptr<Object> > ColliderGrid::collideWithQuadsOnClick(cons
     }
     return out;
 }
+
+void ColliderGrid::resest()
+{
+    for (int i = 0; i < m_sizeX; ++i)
+    {
+        for (int j = 0; j < m_sizeY; ++j)
+        {
+            m_grid[i][j].clear();
+        }
+    }
+}
+
 /*
 bool ColliderGrid::collideAABBWith3dRay(const std::shared_ptr<Object> obj, const mathgp::vector3& rayStart, const mathgp::vector3& rayDir)
 {

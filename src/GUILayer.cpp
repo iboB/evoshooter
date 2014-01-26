@@ -2,9 +2,9 @@
 // gd-proto
 // Copyright (c) 2014 Borislav Stanimirov
 //
-// Distributed under the MIT Software License
-// See accompanying file LICENSE.txt or copy at
-// http://opensource.org/licenses/MIT
+//This game and all content in this file is licensed under  
+//the Attribution-Noncommercial-Share Alike 3.0 version of the Creative Commons License.
+//For reference the license is given below and can also be found at http://creativecommons.org/licenses/by-nc-sa/3.0/
 //
 // gui layer
 #include "EvoShooter.pch.h"
@@ -58,7 +58,7 @@ void GUILayer::update()
 
 void GUILayer::draw()
 {
-    SENTRY(GLDisableSentry, GL_DEPTH_TEST);    
+    SENTRY(GLDisableSentry, GL_DEPTH_TEST);
     SENTRY(GLEnableSentry, GL_BLEND);
 
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

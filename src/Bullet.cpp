@@ -4,9 +4,9 @@
 // Borislav Stanimirov, Filip Chorbadzhiev, Nikolay Dimitrov
 // Assen Kanev, Jem Kerim, Stefan Ivanov
 //
-// Distributed under the MIT Software License
-// See accompanying file LICENSE.txt or copy at
-// http://opensource.org/licenses/MIT
+//This game and all content in this file is licensed under  
+//the Attribution-Noncommercial-Share Alike 3.0 version of the Creative Commons License.
+//For reference the license is given below and can also be found at http://creativecommons.org/licenses/by-nc-sa/3.0/
 //
 #include "EvoShooter.pch.h"
 
@@ -27,7 +27,8 @@ Bullet::Bullet(const mathgp::vector3& pos, float bc)
 , m_IsExploding(false)
 , m_MaxDistanceSq(0)
 {
-    
+    m_damage = 0;
+    m_damageType = EMonsterDamage;
 }
 
 Bullet::~Bullet()
@@ -97,6 +98,7 @@ void Bullet::update(int dt)
     }
 
     collision->GetDamage();
+    collision->OnHit(m_damageType, m_damage);
 
     m_Projectile->stopRendering();
     

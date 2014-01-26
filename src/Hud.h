@@ -4,9 +4,9 @@
 // Borislav Stanimirov, Filip Chorbadzhiev, Nikolay Dimitrov
 // Assen Kanev, Jem Kerim, Stefan Ivanov
 //
-// Distributed under the MIT Software License
-// See accompanying file LICENSE.txt or copy at
-// http://opensource.org/licenses/MIT
+//This game and all content in this file is licensed under  
+//the Attribution-Noncommercial-Share Alike 3.0 version of the Creative Commons License.
+//For reference the license is given below and can also be found at http://creativecommons.org/licenses/by-nc-sa/3.0/
 //
 #pragma once
 
@@ -23,17 +23,18 @@ public:
     void draw();
 
 private:
-    struct BasicVertex
+    struct ColorVertex
     {
         mathgp::point3 position;
+        mathgp::float4 color;
     };
 
-    struct BasicQuad
+    struct ColorQuad
     {
-        BasicVertex vertices[4];
+        ColorVertex vertices[4];
     };
 
-    std::vector<BasicQuad> m_basicQuads;
+    std::vector<ColorQuad> m_colorQuads;
 
     struct TexVertex
     {
@@ -44,6 +45,7 @@ private:
     struct TexQuad
     {
         TexVertex vertices[4];
+        Texture* texture;
     };
 
     std::vector<TexQuad> m_texQuads;
@@ -51,7 +53,9 @@ private:
     int m_indices[6];
 
     Effect* m_colorize;
+    
     Effect* m_texturize;
-
-    Texture* m_charPortrait;
+    int m_texParam;
+    int m_texPVMParam;
+    int m_colorPVMParam;
 };

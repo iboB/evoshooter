@@ -4,9 +4,9 @@
 // Borislav Stanimirov, Filip Chorbadzhiev, Nikolay Dimitrov
 // Assen Kanev, Jem Kerim, Stefan Ivanov
 //
-// Distributed under the MIT Software License
-// See accompanying file LICENSE.txt or copy at
-// http://opensource.org/licenses/MIT
+//This game and all content in this file is licensed under  
+//the Attribution-Noncommercial-Share Alike 3.0 version of the Creative Commons License.
+//For reference the license is given below and can also be found at http://creativecommons.org/licenses/by-nc-sa/3.0/
 //
 #include "EvoShooter.pch.h"
 #include "World.h"
@@ -111,7 +111,7 @@ unsigned int World::spawnBullet(float x, float y, float r, SpritePtr projectile,
     mathgp::vector3 pos = mathgp::v(x, y, 0.01f);
     unsigned int id = m_firstFreeId;
     Bullet* bullet = new Bullet(pos, r);
-
+    bullet->type(EBullet);
     bullet->init(projectile, impact, pos, direction, speed, maxDistance);
 
     bullet->id() = id;
@@ -189,9 +189,8 @@ void World::update(int dt)
         {
             if (distance(i->position, m_mainCharacter->position()) < i->raidus + m_mainCharacter->r())
             {
-                // char in range
-                // Phil phil BAAM
-                int dmgDealt = 0;
+                int dmgDealt = i->damage;
+                m_mainCharacter->OnHit(EMonsterDamage, dmgDealt);
 
                 // notify monster about his damage
                 auto dealer = object(i->ownerId);
@@ -227,4 +226,13 @@ void World::desetroyPendingObjects()
 void World::registerMonsterDamage(const RegisteredMonsterDamage& damage)
 {
     m_monsterDamages.push_back(damage);
+}
+
+void World::reset()
+{
+    m_objects.clear();
+
+    m_monsterDamages.clear();
+    ColliderGrid::instance().resest();
+    m_firstFreeId = 0;
 }

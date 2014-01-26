@@ -4,9 +4,9 @@
 // Borislav Stanimirov, Filip Chorbadzhiev, Nikolay Dimitrov
 // Assen Kanev, Jem Kerim, Stefan Ivanov
 //
-// Distributed under the MIT Software License
-// See accompanying file LICENSE.txt or copy at
-// http://opensource.org/licenses/MIT
+//This game and all content in this file is licensed under  
+//the Attribution-Noncommercial-Share Alike 3.0 version of the Creative Commons License.
+//For reference the license is given below and can also be found at http://creativecommons.org/licenses/by-nc-sa/3.0/
 //
 #include "EvoShooter.pch.h"
 #include "ShadowManager.h"
@@ -92,6 +92,9 @@ void ShadowManager::update()
 
 void ShadowManager::draw(const mathgp::matrix4& viewProj)
 {    
+    if (m_indexBuffer.size() == 0)
+        return;
+
     SENTRY(GLEnableSentry, GL_BLEND);
     SENTRY(GLDisableSentry, GL_DEPTH_TEST);
     //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

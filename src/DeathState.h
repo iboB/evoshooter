@@ -10,19 +10,22 @@
 //
 #pragma once
 
-#include "Object.h"
+#include "GameState.h"
 
-class Sprite;
-typedef std::shared_ptr<Sprite> SpritePtr;
+class GUILayer;
 
-class StaticObject : public Object
+class DeathState : public GameState
 {
 public:
-    StaticObject(SpritePtr sprite, const mathgp::vector3& position, float bc);
-    ~StaticObject();
+    DeathState();
 
-    virtual void update(int dt);
+    void initialize() override;
+    void deinitialize() override;
+
+    void handleEvent(const SDL_Event& event) override;
+    void update(int d) override;
+    void draw() override;
 
 private:
-    SpritePtr m_Sprite;
+    GUILayer* m_guiLayer;
 };
