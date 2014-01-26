@@ -105,10 +105,13 @@ void ExperimentState::initialize()
     attacks.push_back(a2);
     attacks.push_back(a3);
 
+    srand(105);
     unsigned int id = World::instance().spawnMonster(1.f, 1.f, 0.5f, "player", attacks);
     MonsterCharacter* monster = (MonsterCharacter*)World::instance().object(id).get();
     monster->SetMoveDirection(mathgp::vc(0.0f, 0.0f, 0.f));
-    monster->SetMoveSpeed(0.02f);
+    MonsterDNA dna;
+    dna.randomize();
+    monster->useDNA(dna);
 
     AttacksData attacks2;
     AttackData a11 = { "sprites/attacks/attack_anim_01.png", "sprites/attacks/attack_anim_idle_01.png", Vec::zero, 0.005f, false };

@@ -18,6 +18,7 @@
 #include "InGameState.h"
 #include "ExperimentState.h"
 #include "AboutState.h"
+#include "MainMenuState.h"
 
 using namespace std;
 using namespace mathgp;

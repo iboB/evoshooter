@@ -103,8 +103,9 @@ void MonsterDNA::randomize()
     }
 }
 
-float MonsterDNA::operator()(GeneType g) const
+float MonsterDNA::operator()(int g) const
 {
+    assert(g < Num_Genes);
     return m[g].value();
 }
 

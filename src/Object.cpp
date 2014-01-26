@@ -17,7 +17,8 @@ m_pos(),
 m_boundingCircle(0.0f),
 m_bb(mathgp::v(1.0f,1.0f)),
 m_renderShadow(false),
-m_size(1.0f)
+m_size(1.0f),
+m_id(0)
 {
 }
 

@@ -28,6 +28,8 @@ Character::Character(const mathgp::vector3& position, const std::string& name, c
     {
         m_AnimationsController.AddAttack(it->AttackName, it->IdleName, it->Offset, it->Scale, it->IsWholeBodyAttack);
     }
+
+    m_AnimationsController.SetMove(MA_Left);
 }
 
 void Character::Move(const mathgp::vector3& position)

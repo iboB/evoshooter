@@ -12,17 +12,20 @@
 
 enum GeneType
 {
-    G_DesiredAttackRange_RangedEnemy, // 1 next to the player - 0 max far away
-    G_DesiredAttackRange_MeleeEnemy, // 
-    G_MovementPrecision_RangedEnemy, // 1 aims for attack range - 0 total randomness
-    G_MovementPrecision_MeleeEnemy,
-    G_AttackDesire, // 1 only when player is in range - 0 total randomness
+    G_AggroRange, // 0 - only when hit, 1 - entire map
+    G_AggroCooldown, // aggro cooldown - 0 immediately - 1: minutes
+    G_Sight, // 0 blind - 1 sees entire map
+    G_Hearing, // 0 deaf - 1 hears entire map
+    G_Empathy, // 0 doesn't care if not hit - 1 aggro on every attack in sight/hearing
+    G_SenseOfOwnRange, // 0 random attacks - 1 attack only in range
+    G_AttackDesire, // 1 only when player is in range - 0 total randomness (ie 1 - chance to perform random attack)
     G_Aim, // 1 shoots for player, 0.5 interpolates player position, 1 extrapolates player position
-    G_Precision, // 1 exactly as needed, 0 - wide range
+    G_Precision, // 1 exactly as needed, 0 - wide range (meaningless for mellee)
     G_HP, // percent of max - guideline
     G_Speed, // percent of max - guideline
     G_Size, // percent of max - NO guideline
     G_Stamina, // percent of max - guideline
+    G_Regeneration, // how much time to regen 100 hp
     // PanicThreshold, // what percentage of HP will panic and go total random
 
     /// Attacks
@@ -38,8 +41,8 @@ enum GeneType
 
     /// Defenses
     G_NoDefense,
-    G_Fatness,
-    G_Scales,
+    G_UseFatness,
+    G_UseScales,
     
     G_FatnessPower,
     G_ScalesPower,
@@ -94,7 +97,7 @@ public:
 
 //private:
 
-    float operator()(GeneType g) const;
+    float operator()(int g) const;
 
     std::vector<Gene> m;
 

@@ -11,6 +11,7 @@
 #pragma once
 
 #include "Character.h"
+#include "MonsterDNA.h"
 
 class MonsterCharacter : public Character
 {
@@ -18,11 +19,70 @@ public:
     MonsterCharacter(const mathgp::vector3& position, const std::string& name, const std::vector<AttackData>& attacks);
 
     void SetMoveDirection(const mathgp::vector3& dir);
-    void SetMoveSpeed(float speed);
+    void SetTargetPoint(const mathgp::point3& point);
 
     virtual void update(int dt);
 
+    const MonsterDNA& dna() const { return m_dna;  }
+
+    int isDead() { return m_hp <= 0; }
+
 private:
     mathgp::vector3 m_MoveDirection;
-    float m_Speed;// m/s
+    
+    ///////////////////////////
+    // evo stuff
+public:
+    void useDNA(const MonsterDNA& dna);
+    MonsterDNA giveOffspring();
+
+    float calculateFitness() const; // damage * lifetime
+
+    bool hasAggro() { return m_currentAggro != 0; }
+
+private:
+    void think(int dt);
+    MonsterDNA m_dna;
+
+    void aggravate() { m_currentAggro = m_aggroCooldown;  }
+
+    // stats
+    int m_maxHp;
+    int m_hp;
+    void heal(int hp);
+
+    int m_maxStamina;
+    int m_stamina;
+    int m_restCooldown;
+    int m_neededRestTime; // depends on size
+
+    bool isTired() const { return m_restCooldown != 0; }
+    
+    float m_speed; // m/s
+    float m_size;
+
+    float m_aggroRange;
+    int m_aggroCooldown;
+    int m_currentAggro;
+
+    float m_sightRange;
+    float m_hearingRange;
+
+    float m_regenPer100ms;
+    
+    // fitness
+    float m_damageDealtToPlayer;
+    float m_lifetime;
+
+    // memory
+    bool m_hasLastKnownPlayerPosition;
+    mathgp::point3 m_lastKnownPlayerPosition;
+
+    bool isLoitering() const { return m_loiterCooldown != 0; };
+    int m_loiterCooldown;
+    bool m_hasPointToGoTo;
+    mathgp::point3 m_pointToGoTo;
+
+    mathgp::point3 m_lastOwnPosition;
+    int m_timeAtLastPosition;
 };

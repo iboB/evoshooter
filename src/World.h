@@ -37,10 +37,16 @@ public:
     objectsContainer& objects();
     MainCharacter* mainCharacter() { return m_mainCharacter; }
 
+    void queueObjectForDestruction(unsigned int id);
+
     void update(int dt);
 
 private:
+    void desetroyPendingObjects();
+
     objectsContainer m_objects;
     MainCharacter* m_mainCharacter;
 	unsigned int m_firstFreeId;
+
+    std::vector<unsigned int> m_ObjectsPendingDestruction;
 };

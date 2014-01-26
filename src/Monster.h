@@ -17,20 +17,4 @@ class MonsterDNA;
 class Monster
 {
 public:
-    void useDNA(const MonsterDNA& dna);
-    MonsterDNA giveOffspring();
-
-    float calculateFitness() const; // damage * lifetime
-
-private:
-    MonsterDNA m_dna;
-
-    // stats
-    float m_hp;
-    float m_stamina;
-    float m_speed;
-    float m_size;
-
-    float m_damageDealtToPlayer;
-    float m_lifetime;
 };
