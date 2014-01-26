@@ -212,14 +212,6 @@ MonsterDNA MonsterCharacter::giveOffspring()
     return newdna;
 }
 
-void MonsterCharacter::heal(int hp)
-{
-    m_hp += hp;
-
-    if (m_hp > m_maxHp)
-        m_hp = m_maxHp;
-}
-
 point3 MonsterCharacter::randomPointInSight()
 {
     auto point = vc(Util::Rnd11(), Util::Rnd11(), Util::Rnd11());
@@ -371,10 +363,10 @@ void MonsterCharacter::think(int dt)
             // go towards him
             SetTargetPoint(enemy->position());
 
-            if (distanceToPlayer < m_attack->senseOfRange())
+//            if (distanceToPlayer < m_attack->senseOfRange())
             {
                 // we think we can also attack
-                m_attack->attack(enemy->position());
+//                m_attack->attack(enemy->position());
             }
             
             // should we only care about this when in aggro?
@@ -468,4 +460,12 @@ void MonsterCharacter::hear()
             break;
         }
     }
+}
+
+void MonsterCharacter::OnHit(EAttackDamageType dmgType, int dmg)
+{
+    if (dmgType == EMonsterDamage)
+        return; //not concerned by own dmg
+
+    std::cout << "OW!" << std::endl;
 }

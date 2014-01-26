@@ -280,13 +280,18 @@ void ExperimentState::handleEvent(const SDL_Event& event)
     {
         if (event.button.button == SDL_BUTTON_LEFT)
         {
-            vector3 start;
-            vector3 end;
-            m_camera->screenToWorldRay(v((unsigned int)event.button.x, (unsigned int)event.button.y), start, end);
-            m_camera->screenToWorldPoint(v((unsigned int)event.button.x, (unsigned int)event.button.y), end);
-            m_debugStart = start;
-            m_debugEnd = end;
-            std::vector< std::shared_ptr<Object>> test = ColliderGrid::instance().collideWithQuadsOnClick(v((unsigned int)event.button.x, (unsigned int)event.button.y), end);
+            //vector3 start;
+            vector3 worldPoint;
+            //m_camera->screenToWorldRay(v((unsigned int)event.button.x, (unsigned int)event.button.y), start, end);
+            m_camera->screenToWorldPoint(v((unsigned int)event.button.x, (unsigned int)event.button.y), worldPoint);
+            //m_debugStart = start;
+            //m_debugEnd = end;
+            std::vector< std::shared_ptr<Object>> test = ColliderGrid::instance().collideWithQuadsOnClick(v((unsigned int)event.button.x, (unsigned int)event.button.y), worldPoint);
+            Object * obj = NULL;
+            if (test.size() > 0)
+                obj = test[0].get();
+
+            World::instance().mainCharacter()->useWeapon(worldPoint, obj);
             //std::cout << "end world Pos x:" << end.x() << " y:" << end.y() << std::endl;
         }
     }

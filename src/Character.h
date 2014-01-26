@@ -34,9 +34,13 @@ public:
     virtual void Die();
     virtual void GetDamage();
     virtual void Attack(Uint32 attackIndex);
+    virtual void OnHit(EAttackDamageType dmgType, int dmg);
 
     virtual void update(int dt);
-
+    void heal(int hp);
+    void rawDamage(int dmg);
 protected:
     AnimationsController m_AnimationsController;
+    int m_maxHp;
+    int m_hp;    
 };

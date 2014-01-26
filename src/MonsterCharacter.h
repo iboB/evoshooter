@@ -39,6 +39,8 @@ public:
 
     int isDead() { return m_hp <= 0; }
 
+    virtual void OnHit(EAttackDamageType dmgType, int dmg);
+
     void loseStamina(int n);
 
 private:
@@ -61,9 +63,7 @@ private:
     void aggravate();
 
     // stats
-    int m_maxHp;
-    int m_hp;
-    void heal(int hp);
+    
 
     int m_maxStamina;
     int m_stamina;

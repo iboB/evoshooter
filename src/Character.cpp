@@ -72,3 +72,29 @@ void Character::update(int dt)
 {
     m_AnimationsController.update(m_pos, Application::instance().currentState()->camera()->direction());
 }
+
+void Character::heal(int hp)
+{
+    m_hp += hp;
+
+    if (m_hp > m_maxHp)
+        m_hp = m_maxHp;
+}
+void Character::OnHit(EAttackDamageType dmgType, int dmg)
+{
+
+}
+void Character::rawDamage(int dmg)
+{
+    m_hp -= dmg;
+
+    if (m_hp <= 0)
+    {
+        //dead;
+        Die();        
+    }
+    else
+    {
+        GetDamage();
+    }
+}

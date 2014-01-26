@@ -97,3 +97,8 @@ float Object::bb_h()
 {
     return m_bb.x();
 }
+
+void Object::OnHit(EAttackDamageType dmgType, int dmg)
+{
+
+}

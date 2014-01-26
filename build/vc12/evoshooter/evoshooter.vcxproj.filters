@@ -52,6 +52,7 @@
     <ClCompile Include="..\..\..\src\StaticObject.cpp" />
     <ClCompile Include="..\..\..\src\MonsterCharacter.cpp" />
     <ClCompile Include="..\..\..\src\MonsterAttacks.cpp" />
+    <ClCompile Include="..\..\..\src\PlayerWeapon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\AnimationsController.h" />
@@ -113,5 +114,6 @@
     <ClInclude Include="..\..\..\src\MonsterCharacter.h" />
     <ClInclude Include="..\..\..\src\MonsterAttacks.h" />
     <ClInclude Include="..\..\..\src\GameplayConstants.h" />
+    <ClInclude Include="..\..\..\src\PlayerWeapon.h" />
   </ItemGroup>
 </Project>
