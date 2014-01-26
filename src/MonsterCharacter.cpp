@@ -142,6 +142,8 @@ void MonsterCharacter::useDNA(const MonsterDNA& dna)
     m_lastOwnPosition = position();
     m_timeAtLastPosition = 0;
 
+    m_aggroStaminaLoss = 0;
+
     ////////////////////////////////////////////////
     // determine parts and weapons
     float maxWeapon = 0;
@@ -253,11 +255,12 @@ void MonsterCharacter::think(int dt)
             // bam! random attack
             if (m_hasLastKnownPlayerPosition)
             {
-                m_attack->attack(m_lastKnownPlayerPosition);
+                m_attack->attack(m_lastKnownPlayerPosition, m_lastKnownPlayerPosition);
             }
             else
             {
-                m_attack->attack(randomPointInSight());
+                auto point = randomPointInSight();
+                m_attack->attack(point, point);
             }
         }
     }
@@ -348,6 +351,14 @@ void MonsterCharacter::think(int dt)
     }
     else // we have aggro!
     {
+        // lose stamina
+        m_aggroStaminaLoss += dt;
+        while (m_aggroStaminaLoss > Time_To_Lose_1_Stamina_In_Aggro)
+        {
+            m_aggroStaminaLoss -= Time_To_Lose_1_Stamina_In_Aggro;
+            loseStamina(1);
+        }        
+
         // check if the wretched player is within our sight
 
         m_speed = m_aggroSpeed;
@@ -366,7 +377,7 @@ void MonsterCharacter::think(int dt)
 //            if (distanceToPlayer < m_attack->senseOfRange())
             {
                 // we think we can also attack
-//                m_attack->attack(enemy->position());
+                m_attack->attack(enemy->position(), enemy->position());
             }
             
             // should we only care about this when in aggro?
@@ -461,6 +472,12 @@ void MonsterCharacter::hear()
         }
     }
 }
+
+float MonsterCharacter::fitness() const
+{
+    return m_damageDealtToPlayer * (float(m_lifetime) / 1000);
+}
+
 
 void MonsterCharacter::OnHit(EAttackDamageType dmgType, int dmg)
 {

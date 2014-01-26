@@ -23,4 +23,7 @@ sc float Max_Aggro_Time = 6000.f; // max time a mon is in aggro
 sc float Max_Random_Attack_Wait = 3000.f; // wait max 3 secs between attacks
 sc float Max_Loiter_Time = 3000.f; // max time a monster will do nothing
 
+sc float Stamina_Loss_Per_Aggro_Second = 10;
+sc float Time_To_Lose_1_Stamina_In_Aggro = 1000 / Stamina_Loss_Per_Aggro_Second; //ms
+
 sc float Close_Distance_In_World = 0.3f; // distance to a place in the world considered "there"

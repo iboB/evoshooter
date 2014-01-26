@@ -125,6 +125,7 @@
     <ClInclude Include="..\..\..\src\Overlay.h" />
     <ClInclude Include="..\..\..\src\Platform.h" />
     <ClInclude Include="..\..\..\src\PlayerWeapon.h" />
+    <ClInclude Include="..\..\..\src\RegisteredMonsterDamage.h" />
     <ClInclude Include="..\..\..\src\RenderManager.h" />
     <ClInclude Include="..\..\..\src\ResourceManager.h" />
     <ClInclude Include="..\..\..\src\ShadowManager.h" />
