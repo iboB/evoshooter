@@ -24,6 +24,27 @@ namespace Util
 	// returns false if there are no real roots
 	bool SolveQuadraticEquation(float a, float b, float c, float& outX1, float& outX2);
 
+    template <typename FwdIter>
+    size_t FindMaxIndex(FwdIter begin, FwdIter end)
+    {
+        size_t index = 0;
+        size_t bestIndex = 0;
+        FwdIter found = begin;
+        ++begin;
+
+        while (++begin != end)
+        {
+            ++index;
+
+            if (*begin > *found)
+            {
+                found = begin;
+                bestIndex = index;
+            }
+        }
+
+        return bestIndex;
+    }
 }
 
 namespace mathgp

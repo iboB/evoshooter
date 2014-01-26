@@ -97,9 +97,12 @@ void ExperimentState::initialize()
 
     unsigned int id = World::instance().spawnMonster(1.f, 1.f, 0.5f, "player");
 
+    srand(105);
     MonsterCharacter* monster = (MonsterCharacter*)World::instance().object(id).get();
     monster->SetMoveDirection(mathgp::vc(0.0f, 0.0f, 0.f));
-    monster->SetMoveSpeed(0.02f);
+    MonsterDNA dna;
+    dna.randomize();
+    monster->useDNA(dna);
 
     World::instance().spawnPlayer(2.f, 1.5f, 0.5f);
 
