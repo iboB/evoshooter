@@ -17,6 +17,7 @@
 #include "MonsterCharacter.h"
 #include "MainCharacter.h"
 #include "Camera.h"
+#include "Bullet.h"
 #include "GLSentries.h"
 #include "Level.h"
 #include "GUILayer.h"
@@ -105,10 +106,10 @@ void ExperimentState::initialize()
     attacks.push_back(a2);
     attacks.push_back(a3);
 
-    unsigned int id = World::instance().spawnMonster(1.f, 1.f, 0.5f, "player", attacks);
-    MonsterCharacter* monster = (MonsterCharacter*)World::instance().object(id).get();
-    monster->SetMoveDirection(mathgp::vc(0.0f, 0.0f, 0.f));
-    monster->SetMoveSpeed(0.02f);
+    //unsigned int id = World::instance().spawnMonster(1.f, 1.f, 0.5f, "player", attacks);
+    //MonsterCharacter* monster = (MonsterCharacter*)World::instance().object(id).get();
+    //monster->SetMoveDirection(mathgp::vc(0.0f, 0.0f, 0.f));
+    //monster->SetMoveSpeed(0.02f);
 
     AttacksData attacks2;
     AttackData a11 = { "sprites/attacks/attack_anim_01.png", "sprites/attacks/attack_anim_idle_01.png", Vec::zero, 0.005f, false };
@@ -220,6 +221,16 @@ void ExperimentState::handleEvent(const SDL_Event& event)
             break;
         case SDLK_m:
             World::instance().mainCharacter()->Attack(2);
+            break;
+        case SDLK_o:
+            {
+                SpritePtr projectile = ResourceManager::instance().createSpriteFromSingleFrameTexture("sprites/projectiles/bullet.png");
+                SpritePtr impact = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/projectiles/explosion.png", 1, 4, 400);
+
+                unsigned int id = World::instance().spawnBullet(0.f, 0.f, 0.1f, projectile, impact, mathgp::vc(0.5f, 0.5f, 0.0f), 3.f, 5.f);
+
+                ((Bullet*)(World::instance().object(id).get()))->shoot();
+            }
             break;
         default:
             return;

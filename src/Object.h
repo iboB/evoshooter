@@ -35,6 +35,11 @@ public:
 
     unsigned int& id() { return m_id; }
 
+    virtual void Move(const mathgp::vector3& position){}
+    virtual void Die(){}
+    virtual void GetDamage(){}
+    virtual void Attack(Uint32 attackIndex){}
+
 protected:
 
 	mathgp::vector3 m_pos;

@@ -10,6 +10,7 @@
 //
 #include "EvoShooter.pch.h"
 #include "World.h"
+#include "Bullet.h"
 #include "Object.h"
 #include "ColliderGrid.h"
 #include "MainCharacter.h"
@@ -90,6 +91,30 @@ unsigned int World::spawnPlayer(float x, float y, float r, const AttacksData& at
 
     m_mainCharacter = player;
 
+    ++m_firstFreeId;
+
+    if (m_firstFreeId >= INT_MAX)
+    {
+        m_firstFreeId = 0; //hopefully his dead;
+    }
+
+    return id;
+}
+
+unsigned int World::spawnBullet(float x, float y, float r, SpritePtr projectile, SpritePtr impact, const mathgp::vector3& direction, float speed, float maxDistance)
+{
+    mathgp::vector3 pos = mathgp::v(x, y, 0.01f);
+    unsigned int id = m_firstFreeId;
+    Bullet* bullet = new Bullet(pos, r);
+
+    bullet->init(projectile, impact, pos, direction, speed, maxDistance);
+
+    bullet->id() = id;
+    bullet->Move(pos);
+
+    m_objects[id] = std::shared_ptr<Object>(bullet);
+    ColliderGrid::instance().onObjectCreated(m_objects[id]);
+    
     ++m_firstFreeId;
 
     if (m_firstFreeId >= INT_MAX)
