@@ -125,45 +125,54 @@ void ExperimentState::initialize()
         if (rand <= 0.1f)
         {
             sprite = ResourceManager::instance().createSpriteFromSingleFrameTexture("sprites/props/grass_01.png");
+            sprite->setScale(0.006);
         }
         else if (rand <= 0.2f)
         {
             sprite = ResourceManager::instance().createSpriteFromSingleFrameTexture("sprites/props/grey_rock_01.png");
+            sprite->setScale(0.003);
         }
         else if (rand <= 0.3f)
         {
             sprite = ResourceManager::instance().createSpriteFromSingleFrameTexture("sprites/props/grey_rock_02.png");
+            sprite->setScale(0.003);
         }
         else if (rand <= 0.4f)
         {
             sprite = ResourceManager::instance().createSpriteFromSingleFrameTexture("sprites/props/kolona_01.png");
+            sprite->setScale(0.003);
         }
         else if (rand <= 0.5f)
         {
             sprite = ResourceManager::instance().createSpriteFromSingleFrameTexture("sprites/props/kolona_02.png");
+            sprite->setScale(0.003);
         }
         else if (rand <= 0.6f)
         {
             sprite = ResourceManager::instance().createSpriteFromSingleFrameTexture("sprites/props/statue_01.png");
+            sprite->setScale(0.0045);
         }
         else if (rand <= 0.7f)
         {
             sprite = ResourceManager::instance().createSpriteFromSingleFrameTexture("sprites/props/tree_01_outline_test.png");
+            sprite->setScale(0.006);
         }
         else if (rand <= 0.8f)
         {
             sprite = ResourceManager::instance().createSpriteFromSingleFrameTexture("sprites/props/tree_02.png");
+            sprite->setScale(0.006);
         }
         else // (rand <= 0.9f)
         {
             sprite = ResourceManager::instance().createSpriteFromSingleFrameTexture("sprites/props/wall_03.png");
+            sprite->setScale(0.006);
         }
 
         rand = Util::Rnd01();
         float x = rand*g_worldSize;
         rand = Util::Rnd01();
         float y = rand*g_worldSize;
-        sprite->setScale(0.0015);
+       
         World::instance().spawnStaticObject(x, y, 1.0f, sprite);
     }
     
