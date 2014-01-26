@@ -13,12 +13,15 @@
 #include "GUILayer.h"
 #include "Effect.h"
 #include "Texture.h"
+#include "GLSentries.h"
+#include "Application.h"
 
 using namespace mathgp;
 
-InGameState::InGameState()
+InGameState::InGameState(const char* texture, int time)
 {
-
+    m_textureName = texture;
+    m_time = time;
 }
 
 void InGameState::initialize()
@@ -31,7 +34,7 @@ void InGameState::initialize()
     m_effect->link();
 
     m_texture = new Texture;
-    m_texture->loadFromFile("sprites/sprite.png");
+    m_texture->loadFromFile(m_textureName.c_str());
 }
 
 void InGameState::deinitialize()
@@ -45,10 +48,32 @@ void InGameState::handleEvent(const SDL_Event& event)
 
 void InGameState::update(int dt)
 {
+    m_time -= dt;
+    if (m_time <= 0)
+    {
+        //if (m_prevState)
+        {
+            Application::instance().experiMENTAL();
+        }
+        //else
+        //{
+        //    if (!m_nextState)
+        //    {
+        //        std::shared_ptr<GameState> ptr(new InGameState("overlay/game_logo.png", 2000));
+        //        pushState(ptr);
+        //    }
+        //}        
+    }
 }
 
 void InGameState::draw()
 {
+    SENTRY(GLDisableSentry, GL_CULL_FACE);
+    SENTRY(GLDisableSentry, GL_DEPTH_TEST);
+    SENTRY(GLEnableSentry, GL_BLEND);
+
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
     struct Vertex
     {
         vector3 pos;
@@ -57,10 +82,10 @@ void InGameState::draw()
 
     Vertex quad[] =
     {
-        { vc(0, 0, 0.4f), vc(0, 0) },
-        { vc(5, 0, 0.4f), vc(0, 1) },
-        { vc(0, 5, 0.4f), vc(1, 0) },
-        { vc(5, 5, 0.4f), vc(1, 1) },
+        { vc(0, 0, 0.4f), vc(0, 1) },
+        { vc(1, 0, 0.4f), vc(1, 1) },
+        { vc(0, 1, 0.4f), vc(0, 0) },
+        { vc(1, 1, 0.4f), vc(1, 0) },
     };
 
     unsigned indices[] =
@@ -76,7 +101,7 @@ void InGameState::draw()
     m_effect->bindCustomAttribute("inPos", Attr_Pos);
     m_effect->bindCustomAttribute("inTexCoord", Attr_UV);
 
-    auto projection = matrix::ortho_rh(100, 60, 1, 100);
+    auto projection = matrix::ortho_rh(0, 1, 0, 1, 1, 100);
     
     int pvm = m_effect->getParameterByName("pvm");
     m_effect->setParameter(pvm, projection);

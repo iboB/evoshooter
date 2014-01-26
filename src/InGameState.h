@@ -17,7 +17,7 @@ class Texture;
 class InGameState : public GameState
 {
 public:
-    InGameState();
+    InGameState(const char* texture, int time);
 
     void initialize() override;
     void deinitialize() override;
@@ -28,4 +28,8 @@ public:
 private:
     Effect* m_effect;
     Texture* m_texture;
+
+
+    std::string m_textureName;
+    int m_time;
 };

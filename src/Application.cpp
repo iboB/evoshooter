@@ -132,7 +132,7 @@ void Application::initialize()
     glEnable(GL_DEPTH_TEST); // z buffer
     glEnable(GL_CULL_FACE); // cull back (CW) faces
 
-    glClearColor(0, 0, 0.6f, 0); // backbuffer clear color
+    glClearColor(0.80f, 0.80f, 0.80f, 0); // backbuffer clear color
     glClearDepth(1); // z buffer clear value
 
     //////////////////////////////////////
@@ -143,6 +143,17 @@ void Application::initialize()
     //////////////////////////////////////
     // state
     //m_baseState = new InGameState;
+    m_baseState = new InGameState("overlay/cu_logo.png", 1000);
+    m_baseState->initialize();
+    //m_baseState = new AboutState;
+    //m_baseState->initialize();
+    m_stateStack.push_back(m_baseState);
+}
+
+void Application::experiMENTAL()
+{
+    while (!m_stateStack.empty()) m_stateStack.pop_back();
+
     m_baseState = new ExperimentState;
     m_baseState->initialize();
     //m_baseState = new AboutState;

@@ -35,6 +35,7 @@ void GameState::handleEvent(const SDL_Event& event)
 void GameState::pushState(std::shared_ptr<GameState> state)
 {
     m_nextState = state;
+    m_nextState->m_prevState = std::shared_ptr<GameState>(this);
     m_nextState->initialize();
 }
 

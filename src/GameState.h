@@ -30,7 +30,7 @@ public:
     void popState();
     void popSelf();
 
-private:
+protected:
     std::shared_ptr<GameState> m_prevState;
     std::shared_ptr<GameState> m_nextState;
 };

@@ -33,6 +33,8 @@ public:
     GameState* baseState() const { return m_baseState;  }
     void popLastState();
     void pushState(GameState* state);
+
+    void experiMENTAL();
 private:
     void initialize();
     void deinitialize();
