@@ -110,11 +110,12 @@ public:
 
     void Die();
     void GetDamage();
-    void Attack(Uint32 attackIndex);
+    void Attack();
 
     void update(const mathgp::vector3& position, const mathgp::vector3& camDir);
 
     bool isReadyToDiscard() { return m_IsReadyForDiscard; }
+    bool isDead() { return m_IsDead; }
 
 private:
     

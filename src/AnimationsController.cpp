@@ -382,14 +382,13 @@ void AnimationsController::updateAttachments(const mathgp::vector3& position, co
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 PlayerAnimationsController::PlayerAnimationsController()
-: m_ActiveWeapon(PWT_Sword)
+: m_ActiveWeapon(PWT_Shotgun)
 , m_ActiveMovement(PM_Idle)
 , m_IsDead(false)
 {
     //////////////////// sword
     m_Animations[PWT_Sword].Move[PM_Idle] = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/player/MC_idle_sword_anim.png", 1, 8, ANIM_TIME);
     m_Animations[PWT_Sword].Move[PM_Idle]->setScale(0.008f);
-    m_Animations[PWT_Sword].Move[PM_Idle]->startRendering(0);
     m_Animations[PWT_Sword].Move[PM_LEft] = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/player/MC_run_sword_anim.png", 1, 8, ANIM_TIME);
     m_Animations[PWT_Sword].Move[PM_LEft]->setScale(0.008f);
     m_Animations[PWT_Sword].Move[PM_LEft]->setFlipX(true);
@@ -440,6 +439,7 @@ PlayerAnimationsController::PlayerAnimationsController()
     //////////////////// shotgun
     m_Animations[PWT_Shotgun].Move[PM_Idle] = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/player/MC_idle_shotgun_anim.png", 1, 8, ANIM_TIME);
     m_Animations[PWT_Shotgun].Move[PM_Idle]->setScale(0.008f);
+    m_Animations[PWT_Shotgun].Move[PM_Idle]->startRendering(0);
     m_Animations[PWT_Shotgun].Move[PM_LEft] = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/player/MC_runshotgun_anim.png", 1, 8, ANIM_TIME);
     m_Animations[PWT_Shotgun].Move[PM_LEft]->setScale(0.008f);
     m_Animations[PWT_Shotgun].Move[PM_LEft]->setFlipX(true);
@@ -494,6 +494,8 @@ void PlayerAnimationsController::SetWeapon(PlayerWeaponType weapon)
 
     int currentFrame = StopAll();
 
+    m_ActiveWeapon = weapon;
+
     if (m_IsAttacking)
     {
         m_Animations[m_ActiveWeapon].Attack[m_ActiveMovement]->startRendering(currentFrame);
@@ -522,6 +524,8 @@ void PlayerAnimationsController::SetMovement(PlayerMovement movement)
     }
 
     int currentFrame = StopAll();
+
+    m_ActiveMovement = movement;
 
     if (m_IsAttacking)
     {
@@ -570,7 +574,7 @@ void PlayerAnimationsController::GetDamage()
     m_DamageStartTime = SDL_GetTicks();
 }
 
-void PlayerAnimationsController::Attack(Uint32 attackIndex)
+void PlayerAnimationsController::Attack()
 {
     if (m_IsDead)
         return;
@@ -583,6 +587,8 @@ void PlayerAnimationsController::Attack(Uint32 attackIndex)
     m_Animations[m_ActiveWeapon].Attack[m_ActiveMovement]->startRendering(currentFrame);
 
     m_AtackStartTime = SDL_GetTicks();
+
+    m_IsAttacking = true;
 }
 
 void PlayerAnimationsController::update(const mathgp::vector3& position, const mathgp::vector3& camDir)
@@ -597,23 +603,38 @@ void PlayerAnimationsController::update(const mathgp::vector3& position, const m
         return;
     }
 
-    if (m_IsAttacking && (SDL_GetTicks() - m_AtackStartTime) >= ANIM_TIME)
+    if (m_IsAttacking)
     {
-        m_IsAttacking = false;
+        if ((SDL_GetTicks() - m_AtackStartTime) >= ANIM_TIME)
+        {
+            m_IsAttacking = false;
 
-        int currentFrame = StopAll();
-        m_Animations[m_ActiveWeapon].Move[m_ActiveMovement]->startRendering(currentFrame);
-        m_Animations[m_ActiveWeapon].Move[m_ActiveMovement]->update(position, camDir);
+            int currentFrame = StopAll();
+            m_Animations[m_ActiveWeapon].Move[m_ActiveMovement]->startRendering(currentFrame);
+            m_Animations[m_ActiveWeapon].Move[m_ActiveMovement]->update(position, camDir);
+        }
+        else
+        {
+            m_Animations[m_ActiveWeapon].Attack[m_ActiveMovement]->update(position, camDir);
+        }
+
         return;
     }
 
-    if (m_IsTakingDamage && (SDL_GetTicks() - m_DamageStartTime) >= ANIM_TIME)
+    if (m_IsTakingDamage)
     {
-        m_IsTakingDamage = false;
+        if((SDL_GetTicks() - m_DamageStartTime) >= ANIM_TIME)
+        {
+            m_IsTakingDamage = false;
 
-        int currentFrame = StopAll();
-        m_Animations[m_ActiveWeapon].Move[m_ActiveMovement]->startRendering(currentFrame);
-        m_Animations[m_ActiveWeapon].Move[m_ActiveMovement]->update(position, camDir);
+            int currentFrame = StopAll();
+            m_Animations[m_ActiveWeapon].Move[m_ActiveMovement]->startRendering(currentFrame);
+            m_Animations[m_ActiveWeapon].Move[m_ActiveMovement]->update(position, camDir);
+        }
+        else
+        {
+            m_Animations[m_ActiveWeapon].Damage[m_ActiveMovement]->update(position, camDir);
+        }
         return;
     }
 

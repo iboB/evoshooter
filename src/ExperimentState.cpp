@@ -267,6 +267,10 @@ void ExperimentState::update(int dt)
         
         World::instance().mainCharacter()->Move(World::instance().mainCharacter()->position() + unitsPerSecond * frameTime * normalized(m_moveWeight));
     }
+    else
+    {
+        World::instance().mainCharacter()->GoIdle();
+    }
 
     SpawnManager::instance().update(dt);
     World::instance().update(dt);
