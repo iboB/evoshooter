@@ -14,6 +14,8 @@
 #include "ColliderGrid.h"
 #include "MainCharacter.h"
 #include "Util.h"
+#include "Bullet.h"
+#include "ResourceManager.h"
 
 std::string PlayerWeapon::m_weaponNames[EWeaponCount] =
 {
@@ -55,11 +57,24 @@ void PlayerWeapon::attack(const mathgp::vector3& worldPoint, Object* objectHit)
             meleeAttack(worldPoint);
             break;
         case EPistol:
+        {
+            if (objectHit)
+            {
+                rangedAttack(objectHit->position());
+            }
+            else
+            {
+                rangedAttack(worldPoint);
+            }
+        }
             break;
         }
     }
 }
-
+unsigned PlayerWeapon::damage()
+{
+    return (unsigned)((m_damageRange.y() - m_damageRange.x())*Util::Rnd01() + m_damageRange.x());
+}
 void PlayerWeapon::meleeAttack(const mathgp::vector3& worldPoint)
 {
     vector3 playerPos = World::instance().mainCharacter()->position();
@@ -71,8 +86,22 @@ void PlayerWeapon::meleeAttack(const mathgp::vector3& worldPoint)
     std::vector< std::shared_ptr<Object> >::iterator it = affectedTargets.begin();
     while (it != affectedTargets.end())
     {
-        unsigned damage = (m_damageRange.y() - m_damageRange.x())*Util::Rnd01() + m_damageRange.x();
-        (*it)->OnHit(m_damageType, damage);
+       
+        (*it)->OnHit(m_damageType, damage());
         ++it;
     }
+}
+
+void PlayerWeapon::rangedAttack(const mathgp::vector3& worldPoint)
+{
+    SpritePtr projectile = ResourceManager::instance().createSpriteFromSingleFrameTexture("sprites/projectiles/bullet.png");
+    SpritePtr impact = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/projectiles/explosion.png", 1, 4, 400);
+    vector3 playerPos = World::instance().mainCharacter()->position();
+    vector3 directionOfAttack = normalized(worldPoint - playerPos);
+
+    unsigned int id = World::instance().spawnBullet(playerPos.x(), playerPos.y(), 0.1f, projectile, impact, directionOfAttack, 3.f, 5.f);
+    Bullet* bullet = (Bullet*)(World::instance().object(id).get());
+    bullet->setDamage(damage());
+    bullet->setDamageType(m_damageType);
+    bullet->shoot();
 }

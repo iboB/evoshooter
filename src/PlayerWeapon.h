@@ -46,6 +46,7 @@ private:
     mathgp::uvector2 m_damageRange;
 
     
-
+    unsigned damage();
     void meleeAttack(const mathgp::vector3& worldPoint);
+    void rangedAttack(const mathgp::vector3& targetPos);
 };

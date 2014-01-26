@@ -16,6 +16,7 @@
 #include "GameState.h"
 #include "Camera.h"
 #include "World.h"
+#include "SoundManager.h"
 
 Character::Character(const mathgp::vector3& position, const std::string& name, const std::vector<AttackData>& attacks)
 : Object(position, 1.0f)
@@ -57,6 +58,15 @@ void Character::Move(const mathgp::vector3& position)
 void Character::Die()
 {
     m_AnimationsController.Die();
+    if (m_type == EMonster_Character)
+    {
+        SoundManager::instance().playSound(ESounds_EnemyDeath);
+    }
+    else if (m_type == EPlayer_Character)
+    {
+        SoundManager::instance().playSound(ESounds_PlayerDeath);
+        //should something else happen?
+    }
 }
 
 void Character::GetDamage()

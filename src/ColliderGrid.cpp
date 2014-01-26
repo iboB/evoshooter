@@ -25,8 +25,8 @@ bool ColliderGrid::m_collisionMatrix[EObject_Type_Count][EObject_Type_Count] = {
     /*EBase_Object,*/       { true,     true,           true,               true,           true, true },
     /*EBase_Character,*/    { true,     true,           true,               true,           true, true },
     /*EMonster_Character,*/ { true,     true,           true,               false,          true, true },
-    /*EPlayer_Character,*/  { true,     true,           false,              false,          true, true },
-    /*EBullet,*/            { true,     true,           true,               true,           false, true },
+    /*EPlayer_Character,*/  { true,     true,           false,              false,          false, true },
+    /*EBullet,*/            { true,     true,           true,               false,           false, true },
     /*EStatic,*/            { true,     true,           true,               true,           true, true }
     
 };

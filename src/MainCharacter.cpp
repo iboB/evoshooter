@@ -15,7 +15,7 @@
 MainCharacter::MainCharacter(const mathgp::vector3& position, const std::vector<AttackData>& attacks)
 : Character(position, "eye", attacks)
 {
-    m_weapon = new PlayerWeapon(EKnife, 1000, mathgp::v((unsigned)1,(unsigned)10));
+    m_weapon = new PlayerWeapon(EPistol, 1000, mathgp::v((unsigned)1,(unsigned)10));
     m_hp = Player_Starting_Health;
 }
 

@@ -111,7 +111,7 @@ unsigned int World::spawnBullet(float x, float y, float r, SpritePtr projectile,
     mathgp::vector3 pos = mathgp::v(x, y, 0.01f);
     unsigned int id = m_firstFreeId;
     Bullet* bullet = new Bullet(pos, r);
-
+    bullet->type(EBullet);
     bullet->init(projectile, impact, pos, direction, speed, maxDistance);
 
     bullet->id() = id;

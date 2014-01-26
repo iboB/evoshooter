@@ -23,6 +23,8 @@
 
 #include "GameplayConstants.h"
 
+#include "SoundManager.h"
+
 using namespace mathgp;
 
 MonsterCharacter::MonsterCharacter(const mathgp::vector3& position, const std::string& name, const std::vector<AttackData>& attacks)
@@ -201,7 +203,7 @@ void MonsterCharacter::useDNA(const MonsterDNA& dna)
         break;
     }
 
-   // m_attack->setOwner(this);
+    m_attack->setOwner(this);
 
     float maxDefense = 0;
     int defense = G_UseSpitter;
@@ -519,13 +521,16 @@ void MonsterCharacter::OnHit(EAttackDamageType dmgType, int dmg)
     }
 
     if (dmg > 0)
-        GetDamage();
+    {
 
-    rawDamage(dmg);
+        GetDamage();
+        rawDamage(dmg);
+        SoundManager::instance().playSound(ESounds_EnemyOnHit);
+    }
 }
 
 int MonsterCharacter::applyArmor(int dmg)
 {
-    dmg = dmg - (m_defenseStrength*dmg);
+    dmg = dmg - (int)(m_defenseStrength*dmg);
     return dmg;
 }

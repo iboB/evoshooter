@@ -27,6 +27,8 @@ public:
     
     virtual void update(int dt);
 
+    void setDamageType(EAttackDamageType in) { m_damageType = in; }
+    void setDamage(int in) { m_damage = in; }
 private:
 
     SpritePtr m_Projectile;
@@ -39,4 +41,7 @@ private:
 
     bool m_IsFlying;
     bool m_IsExploding;
+
+    EAttackDamageType m_damageType;
+    int m_damage;
 };

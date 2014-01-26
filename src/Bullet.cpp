@@ -27,7 +27,8 @@ Bullet::Bullet(const mathgp::vector3& pos, float bc)
 , m_IsExploding(false)
 , m_MaxDistanceSq(0)
 {
-    
+    m_damage = 0;
+    m_damageType = EMonsterDamage;
 }
 
 Bullet::~Bullet()
@@ -97,6 +98,7 @@ void Bullet::update(int dt)
     }
 
     collision->GetDamage();
+    collision->OnHit(m_damageType, m_damage);
 
     m_Projectile->stopRendering();
     
