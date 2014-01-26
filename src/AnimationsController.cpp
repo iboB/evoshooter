@@ -18,7 +18,7 @@
 static Uint32 ANIM_TIME = 1000;
 
 AnimationsController::AnimationsController()
-: m_ActiveMovement(MA_None)
+: m_ActiveMovement(MA_Left)
 , m_IsTakingDamage(false)
 , m_IsDead(false)
 , m_ActiveAttack(0)

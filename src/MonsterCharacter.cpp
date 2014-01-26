@@ -37,7 +37,7 @@ void MonsterCharacter::update(int dt)
 {
     mathgp::vector3 offset = m_MoveDirection * (m_Speed * float(dt) * 0.001f);
 
-    Move(m_pos + offset);
+    //Move(m_pos + offset);
 
     Character::update(dt);
 }

@@ -124,6 +124,7 @@ void ExperimentState::initialize()
 
     m_camera->followObject(World::instance().mainCharacter());
     ShadowManager::instance().initialize();
+    ColliderGrid::instance().initialize();
 }
 
 void ExperimentState::deinitialize()
