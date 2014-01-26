@@ -299,7 +299,7 @@ std::vector<std::shared_ptr<Object> > ColliderGrid::collideCirclesWith2dRay(math
 
     return out;
 }
-//#include <iostream>
+#include <iostream>
 std::vector<std::shared_ptr<Object> > ColliderGrid::collideWithQuadsOnClick(const mathgp::uvector2& screenPos, const mathgp::vector3& worldPoint)
 {
     m_currentCollisionRayStart = v(0.0f, 0.0f, 0.0f); //todo: make this player pos;
@@ -315,6 +315,7 @@ std::vector<std::shared_ptr<Object> > ColliderGrid::collideWithQuadsOnClick(cons
     const uvector2& screenSize = Application::instance().mainWindow()->clientAreaSize();
 
     uvector2 halfScreenSize = v(screenSize.x() / 2, screenSize.y() / 2);
+    vector3 pos;
    // vector2 ooScreenCoords = v(float((int)screenPos.x() - (int)halfScreenSize.x()) / float(halfScreenSize.x()), float((int)halfScreenSize.y() - (int)screenPos.y()) / float(halfScreenSize.y()));
     
     Camera* cam = Application::instance().currentState()->camera();
@@ -341,8 +342,9 @@ std::vector<std::shared_ptr<Object> > ColliderGrid::collideWithQuadsOnClick(cons
             while (it != m_grid[x][y].end())
             {
                 //topLeftWorld = (*it)->position() + (up*(*it)->bb_h()) + (left*((*it)->bb_w() / 2.0f));
-                topLeftWorld = (*it)->position() + up*(*it)->bb_h();
-                botRightWorld = (*it)->position() + (-1.0f*left)*(*it)->bb_w();
+                pos = (*it)->position() + v((*it)->hitDetectionOffset().x(), (*it)->hitDetectionOffset().y(), 0.0f);
+                topLeftWorld = pos + up*(*it)->bb_h();
+                botRightWorld = pos + (-1.0f*left)*(*it)->bb_w();
 
                 topLeftScreen = transform_coord(topLeftWorld, projectionView);
                 
@@ -367,7 +369,10 @@ std::vector<std::shared_ptr<Object> > ColliderGrid::collideWithQuadsOnClick(cons
     }
 
     std::sort(out.begin(), out.end(), SortComparer(this));
-
+    if (out.size() > 0)
+    {
+        std::cout << "hit!" << std::endl;
+    }
     return out;
 }
 /*

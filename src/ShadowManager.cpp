@@ -77,7 +77,7 @@ void ShadowManager::update()
             quad.vertices[3].texCoord = v(1.0f, 0.0f);
             for (int i = 0; i < 4; ++i)
             {
-                quad.vertices[i].position *= (obj->size()*1.6f);
+                quad.vertices[i].position *= (obj->size()*0.5f);
                 //quad.vertices[i].position = (quad.vertices[i].position - obj->position()) + obj->position();
                 quad.vertices[i].position += obj->position();
                 quad.vertices[i].position.z() = 0.001f;
