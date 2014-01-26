@@ -20,8 +20,10 @@ public:
 
     void setOwner(MonsterCharacter* owner);
 
-    //virtual float senseOfRange() const;
-    //virtual void attack(const mathgp::point3& point);
+    virtual float range() const = 0;
+    virtual float senseOfRange() = 0;
+    virtual void attack(const mathgp::point3& point) = 0;
+    virtual void attack(const mathgp::point3& lastKnownPosition, const mathgp::point3& point) = 0;
 
 private:
     MonsterCharacter* m_owner;
@@ -32,27 +34,7 @@ class RangedAttack : public MonsterAttack
 
 };
 
-class Thorns : public RangedAttack
-{
-
-};
-
-class Spit : public RangedAttack
-{
-
-};
-
 class MeleeAttack : public MonsterAttack
-{
-
-};
-
-class Grapple : public MeleeAttack
-{
-
-};
-
-class Claws : public MeleeAttack
 {
 
 };
@@ -61,3 +43,25 @@ class NoAttack : public MonsterAttack
 {
 
 };
+
+//class Thorns : public RangedAttack
+//{
+//
+//};
+//
+//class Spit : public RangedAttack
+//{
+//
+//};
+//
+//
+//class Grapple : public MeleeAttack
+//{
+//
+//};
+//
+//class Claws : public MeleeAttack
+//{
+//
+//};
+
