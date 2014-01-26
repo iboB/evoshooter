@@ -32,7 +32,7 @@ ShadowManager::~ShadowManager()
 
 void ShadowManager::initialize()
 {
-    m_texture = ResourceManager::instance().getTexture("sprites/sprite.png");
+    m_texture = ResourceManager::instance().getTexture("level/shadows_gradient.png");
 }
 
 void ShadowManager::update()
@@ -77,7 +77,7 @@ void ShadowManager::update()
             quad.vertices[3].texCoord = v(1.0f, 0.0f);
             for (int i = 0; i < 4; ++i)
             {
-                quad.vertices[i].position *= obj->size();
+                quad.vertices[i].position *= (obj->size()*1.6f);
                 //quad.vertices[i].position = (quad.vertices[i].position - obj->position()) + obj->position();
                 quad.vertices[i].position += obj->position();
                 quad.vertices[i].position.z() = 0.001f;
@@ -92,7 +92,7 @@ void ShadowManager::update()
 void ShadowManager::draw(const mathgp::matrix4& viewProj)
 {    
     SENTRY(GLEnableSentry, GL_BLEND);
-
+    SENTRY(GLDisableSentry, GL_DEPTH_TEST);
     //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
     const int Attr_Pos = 0;

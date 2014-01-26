@@ -21,7 +21,6 @@
     <ClCompile Include="..\..\..\src\MainCharacter.cpp" />
     <ClCompile Include="..\..\..\src\MainMenuState.cpp" />
     <ClCompile Include="..\..\..\src\MainWindow.cpp" />
-    <ClCompile Include="..\..\..\src\MonsterCharacter.cpp" />
     <ClCompile Include="..\..\..\src\Overlay.cpp" />
     <ClCompile Include="..\..\..\src\RenderManager.cpp" />
     <ClCompile Include="..\..\..\src\Monster.cpp" />
@@ -47,6 +46,9 @@
       <Filter>Evo</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\MonsterDNA.cpp">
+      <Filter>Evo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\MonsterCharacter.cpp">
       <Filter>Evo</Filter>
     </ClCompile>
   </ItemGroup>
@@ -77,8 +79,6 @@
     <ClInclude Include="..\..\..\src\MainMenuState.h" />
     <ClInclude Include="..\..\..\src\MainWindow.h" />
     <ClInclude Include="..\..\..\src\Memory.h" />
-    <ClInclude Include="..\..\..\src\Monster.h" />
-    <ClInclude Include="..\..\..\src\MonsterCharacter.h" />
     <ClInclude Include="..\..\..\src\MonsterDNA.h" />
     <ClInclude Include="..\..\..\src\NonCopyable.h" />
     <ClInclude Include="..\..\..\src\Object.h" />
@@ -106,6 +106,9 @@
       <Filter>Evo</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\MonsterDNA.h">
+      <Filter>Evo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\MonsterCharacter.h">
       <Filter>Evo</Filter>
     </ClInclude>
   </ItemGroup>

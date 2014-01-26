@@ -23,7 +23,7 @@ public:
     void  x(float val);
 	float y();
     void  y(float val);
-	float r();
+	float r() const;
     bool collidesWith(std::shared_ptr<Object> otherGuy);
     float bb_w();
     float bb_h();

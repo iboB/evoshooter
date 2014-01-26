@@ -27,7 +27,7 @@ m_pos(pos),
 m_boundingCircle(bc),
 m_bb(mathgp::v(10.0f, 10.0f)),
 m_renderShadow(false),
-m_size(1.0f)
+m_size(bc*2)
 {
 }
 
@@ -64,9 +64,9 @@ void Object::y(float val)
     m_pos.y() = val;
 }
 
-float Object::r()
+float Object::r() const
 {
-	return m_boundingCircle;
+	return m_size*0.5;
 }
 bool Object::collidesWith(std::shared_ptr<Object> otherGuy)
 {

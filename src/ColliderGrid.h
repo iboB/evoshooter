@@ -35,6 +35,12 @@ public:
 
     std::vector<std::shared_ptr<Object> > collideWithQuadsOnClick(const mathgp::uvector2& screenPos, const mathgp::vector3& worldPoint);
     //bool                     collideAABBWith3dRay(const std::shared_ptr<Object> obj, const mathgp::vector3& rayStart, const mathgp::vector3& rayDir);
+
+    bool                    isWall(std::shared_ptr<Object> obj) { return (m_dummyObject == obj); }
+
+    void                    initialize();
+
+    std::vector<std::shared_ptr<Object> > collideWithCircle(mathgp::vector2 origin, float r);
 private:
     mathgp::uvector2		getObjectCell(Object* obj);
     mathgp::uvector2		getObjectCell(float x, float y);
@@ -45,4 +51,6 @@ private:
 	gridContainer m_grid;
 	int m_sizeX;
 	int m_sizeY;
+    std::shared_ptr<Object> m_dummyObject; //dummy obj to simulate wall collisions;
+    unsigned int m_dummyObjectId;
 };

@@ -25,12 +25,19 @@ m_sizeX(g_gridCells),
 m_sizeY(g_gridCells),
 m_grid(g_gridCells, std::vector<std::list<std::shared_ptr<Object> > >(g_gridCells, std::list<std::shared_ptr<Object> >()))
 {
+    
 }
 
 ColliderGrid::~ColliderGrid()
 {
+    m_dummyObject.reset();
 }
 
+void ColliderGrid::initialize()
+{
+    m_dummyObjectId = World::instance().spawnObject(-20, -20, 0); // dummy object
+    m_dummyObject = World::instance().object(m_dummyObjectId);
+}
 
 std::shared_ptr<Object> ColliderGrid::requestMoveTo(Object* obj, const mathgp::vector2& pos)
 {
@@ -40,8 +47,55 @@ std::shared_ptr<Object> ColliderGrid::requestMoveTo(Object* obj, const mathgp::v
 {
 	return requestMoveTo(obj, pos.x(), pos.y());
 }
+
+std::vector<std::shared_ptr<Object> > ColliderGrid::collideWithCircle(mathgp::vector2 origin, float r)
+{
+    std::vector<std::shared_ptr<Object> > out;
+
+    mathgp::uvector2 id = getObjectCell(origin.x(), origin.y());
+    
+
+    std::list< std::shared_ptr< Object > >::iterator it;
+    int x, y;
+    for (int i = -1; i <= 1; ++i)
+    {
+        x = id.x() + i;
+        if (x < 0 || x >= m_sizeX)
+        {
+            continue;
+        }
+        for (int j = -1; j <= 1; ++j)
+        {
+            y = id.y() + j;
+
+            if (y < 0 || y >= m_sizeY)
+            {
+                continue;
+            }
+
+            it = m_grid[x][y].begin();
+            while (it != m_grid[x][y].end())
+            {
+                if (std::sqrt(((*it)->x() - origin.x()) * ((*it)->x() - origin.x()) + ((*it)->y() - origin.y()) * ((*it)->y() - origin.y())) < r + (*it)->r())
+                {
+                    out.push_back((*it));
+                }
+                ++it;
+            }
+        }
+    }
+
+    return out;
+}
+
 std::shared_ptr<Object> ColliderGrid::requestMoveTo(Object* obj, float newX, float newY)
 {
+    if (newY >= (g_worldSize - g_worldBorderOffset) || newY <= g_worldBorderOffset || newX >= (g_worldSize - g_worldBorderOffset) || newX <= g_worldBorderOffset)
+    {
+        //disallow move, return dummy obj, use isWall to test;
+        return m_dummyObject;
+    }
+
     mathgp::uvector2 oldId = getObjectCell(obj);
     mathgp::uvector2 id = getObjectCell(newX, newY);
     std::list< std::shared_ptr< Object > >::iterator it;
@@ -111,8 +165,11 @@ std::shared_ptr<Object> ColliderGrid::requestMoveTo(Object* obj, float newX, flo
 
 void ColliderGrid::onObjectCreated(std::shared_ptr<Object> obj)
 {
-	mathgp::uvector2 id = getObjectCell(obj.get());
-    m_grid[id.x()][id.y()].push_back(obj);
+    if (m_dummyObject != obj)
+    {
+        mathgp::uvector2 id = getObjectCell(obj.get());
+        m_grid[id.x()][id.y()].push_back(obj);
+    }
 }
 void ColliderGrid::onObjectDestroyed(std::shared_ptr<Object> obj)
 {
@@ -135,11 +192,11 @@ mathgp::uvector2 ColliderGrid::getObjectCell(Object* obj)
 
 mathgp::uvector2 ColliderGrid::getObjectCell(float x, float y)
 {
-#ifndef _DEBUG
-    return mathgp::v((unsigned int)(x / g_gridSize), (unsigned int)(y / g_gridSize));
-#else
+//#ifndef _DEBUG
+//    return mathgp::v((unsigned int)(x / g_gridSize), (unsigned int)(y / g_gridSize));
+//#else
     return cullIdToBounds(mathgp::v((unsigned int)(x / g_gridSize), (unsigned int)(y / g_gridSize)));
-#endif
+//#endif
 }
 
 mathgp::uvector2& ColliderGrid::cullIdToBounds(mathgp::uvector2& id)
@@ -193,8 +250,8 @@ std::vector<std::shared_ptr<Object> > ColliderGrid::collideCirclesWith2dRay(math
     {
         obj = it->second;
         it++;
-        objPos2d.x() = obj->x();
-        objPos2d.y() = obj->y();
+        objPos2d.x() = obj->x();// +(obj->r() / 2);
+        objPos2d.y() = obj->y();// +(obj->r() / 2);
         f = start - objPos2d;
         float a = d.length_sq();
         //mathgp::vector2 dd;
