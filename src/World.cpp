@@ -183,9 +183,8 @@ void World::update(int dt)
         {
             if (distance(i->position, m_mainCharacter->position()) < i->raidus + m_mainCharacter->r())
             {
-                // char in range
-                // Phil phil BAAM
-                int dmgDealt = 0;
+                int dmgDealt = i->damage;
+                m_mainCharacter->OnHit(EMonsterDamage, dmgDealt);
 
                 // notify monster about his damage
                 auto dealer = object(i->ownerId);
