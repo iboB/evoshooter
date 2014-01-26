@@ -111,10 +111,10 @@ void ExperimentState::initialize()
     AttacksData attacks2;
     AttackData a11 = { "sprites/attacks/attack_anim_01.png", "sprites/attacks/attack_anim_idle_01.png", Vec::zero, 0.005f, false };
     AttackData a21 = { "sprites/attacks/attack_anim_02.png", "sprites/attacks/attack_anim_idle_02.png", Vec::zero, 0.005f, false };
-    AttackData a31 = { "sprites/attacks/attack_anim_00.png", "sprites/attacks/attack_anim_idle_00.png", Vec::zero, 0.008f, true };
+    //AttackData a31 = { "sprites/attacks/attack_anim_00.png", "sprites/attacks/attack_anim_idle_00.png", Vec::zero, 0.008f, true };
     attacks2.push_back(a11);
     attacks2.push_back(a21);
-    attacks2.push_back(a31);
+    //attacks2.push_back(a31);
 
     //id = World::instance().spawnMonster(2.f, 3.f, 0.5f, "eye", attacks);
     
