@@ -40,6 +40,9 @@ public:
     void heal(int hp);
     int rawDamage(int dmg);
     int isDead() { return m_hp <= 0; }
+
+    int maxHp() const { return m_maxHp; }
+    int hp() const { return m_hp; }
 protected:
     AnimationsController m_AnimationsController;
     int m_maxHp;

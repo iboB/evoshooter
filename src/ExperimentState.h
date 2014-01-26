@@ -16,6 +16,8 @@ class Level;
 class GUILayer;
 class Overlay;
 
+class Hud;
+
 namespace Rocket
 {
     namespace Core
@@ -28,7 +30,7 @@ struct GameHud
     Rocket::Core::Element* m_healthDisplay;
     Rocket::Core::Element* m_weaponDisplay;
 
-    void health(int health);
+    void health(int health, int maxHealth);
     void weapon(const std::string& weaponName);
 };
 
@@ -70,4 +72,5 @@ private:
 
     Overlay* m_overlay;
 
+    Hud* m_hud;
 };
