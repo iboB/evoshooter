@@ -371,7 +371,7 @@ std::vector<std::shared_ptr<Object> > ColliderGrid::collideWithQuadsOnClick(cons
     //std::sort(out.begin(), out.end(), SortComparer(this));
     if (out.size() > 0)
     {
-        std::cout << "hit!" << std::endl;
+        //std::cout << "hit!" << std::endl;
     }
     return out;
 }

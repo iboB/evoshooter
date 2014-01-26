@@ -9,5 +9,5 @@ void main()
 {
 	gl_Position =  pvm * inPos;
 
-	texCoord = inTexCoord.xy*20;
+	texCoord = inTexCoord.xy*10;
 }

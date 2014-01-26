@@ -530,8 +530,7 @@ void MonsterCharacter::OnHit(EAttackDamageType dmgType, int dmg)
     if (dmgType == EMonsterDamage)
         return; //not concerned by own dmg
 
-    std::cout << "OW!" << std::endl;
-    
+    //std::cout << "OW!" << std::endl;    
 
     if ((dmgType == EPiercing && m_defenseType == EScales)
         || (dmgType == EBlunt && m_defenseType == EFatness)

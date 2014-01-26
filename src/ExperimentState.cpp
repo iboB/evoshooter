@@ -43,6 +43,9 @@ using namespace mathgp;
 //SpritePtr g_Sprite;
 MonsterCharacter* g_Monster;
 
+bool m_isShooting;
+unsigned m_lastShotTime;
+
 void GameHud::health(int health, int maxHealth)
 {
     char text[50];
@@ -118,7 +121,7 @@ void ExperimentState::initialize()
 
     //id = World::instance().spawnMonster(2.f, 3.f, 0.5f, "eye", attacks);
     
-    World::instance().spawnPlayer(2.f, 1.5f, 0.5f, attacks2);
+    World::instance().spawnPlayer(11.f, 11.f, 0.5f, attacks2);
 
     m_camera->followObject(World::instance().mainCharacter());
     ShadowManager::instance().initialize();
@@ -163,25 +166,7 @@ void ExperimentState::handleEvent(const SDL_Event& event)
 
         switch (event.key.keysym.sym)
         {
-        case SDLK_y:
-            angle = mod;
-            break;
-        case SDLK_h:
-            angle = -mod;
-            break;
-        case SDLK_u:
-            fov = mod;
-            break;
-        case SDLK_j:
-            fov = -mod;
-            break;
-        case SDLK_i:
-            distance = mod;
-            break;
-        case SDLK_k:
-            distance = -mod;
-            break;
-
+        
         case SDLK_w:
         case SDLK_s:
             m_moveWeight.y() = 0.f;
@@ -189,80 +174,13 @@ void ExperimentState::handleEvent(const SDL_Event& event)
         case SDLK_a:
         case SDLK_d:
             m_moveWeight.x() = 0.f;
-            break;
-        case SDLK_0:
-            SoundManager::instance().playSound((ESounds)0);
-            break;
+            break;       
         case SDLK_1:
-            //SoundManager::instance().playSound((ESounds)1);
-            World::instance().mainCharacter()->previousWeapon();
-            break;
-        case SDLK_2:
-            //SoundManager::instance().playSound((ESounds)2);
-            World::instance().mainCharacter()->nextWeapon();
-            break;
-        case SDLK_3:
-            //SoundManager::instance().playSound((ESounds)3);
-            break;
-        case SDLK_SPACE:
-            //World::instance().mainCharacter()->Die();
-            break;
-        case SDLK_l:
-            World::instance().mainCharacter()->GetDamage();
-            break;
-        case SDLK_F1:
-            {
-                GameState* state = new AboutState;
-                Application::instance().pushState(state);
-            }
-            break;
-        case SDLK_F2:
-            {
-                World::instance().mainCharacter()->rawDamage(90000);
-            }
-            break;
-        case SDLK_b:
-            World::instance().mainCharacter()->Attack(0);
-            break;
-        case SDLK_n:
-            World::instance().mainCharacter()->Attack(1);
-            break;
-        case SDLK_m:
-            World::instance().mainCharacter()->Attack(2);
-            break;
-        case SDLK_o:
-            {
-                SpritePtr projectile = ResourceManager::instance().createSpriteFromSingleFrameTexture("sprites/projectiles/bullet.png");
-                SpritePtr impact = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/projectiles/explosion.png", 1, 4, 400);
-
-                unsigned int id = World::instance().spawnBullet(0.5f, 0.5f, 0.1f, projectile, impact, mathgp::vc(0.5f, 0.5f, 0.0f), 3.f, 5.f);
-
-                ((Bullet*)(World::instance().object(id).get()))->shoot();
-            }
-            break;
-        case SDLK_v:
-            {
-                SpritePtr sprite  = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/projectiles/explosion.png", 1, 4, 4000);
-                sprite->setScale(0.01f);
-                World::instance().spawnStaticObject(3.5f, 3.5f, 0.1f, sprite);
-            }
-            break;
-        case SDLK_4:
-        {
-            std::vector< std::shared_ptr<Object>> test = ColliderGrid::instance().collideWithCircle(v(2.5f, 2.5f), 5.0f);
-            break;
-        }
-        case SDLK_5:
-        {
-            std::vector< std::shared_ptr<Object>> test = ColliderGrid::instance().collideWithCircle(v(25.f, 25.f), 5.0f);
-            break;
-        }
-        case SDLK_LEFTBRACKET:
             {
                 World::instance().mainCharacter()->previousWeapon();
             }
             break;
-        case SDLK_RIGHTBRACKET:
+        case SDLK_2:
             {
                 World::instance().mainCharacter()->nextWeapon();
             }
@@ -289,23 +207,18 @@ void ExperimentState::handleEvent(const SDL_Event& event)
             break;
         }
     }
+    else if (event.type == SDL_MOUSEBUTTONDOWN)
+    {
+        if (event.button.button == SDL_BUTTON_LEFT)
+        {
+            m_isShooting = true;
+        }
+    }
     else if (event.type == SDL_MOUSEBUTTONUP)
     {
         if (event.button.button == SDL_BUTTON_LEFT)
         {
-            //vector3 start;
-            vector3 worldPoint;
-            //m_camera->screenToWorldRay(v((unsigned int)event.button.x, (unsigned int)event.button.y), start, end);
-            m_camera->screenToWorldPoint(v((unsigned int)event.button.x, (unsigned int)event.button.y), worldPoint);
-            //m_debugStart = start;
-            //m_debugEnd = end;
-            std::vector< std::shared_ptr<Object>> test = ColliderGrid::instance().collideWithQuadsOnClick(v((unsigned int)event.button.x, (unsigned int)event.button.y), worldPoint);
-            Object * obj = NULL;
-            if (test.size() > 0)
-                obj = test[0].get();
-
-            World::instance().mainCharacter()->useWeapon(worldPoint, obj);
-            //std::cout << "end world Pos x:" << end.x() << " y:" << end.y() << std::endl;
+            m_isShooting = false;
         }
     }
 
@@ -363,6 +276,33 @@ void ExperimentState::update(int dt)
 	ShadowManager::instance().update();
 
     m_hud->update();
+
+    if (m_isShooting)
+    {
+        unsigned now = Application::instance().currentFrameTime();
+
+        if (now - m_lastShotTime > 100)
+        {
+
+            int x, y;
+            SDL_GetMouseState(&x, &y);
+            //vector3 start;
+            vector3 worldPoint;
+            //m_camera->screenToWorldRay(v((unsigned int)event.button.x, (unsigned int)event.button.y), start, end);
+            m_camera->screenToWorldPoint(v((unsigned int)x, (unsigned int)y), worldPoint);
+            //m_debugStart = start;
+            //m_debugEnd = end;
+            std::vector< std::shared_ptr<Object>> test = ColliderGrid::instance().collideWithQuadsOnClick(v((unsigned int)x, (unsigned int)y), worldPoint);
+            Object * obj = NULL;
+            if (test.size() > 0)
+                obj = test[0].get();
+
+            World::instance().mainCharacter()->useWeapon(worldPoint, obj);
+            //std::cout << "end world Pos x:" << end.x() << " y:" << end.y() << std::endl;
+
+            m_lastShotTime = now;
+        }
+    }
 }
 
 void ExperimentState::draw()
