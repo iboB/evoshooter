@@ -69,11 +69,12 @@ void MonsterCharacter::update(int dt)
 {
     m_timeAtLastPosition += dt;
 
+    //SetTargetPoint(World::instance().mainCharacter()->position());
     think(dt);
 
     mathgp::vector3 offset = m_MoveDirection * (m_speed * float(dt) * 0.001f);
 
-    //Move(m_pos + offset);
+    Move(m_pos + offset);
 
     Character::update(dt);
 
