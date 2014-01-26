@@ -37,8 +37,6 @@ public:
 
     const MonsterDNA& dna() const { return m_dna;  }
 
-    
-
     virtual void OnHit(EAttackDamageType dmgType, int dmg);
 
     void loseStamina(int n);

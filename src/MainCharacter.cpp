@@ -120,6 +120,11 @@ void MainCharacter::OnHit(EAttackDamageType dmgType, int dmg)
     if (dmgType != EMonsterDamage)
         return; //not concerned by own dmg
 
+    if (m_PlayerAnimationController.isDead())
+    {
+        return;
+    }
+
     rawDamage(dmg);
 }
 
