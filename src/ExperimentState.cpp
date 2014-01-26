@@ -84,7 +84,7 @@ void ExperimentState::initialize()
 
     m_moveWeight = Vec::zero;
 
-    g_Sprite = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/sprite.png", 2, 4, 8000);
+    //g_Sprite = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/sprite.png", 2, 4, 8000);
     //g_Sprite = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/sprite.png", 2, 4, 8000);
 
     //g_Sprite.reset(new Sprite());
@@ -112,7 +112,7 @@ void ExperimentState::initialize()
     {
         float2 pos = v(Util::Rnd01(), Util::Rnd01()) * g_worldSize;
 
-        unsigned int id = World::instance().spawnMonster(pos.x(), pos.y(), 0.5f, "player", attacks);
+        unsigned int id = World::instance().spawnMonster(pos.x(), pos.y(), 0.5f, "eye", attacks);
         MonsterCharacter* monster = (MonsterCharacter*)World::instance().object(id).get();
         monster->SetMoveDirection(mathgp::vc(0.0f, 0.0f, 0.f));
         MonsterDNA dna;
@@ -348,6 +348,10 @@ void ExperimentState::update(int dt)
         m_camPosition += unitsPerSecond * frameTime * normalized(m_moveWeight);
         
         World::instance().mainCharacter()->Move(World::instance().mainCharacter()->position() + unitsPerSecond * frameTime * normalized(m_moveWeight));
+    }
+    else
+    {
+        World::instance().mainCharacter()->GoIdle();
     }
 
     World::instance().update(dt);

@@ -494,6 +494,8 @@ void PlayerAnimationsController::SetWeapon(PlayerWeaponType weapon)
 
     int currentFrame = StopAll();
 
+    m_ActiveWeapon = weapon;
+
     if (m_IsAttacking)
     {
         m_Animations[m_ActiveWeapon].Attack[m_ActiveMovement]->startRendering(currentFrame);
@@ -522,6 +524,8 @@ void PlayerAnimationsController::SetMovement(PlayerMovement movement)
     }
 
     int currentFrame = StopAll();
+
+    m_ActiveMovement = movement;
 
     if (m_IsAttacking)
     {
@@ -570,7 +574,7 @@ void PlayerAnimationsController::GetDamage()
     m_DamageStartTime = SDL_GetTicks();
 }
 
-void PlayerAnimationsController::Attack(Uint32 attackIndex)
+void PlayerAnimationsController::Attack()
 {
     if (m_IsDead)
         return;

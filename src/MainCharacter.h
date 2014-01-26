@@ -12,14 +12,27 @@
 
 #include "Character.h"
 #include "PlayerWeapon.h"
+#include "AnimationsController.h"
 
 class MainCharacter : public Character
 {
 public:
     MainCharacter(const mathgp::vector3& position, const std::vector<AttackData>& attacks);
     void OnHit(EAttackDamageType dmgType, int dmg);
+
     virtual void update(int dt);
     void useWeapon(const mathgp::vector3& worldPoint, Object* objectHit);
+
+    virtual void Die();
+    virtual void GetDamage();
+    virtual void Attack(Uint32 attackIndex);
+
+    virtual void Move(const mathgp::vector3& position);
+
+    void GoIdle();
+
 private:
     PlayerWeapon* m_weapon;
+
+    PlayerAnimationsController m_PlayerAnimationController;
 };
