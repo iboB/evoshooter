@@ -19,15 +19,15 @@
 
 std::string PlayerWeapon::m_weaponNames[EWeaponCount] =
 {
-    "Knife", "Gun"
+    "Knife", "Gun", "Shotgun"
 };
 EAttackDamageType PlayerWeapon::m_weaponDamageTypes[EWeaponCount] =
 {
-    EPiercing, EBlunt
+    EPiercing, EBlunt, EBlunt
 };
 EAttackType PlayerWeapon::m_weaponAttackTypes[EWeaponCount] =
 {
-    EMele, EShoot
+    EMele, EShoot, EShoot
 };
 
 using namespace mathgp;
@@ -58,14 +58,28 @@ void PlayerWeapon::attack(const mathgp::vector3& worldPoint, Object* objectHit)
             meleeAttack(worldPoint);
             break;
         case EPistol:
-        {
-            if (objectHit && objectHit->type() != EPlayer_Character)
             {
-                rangedAttack(objectHit->position());
+                if (objectHit && objectHit->type() != EPlayer_Character)
+                {
+                    rangedGunAttack(objectHit->position());
+                }
+                else
+                {
+                    rangedGunAttack(worldPoint);
+                }
             }
-            else
+            break;
+        case EShotgun:
+        {
             {
-                rangedAttack(worldPoint);
+                if (objectHit && objectHit->type() != EPlayer_Character)
+                {
+                    rangedShotgunAttack(objectHit->position());
+                }
+                else
+                {
+                    rangedShotgunAttack(worldPoint);
+                }
             }
         }
             break;
@@ -93,7 +107,20 @@ void PlayerWeapon::meleeAttack(const mathgp::vector3& worldPoint)
     }
 }
 
-void PlayerWeapon::rangedAttack(const mathgp::vector3& worldPoint)
+void PlayerWeapon::rangedShotgunAttack(const mathgp::vector3& worldPoint)
+{
+    SpritePtr projectile = ResourceManager::instance().createSpriteFromSingleFrameTexture("sprites/projectiles/rocket.png");
+    SpritePtr impact = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/projectiles/explosion.png", 1, 4, 400);
+    vector3 playerPos = World::instance().mainCharacter()->position();
+    vector3 directionOfAttack = normalized(worldPoint - playerPos);
+
+    unsigned int id = World::instance().spawnBullet(playerPos.x(), playerPos.y(), 0.1f, projectile, impact, directionOfAttack, 3.f, 5.f);
+    Bullet* bullet = (Bullet*)(World::instance().object(id).get());
+    bullet->setDamage(damage());
+    bullet->setDamageType(m_damageType);
+    bullet->shoot();
+}
+void PlayerWeapon::rangedGunAttack(const mathgp::vector3& worldPoint)
 {
     SpritePtr projectile = ResourceManager::instance().createSpriteFromSingleFrameTexture("sprites/projectiles/rocket.png");
     SpritePtr impact = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/projectiles/explosion.png", 1, 4, 400);

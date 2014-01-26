@@ -107,7 +107,7 @@ void Character::OnHit(EAttackDamageType dmgType, int dmg)
 int Character::rawDamage(int dmg)
 {
     m_hp -= dmg;
-
+   // SoundManager::instance().playSound();
     if (m_hp <= 0)
     {
         //dead;
