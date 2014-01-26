@@ -25,10 +25,12 @@
 
 #include "SoundManager.h"
 
+#include "SpawnManager.h"
+
 using namespace mathgp;
 
-MonsterCharacter::MonsterCharacter(const mathgp::vector3& position, const std::string& name, const std::vector<AttackData>& attacks)
-: Character(position, name, attacks)
+MonsterCharacter::MonsterCharacter(const mathgp::vector3& position, const MonsterDNA& dna)
+: Character(position)
 , m_MoveDirection()
 , m_attack(nullptr)
 , m_damagePainFrames(0)
@@ -36,6 +38,7 @@ MonsterCharacter::MonsterCharacter(const mathgp::vector3& position, const std::s
 , m_defenseStrength(0.0f)
 {
     m_MoveDirection = mathgp::vc(0.f, 0.0f, 0.f);
+    useDNA(dna);
 }
 
 MonsterCharacter::~MonsterCharacter()
@@ -231,6 +234,23 @@ void MonsterCharacter::useDNA(const MonsterDNA& dna)
     default:
         break;
     }
+
+    std::string name;
+    if (m_size < Max_Monster_Size / 3)
+    {
+        name = "eye";
+    }
+    else if (m_size < (2 * Max_Monster_Size) / 3)
+    {
+        name = "jaba_the_slut";
+    }
+    else
+    {
+        name = "pudge";
+    }
+
+    std::vector<AttackData> attacks;
+    init(name, attacks);
 }
 
 MonsterDNA MonsterCharacter::giveOffspring()
@@ -533,4 +553,11 @@ int MonsterCharacter::applyArmor(int dmg)
 {
     dmg = dmg - (int)(m_defenseStrength*dmg);
     return dmg;
+}
+
+void MonsterCharacter::Die()
+{
+    SpawnManager::instance().onMonsterDeath(this);
+
+    Character::Die();
 }

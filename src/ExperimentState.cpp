@@ -22,6 +22,7 @@
 #include "GLSentries.h"
 #include "Level.h"
 #include "GUILayer.h"
+#include "SpawnManager.h"
 #include "Application.h"
 #include "Util.h"
 #include "Overlay.h"
@@ -39,7 +40,7 @@
 
 using namespace mathgp;
 
-SpritePtr g_Sprite;
+//SpritePtr g_Sprite;
 MonsterCharacter* g_Monster;
 
 void GameHud::health(int health, int maxHealth)
@@ -84,7 +85,7 @@ void ExperimentState::initialize()
 
     m_moveWeight = Vec::zero;
 
-    g_Sprite = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/sprite.png", 2, 4, 8000);
+    //g_Sprite = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/sprite.png", 2, 4, 8000);
     //g_Sprite = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/sprite.png", 2, 4, 8000);
 
     //g_Sprite.reset(new Sprite());
@@ -107,19 +108,6 @@ void ExperimentState::initialize()
     attacks.push_back(a2);
     attacks.push_back(a3);
 
-    srand(105);
-    for (int i = 0; i < 10; ++i)
-    {
-        float2 pos = v(Util::Rnd01(), Util::Rnd01()) * g_worldSize;
-
-        unsigned int id = World::instance().spawnMonster(pos.x(), pos.y(), 0.5f, "player", attacks);
-        MonsterCharacter* monster = (MonsterCharacter*)World::instance().object(id).get();
-        monster->SetMoveDirection(mathgp::vc(0.0f, 0.0f, 0.f));
-        MonsterDNA dna;
-        dna.randomize();
-        monster->useDNA(dna);
-    }
-
     AttacksData attacks2;
     AttackData a11 = { "sprites/attacks/attack_anim_01.png", "sprites/attacks/attack_anim_idle_01.png", Vec::zero, 0.005f, false };
     AttackData a21 = { "sprites/attacks/attack_anim_02.png", "sprites/attacks/attack_anim_idle_02.png", Vec::zero, 0.005f, false };
@@ -129,6 +117,55 @@ void ExperimentState::initialize()
     //attacks2.push_back(a31);
 
     //id = World::instance().spawnMonster(2.f, 3.f, 0.5f, "eye", attacks);
+
+    for (int i = 0; i < (g_worldSize); ++i)
+    {
+        float rand = Util::Rnd01();
+        SpritePtr sprite;
+        if (rand <= 0.1f)
+        {
+            sprite = ResourceManager::instance().createSpriteFromSingleFrameTexture("sprites/props/grass_01.png");
+        }
+        else if (rand <= 0.2f)
+        {
+            sprite = ResourceManager::instance().createSpriteFromSingleFrameTexture("sprites/props/grey_rock_01.png");
+        }
+        else if (rand <= 0.3f)
+        {
+            sprite = ResourceManager::instance().createSpriteFromSingleFrameTexture("sprites/props/grey_rock_02.png");
+        }
+        else if (rand <= 0.4f)
+        {
+            sprite = ResourceManager::instance().createSpriteFromSingleFrameTexture("sprites/props/kolona_01.png");
+        }
+        else if (rand <= 0.5f)
+        {
+            sprite = ResourceManager::instance().createSpriteFromSingleFrameTexture("sprites/props/kolona_02.png");
+        }
+        else if (rand <= 0.6f)
+        {
+            sprite = ResourceManager::instance().createSpriteFromSingleFrameTexture("sprites/props/statue_01.png");
+        }
+        else if (rand <= 0.7f)
+        {
+            sprite = ResourceManager::instance().createSpriteFromSingleFrameTexture("sprites/props/tree_01_outline_test.png");
+        }
+        else if (rand <= 0.8f)
+        {
+            sprite = ResourceManager::instance().createSpriteFromSingleFrameTexture("sprites/props/tree_02.png");
+        }
+        else // (rand <= 0.9f)
+        {
+            sprite = ResourceManager::instance().createSpriteFromSingleFrameTexture("sprites/props/wall_03.png");
+        }
+
+        rand = Util::Rnd01();
+        float x = rand*g_worldSize;
+        rand = Util::Rnd01();
+        float y = rand*g_worldSize;
+        sprite->setScale(0.0015);
+        World::instance().spawnStaticObject(x, y, 1.0f, sprite);
+    }
     
     World::instance().spawnPlayer(2.f, 1.5f, 0.5f, attacks2);
 
@@ -366,7 +403,12 @@ void ExperimentState::update(int dt)
         
         World::instance().mainCharacter()->Move(World::instance().mainCharacter()->position() + unitsPerSecond * frameTime * normalized(m_moveWeight));
     }
+    else
+    {
+        World::instance().mainCharacter()->GoIdle();
+    }
 
+    SpawnManager::instance().update(dt);
     World::instance().update(dt);
     //g_Sprite->update(vc(2.f, 4.f, 0.0f), m_camDirection);
 

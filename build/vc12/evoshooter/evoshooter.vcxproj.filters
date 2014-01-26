@@ -54,6 +54,7 @@
     <ClCompile Include="..\..\..\src\MonsterAttacks.cpp" />
     <ClCompile Include="..\..\..\src\Hud.cpp" />
     <ClCompile Include="..\..\..\src\PlayerWeapon.cpp" />
+    <ClCompile Include="..\..\..\src\SpawnManager.cpp" />
     <ClCompile Include="..\..\..\src\DeathState.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -119,6 +120,7 @@
     <ClInclude Include="..\..\..\src\PlayerWeapon.h" />
     <ClInclude Include="..\..\..\src\RegisteredMonsterDamage.h" />
     <ClInclude Include="..\..\..\src\Hud.h" />
+    <ClInclude Include="..\..\..\src\SpawnManager.h" />
     <ClInclude Include="..\..\..\src\DeathState.h" />
   </ItemGroup>
 </Project>
