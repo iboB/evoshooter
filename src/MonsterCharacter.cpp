@@ -29,6 +29,7 @@ MonsterCharacter::MonsterCharacter(const mathgp::vector3& position, const std::s
 , m_attack(nullptr)
 , m_damagePainFrames(0)
 , m_playerInSightLastFrame(false)
+, m_defenseStrength(0.0f)
 {
     m_MoveDirection = mathgp::vc(0.f, 0.0f, 0.f);
 
@@ -176,7 +177,7 @@ void MonsterCharacter::useDNA(const MonsterDNA& dna)
         break;
     }
 
-    m_attack->setOwner(this);
+   // m_attack->setOwner(this);
 
     float maxDefense = 0;
     int defense = G_UseSpitter;
@@ -192,10 +193,15 @@ void MonsterCharacter::useDNA(const MonsterDNA& dna)
     switch (defense)
     {
     case G_UseScales:
+        m_defenseStrength = m_dna(G_ScalesPower);
+        m_defenseType = EScales;
         break;
     case G_UseFatness:
+        m_defenseStrength = m_dna(G_FatnessPower);
+        m_defenseType = EFatness;
         break;
     case G_NoDefense:
+        m_defenseType = ENone;
     default:
         break;
     }

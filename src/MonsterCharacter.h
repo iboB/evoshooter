@@ -15,6 +15,13 @@
 
 class MonsterAttack;
 
+enum EMonsterDefenseType
+{
+    ENone = 0,
+    EScales,
+    EFatness
+};
+
 class MonsterCharacter : public Character
 {
 public:
@@ -106,4 +113,7 @@ private:
     MonsterAttack* m_attack;
 
     int m_damagePainFrames;
+
+    float m_defenseStrength;
+    EMonsterDefenseType m_defenseType;
 };
