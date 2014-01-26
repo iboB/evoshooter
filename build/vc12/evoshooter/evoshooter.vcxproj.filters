@@ -112,5 +112,6 @@
     <ClInclude Include="..\..\..\src\Monster.h" />
     <ClInclude Include="..\..\..\src\MonsterCharacter.h" />
     <ClInclude Include="..\..\..\src\MonsterAttacks.h" />
+    <ClInclude Include="..\..\..\src\GameplayConstants.h" />
   </ItemGroup>
 </Project>

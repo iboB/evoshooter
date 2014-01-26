@@ -21,6 +21,7 @@ enum GeneType
     G_AttackDesire, // 1 only when player is in range - 0 total randomness (ie 1 - chance to perform random attack)
     G_Aim, // no clear cost???? extrapolate a part of a unit in front of a player
     G_Precision, // 1 exactly as needed, 0 - wide range (meaningless for mellee)
+    G_HardHit, // bonus melee dmg for longer cooldown 
     G_HP, // percent of max - guideline
     G_Speed, // percent of max - guideline
     G_Size, // percent of max - NO guideline

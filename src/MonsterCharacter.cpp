@@ -21,6 +21,8 @@
 
 #include "MonsterAttacks.h"
 
+#include "GameplayConstants.h"
+
 using namespace mathgp;
 
 MonsterCharacter::MonsterCharacter(const mathgp::vector3& position, const std::string& name, const std::vector<AttackData>& attacks)
@@ -91,41 +93,35 @@ void MonsterCharacter::useDNA(const MonsterDNA& dna)
 {
     m_dna = dna;
 
-    // here be constants for max values
-    static const float Max_HP = 1000;
-    static const float Max_Stamina = 1000;
-    static const float Max_Size = 5;
-    static const float Max_Speed = 4;
-
-
     // determine stats
-    m_size = 0.5f + Max_Size *
+    m_size = 0.5f + Max_Monster_Size *
         dna(G_Size);
 
     // reduce speed by up to 40% based on size
-    m_speed = Max_Speed *
+    m_speed = Max_Monster_Speed *
         saturate(dna(G_Speed) - dna(G_Size) * 0.4f);
     m_regularSpeed = m_speed;
-    m_aggroSpeed = m_speed * 1.5f;
+    m_aggroSpeed = m_speed * Aggro_Speed_Factor;
 
     // increase hp by up to 20% based on size
-    m_hp = m_maxHp = int(Max_HP *
+    m_hp = m_maxHp = int(Max_Monster_HP *
         saturate(dna(G_HP) + 0.2f * dna(G_Size)));
 
     // decrease stamina on small size
-    m_stamina = m_maxStamina = int(Max_Stamina *
+    m_stamina = m_maxStamina = int(Max_Monster_Stamina *
         saturate(dna(G_Stamina)));
     m_restCooldown = 0;
-    m_neededRestTime = 500 + int(dna(G_Size) * 4000);
+    m_neededRestTime = 500 + int(dna(G_Size) * Max_Rest_Time);
 
-    m_chanceToAggroOnSight = 0.25f * g_worldSize * dna(G_Aggresiveness);
+    m_chanceToAggroOnSight = World_Range_Factor * g_worldSize * dna(G_Aggresiveness);
     m_aggroCooldown = 0;
-    m_aggroTime = int(dna(G_Aggresiveness) * 60000); // 1 minute;
+    m_aggroTime = int(dna(G_Aggresiveness) * Max_Aggro_Time); // 1 minute;
 
-    m_sightRange = 0.25f * g_worldSize * dna(G_Sight);
-    m_hearingRange = 0.25f * g_worldSize * dna(G_Hearing);
+    m_sightRange = World_Range_Factor * g_worldSize * dna(G_Sight);
+    m_hearingRange = World_Range_Factor * g_worldSize * dna(G_Hearing);
 
-    m_randomAttackCooldown = m_timeToDecideForRandomAttack = dna(G_AttackDesire) * 3000;
+    m_randomAttackCooldown = m_timeToDecideForRandomAttack = 
+        dna(G_AttackDesire) * Max_Random_Attack_Wait;
 
     // 100 hp per 10 seconds
     // means 1 hp per 100 ms
@@ -323,7 +319,7 @@ void MonsterCharacter::think(int dt)
 
         if (m_hasPointToGoTo)
         {
-            if (distance(position(), m_pointToGoTo) > 0.3f)
+            if (distance(position(), m_pointToGoTo) > Close_Distance_In_World)
             {
                 // if we're here a long time, we're probably stuck
                 if (m_timeAtLastPosition < 1000)
@@ -338,7 +334,7 @@ void MonsterCharacter::think(int dt)
         if (Util::Rnd11() < 0)
         {
             // loiter up to 3 seconds
-            m_loiterCooldown = int(Util::Rnd01() * 3000);
+            m_loiterCooldown = int(Util::Rnd01() * Max_Loiter_Time);
             m_hasPointToGoTo = false;
         }
         else
@@ -383,7 +379,7 @@ void MonsterCharacter::think(int dt)
         {
             if (m_hasLastKnownPlayerPosition)
             {
-                if (distance(position(), m_lastKnownPlayerPosition) > 0.3f)
+                if (distance(position(), m_lastKnownPlayerPosition) > Close_Distance_In_World)
                 {
                     // go there
                     SetTargetPoint(m_lastKnownPlayerPosition);
