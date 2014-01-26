@@ -69,6 +69,7 @@ MonsterDNA::MonsterDNA()
     }
 
     // no clear cost here
+    m[G_Size].setCostFactor(0);
     m[G_Aim].setCostFactor(0);
     m[G_UseClaws].setCostFactor(0);
     m[G_UseSpitter].setCostFactor(0);

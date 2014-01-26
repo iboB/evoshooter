@@ -113,6 +113,8 @@ void MonsterCharacter::useDNA(const MonsterDNA& dna)
     m_sightRange = 0.25f * g_worldSize * dna(G_Sight);
     m_hearingRange = 0.25f * g_worldSize * dna(G_Hearing);
 
+    m_randomAttackCooldown = m_timeToDecideForRandomAttack = dna(G_AttackDesire) * 3000;
+
     // 100 hp per 10 seconds
     // means 1 hp per 100 ms
     m_regenPer100ms = dna(G_Regeneration);
@@ -147,20 +149,20 @@ void MonsterCharacter::useDNA(const MonsterDNA& dna)
     switch (weapon)
     {
     case G_UseSpitter:
-        //m_attack = new Spit;
+        m_attack = new RangedAttack;
         break;
     case G_UseGrapple:
-        //m_attack = new Grapple;
+        m_attack = new MeleeAttack;
         break;
     case G_UseClaws:
-        //m_attack = new Claws;
+        m_attack = new MeleeAttack;
         break;
     case G_UseThorns:
-        //m_attack = new Thorns;
+        m_attack = new RangedAttack;
         break;
     default:
         // no weapon!
-        //m_attack = new NoAttack;
+        m_attack = new NoAttack;
         break;
     }
 
@@ -204,6 +206,15 @@ void MonsterCharacter::heal(int hp)
         m_hp = m_maxHp;
 }
 
+point3 MonsterCharacter::randomPointInSight()
+{
+    auto point = vc(Util::Rnd11(), Util::Rnd11(), Util::Rnd11());
+
+    point *= m_sightRange;
+    point += position();
+    return point;
+}
+
 void MonsterCharacter::think(int dt)
 {
     if (isDead())
@@ -216,7 +227,7 @@ void MonsterCharacter::think(int dt)
 
     ////////////////////////////////////////////
     // do cooldowns
-    
+
     // hp regen
     m_regenPer100ms += float(dt) / 100;
     while (m_regenPer100ms >= 1)
@@ -225,24 +236,45 @@ void MonsterCharacter::think(int dt)
         --m_regenPer100ms;
     }
 
+    // random attack
+    m_randomAttackCooldown -= dt;
+    if (m_randomAttackCooldown < 0)
+    {
+        m_randomAttackCooldown = m_timeToDecideForRandomAttack;
+
+        if (m_dna(G_AttackDesire) < Util::Rnd01())
+        {
+            // bam! random attack
+            if (m_hasLastKnownPlayerPosition)
+            {
+                m_attack->attack(m_lastKnownPlayerPosition);
+            }
+            else
+            {
+                m_attack->attack(randomPointInSight());
+            }
+        }
+    }
+
+
     // aggro
     if (hasAggro())
     {
         m_aggroCooldown -= dt;
-        if (m_aggroCooldown < 0) m_aggroCooldown = 0;
+        if (m_aggroCooldown <= 0) m_aggroCooldown = 0;
     }
 
     // stamina
     if (isTired())
     {
         m_restCooldown -= dt;
-        if (m_restCooldown < 0) m_restCooldown = 0;
+        if (m_restCooldown <= 0) m_restCooldown = 0;
     }
 
     if (isLoitering())
     {
         m_loiterCooldown -= dt;
-        if (m_loiterCooldown < 0) m_loiterCooldown = 0;
+        if (m_loiterCooldown <= 0) m_loiterCooldown = 0;
     }
 
     ////////////////////////////////////////////
@@ -293,10 +325,7 @@ void MonsterCharacter::think(int dt)
         else
         {
             // choose point to go to in sight range
-            auto point = vc(Util::Rnd11(), Util::Rnd11(), Util::Rnd11());
-
-            point *= m_sightRange;
-            point += position();
+            auto point = randomPointInSight();            
 
             m_pointToGoTo = point;
             m_hasPointToGoTo = true;
@@ -321,11 +350,11 @@ void MonsterCharacter::think(int dt)
             // go towards him
             SetTargetPoint(enemy->position());
 
-            //if (distanceToPlayer < m_attack->senseOfRange())
-            //{
-            //    // we think we can also attack
-            //    m_attack->attack(enemy->position());
-            //}
+            if (distanceToPlayer < m_attack->senseOfRange())
+            {
+                // we think we can also attack
+                m_attack->attack(enemy->position());
+            }
             
             // should we only care about this when in aggro?
             m_hasLastKnownPlayerPosition = true;
@@ -341,10 +370,10 @@ void MonsterCharacter::think(int dt)
                     SetTargetPoint(m_lastKnownPlayerPosition);
                     return;
                 }
-                
-                // we're there and he isnt
-                // angrily go to random point in own range
             }
+
+            // roam
+            SetTargetPoint(randomPointInSight());
         }
     }
 }

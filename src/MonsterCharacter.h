@@ -68,7 +68,7 @@ private:
     float m_aggroSpeed;
 
     float m_randomAttackCooldown;
-    float m_currentDesireToRandomAttack;
+    float m_timeToDecideForRandomAttack;
 
     float m_size;
 
@@ -77,6 +77,7 @@ private:
     int m_aggroTime;
 
     float m_sightRange;
+    mathgp::point3 randomPointInSight();
     float m_hearingRange;
 
     float m_regenPer100ms;
