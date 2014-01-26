@@ -10,7 +10,9 @@
 //
 #include "EvoShooter.pch.h"
 #include "Object.h"
-#include <math.h> 
+#include <math.h>
+
+const float g_scaleConst = 0.008f;
 
 Object::Object():
 m_pos(),
@@ -22,13 +24,26 @@ m_id(0)
 {
 }
 
-Object::Object(const mathgp::vector3& pos, float halfSize):
+Object::Object(const mathgp::vector3& pos, float halfSize) :
 m_pos(pos),
 m_boundingCircle(halfSize),
-m_bb(mathgp::v(halfSize*2, halfSize*2)),
+m_bb(mathgp::v(halfSize * 2, halfSize * 3)),
 m_renderShadow(false),
-m_size(halfSize*2)
+m_size(halfSize * 2),
+m_hitDetectionOffset(mathgp::v(halfSize, halfSize))
 {
+    //eye aabb hard vals:
+    /*
+    m_hitDetectionOffset.x() = 0.3;
+    m_hitDetectionOffset.y() = 0.1;
+    m_bb.x() = 1.0;
+    m_bb.y() = 0.5;
+    */
+    //blob hard vals
+    m_hitDetectionOffset.x() = 13 * g_scaleConst;
+    m_hitDetectionOffset.y() = 26 * g_scaleConst;
+    m_bb.x() = 88 * g_scaleConst;
+    m_bb.y() = 120 * g_scaleConst; 
 
 }
 
@@ -67,7 +82,7 @@ void Object::y(float val)
 
 float Object::r() const
 {
-	return m_size*0.5;
+	return m_size*0.15;
 }
 bool Object::collidesWith(std::shared_ptr<Object> otherGuy)
 {

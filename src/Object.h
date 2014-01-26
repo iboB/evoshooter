@@ -53,11 +53,13 @@ public:
 
     void type(EObjectType t) { m_type = t; }
     EObjectType type() const { return m_type; }
+    mathgp::vector2 hitDetectionOffset() const { return m_hitDetectionOffset;  }
 protected:
 
 	mathgp::vector3 m_pos;
 	float m_boundingCircle;
     mathgp::vector2 m_bb; //w,h of the bounding quad
+    mathgp::vector2 m_hitDetectionOffset;
     bool m_renderShadow;
     float m_size;
     unsigned int m_id;
