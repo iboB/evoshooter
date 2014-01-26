@@ -40,12 +40,14 @@ void ShadowManager::update()
     objectsContainer& objects = World::instance().objects();
     Object* obj;
     Quad quad;
-    
+    m_quadBuffer.clear();
+    m_indexBuffer.clear();
     unsigned count = 0;
     unsigned startIndex = 0;
     const unsigned indexStep = 4;
 
     objectsContainer::iterator it = objects.begin();
+    
     while (it != objects.end())
     {
         obj = it->second.get();
@@ -60,18 +62,23 @@ void ShadowManager::update()
             m_indexBuffer.push_back(startIndex + 1);
             m_indexBuffer.push_back(startIndex + 3);
             ++count;
-
-            quad.vertices[0].position = v(0.0f, -1.0f, 0.0f);
-            quad.vertices[0].texCoord = v(0.0f, 0.0f);
+            /* { v(maxx, maxy, minz), vc(0, 1) },
+        { v(maxx, miny, minz), vc(1, 1) },
+        { v(maxx, maxy, maxz), vc(0, 0) },
+        { v(maxx, miny, maxz), vc(1, 0) },
+    };*/
+            quad.vertices[0].position = v(0.0f, 0.0f, 0.0f);
+            quad.vertices[0].texCoord = v(0.0f, 1.0f);
             quad.vertices[1].position = v(1.0f, 0.0f, 0.0f);
-            quad.vertices[1].texCoord = v(0.0f, 1.0f);
-            quad.vertices[2].position = v(-1.0f, 0.0f, 0.0f);
-            quad.vertices[2].texCoord = v(1.0f, 0.0f);
-            quad.vertices[3].position = v(0.0f, 1.0f, 0.0f);
-            quad.vertices[3].texCoord = v(1.0f, 1.0f);
+            quad.vertices[1].texCoord = v(1.0f, 1.0f);
+            quad.vertices[2].position = v(0.0f, 1.0f, 0.0f);
+            quad.vertices[2].texCoord = v(0.0f, 0.0f);
+            quad.vertices[3].position = v(1.0f, 1.0f, 0.0f);
+            quad.vertices[3].texCoord = v(1.0f, 0.0f);
             for (int i = 0; i < 4; ++i)
             {
                 quad.vertices[i].position *= obj->size();
+                //quad.vertices[i].position = (quad.vertices[i].position - obj->position()) + obj->position();
                 quad.vertices[i].position += obj->position();
                 quad.vertices[i].position.z() = 0.001f;
             }
@@ -84,10 +91,10 @@ void ShadowManager::update()
 
 void ShadowManager::draw(const mathgp::matrix4& viewProj)
 {    
-    glEnable(GL_BLEND);
+    SENTRY(GLEnableSentry, GL_BLEND);
 
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
+    //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    
     const int Attr_Pos = 0;
     const int Attr_UV = 1;
 
@@ -104,10 +111,12 @@ void ShadowManager::draw(const mathgp::matrix4& viewProj)
     simpleEffect->setParameter(tex, *m_texture);
 
     glVertexAttribPointer(Attr_Pos, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), &m_quadBuffer.front());
+    glEnableVertexAttribArray(Attr_Pos);
     SENTRY(GLEnableAttribSentry, Attr_Pos);
 
-    glVertexAttribPointer(Attr_UV, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), &m_quadBuffer.front() + sizeof(vector3));
+    glVertexAttribPointer(Attr_UV, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<char*>(&m_quadBuffer.front()) + sizeof(vector3));
     SENTRY(GLEnableAttribSentry, Attr_UV);
 
     glDrawElements(GL_TRIANGLES, m_indexBuffer.size(), GL_UNSIGNED_INT, &m_indexBuffer.front());
+
 }

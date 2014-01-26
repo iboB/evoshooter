@@ -39,6 +39,6 @@ protected:
 
 
     std::vector<Quad> m_quadBuffer;
-    std::vector<int> m_indexBuffer;
+    std::vector<unsigned int> m_indexBuffer;
     TexturePtr m_texture;
 };
