@@ -135,6 +135,7 @@ unsigned int World::spawnStaticObject(float x, float y, float r, SpritePtr sprit
     mathgp::vector3 pos = mathgp::v(x, y, 0.0f);
     unsigned int id = m_firstFreeId;
     StaticObject* object = new StaticObject(sprite, pos, r);
+    object->type(EStatic);
     object->id() = id;
 
     m_objects[id] = std::shared_ptr<Object>(object);
