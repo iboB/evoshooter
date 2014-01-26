@@ -191,6 +191,11 @@ void AnimationsController::GetDamage()
         return;
     }
 
+    if (m_IsAttacking && m_Attacks[m_ActiveAttack].m_IsWholeBodyAttack)
+    {
+        return;
+    }
+
     int activeFrame = 0;
     if (m_ActiveMovement != MA_None)
     {
@@ -214,6 +219,11 @@ void AnimationsController::Attack(Uint32 attackIndex)
     if (attackIndex >= m_Attacks.size())
     {
         assert(false);
+        return;
+    }
+
+    if (m_IsTakingDamage && m_Attacks[attackIndex].m_IsWholeBodyAttack)
+    {
         return;
     }
 
