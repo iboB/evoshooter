@@ -378,3 +378,281 @@ void AnimationsController::updateAttachments(const mathgp::vector3& position, co
         }
     }
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+PlayerAnimationsController::PlayerAnimationsController()
+: m_ActiveWeapon(PWT_Sword)
+, m_ActiveMovement(PM_Idle)
+, m_IsDead(false)
+{
+    //////////////////// sword
+    m_Animations[PWT_Sword].Move[PM_Idle] = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/player/MC_idle_sword_anim.png", 1, 8, ANIM_TIME);
+    m_Animations[PWT_Sword].Move[PM_Idle]->setScale(0.008f);
+    m_Animations[PWT_Sword].Move[PM_Idle]->startRendering(0);
+    m_Animations[PWT_Sword].Move[PM_LEft] = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/player/MC_run_sword_anim.png", 1, 8, ANIM_TIME);
+    m_Animations[PWT_Sword].Move[PM_LEft]->setScale(0.008f);
+    m_Animations[PWT_Sword].Move[PM_LEft]->setFlipX(true);
+    m_Animations[PWT_Sword].Move[PM_Right] = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/player/MC_run_sword_anim.png", 1, 8, ANIM_TIME);
+    m_Animations[PWT_Sword].Move[PM_Right]->setScale(0.008f);
+
+    m_Animations[PWT_Sword].Attack[PM_Idle] = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/player/MC_sword_attack_anim.png", 1, 8, ANIM_TIME);
+    m_Animations[PWT_Sword].Attack[PM_Idle]->setScale(0.008f);
+    m_Animations[PWT_Sword].Attack[PM_LEft] = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/player/MC_run_swordattack_anim.png", 1, 8, ANIM_TIME);
+    m_Animations[PWT_Sword].Attack[PM_LEft]->setScale(0.008f);
+    m_Animations[PWT_Sword].Attack[PM_LEft]->setFlipX(true);
+    m_Animations[PWT_Sword].Attack[PM_Right] = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/player/MC_run_swordattack_anim.png", 1, 8, ANIM_TIME);
+    m_Animations[PWT_Sword].Attack[PM_Right]->setScale(0.008f);
+
+    m_Animations[PWT_Sword].Damage[PM_Idle] = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/player/MC_dmg_sword_anim.png", 1, 8, ANIM_TIME);
+    m_Animations[PWT_Sword].Damage[PM_Idle]->setScale(0.008f);
+    m_Animations[PWT_Sword].Damage[PM_LEft] = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/player/MC_run_hitsword_anim.png", 1, 8, ANIM_TIME);
+    m_Animations[PWT_Sword].Damage[PM_LEft]->setScale(0.008f);
+    m_Animations[PWT_Sword].Damage[PM_LEft]->setFlipX(true);
+    m_Animations[PWT_Sword].Damage[PM_Right] = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/player/MC_run_hitsword_anim.png", 1, 8, ANIM_TIME);
+    m_Animations[PWT_Sword].Damage[PM_Right]->setScale(0.008f);
+
+    //////////////////// pistol
+    m_Animations[PWT_Pistol].Move[PM_Idle] = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/player/MC_idlegun_anim.png", 1, 8, ANIM_TIME);
+    m_Animations[PWT_Pistol].Move[PM_Idle]->setScale(0.008f);
+    m_Animations[PWT_Pistol].Move[PM_LEft] = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/player/MC_rungun_anim.png", 1, 8, ANIM_TIME);
+    m_Animations[PWT_Pistol].Move[PM_LEft]->setScale(0.008f);
+    m_Animations[PWT_Pistol].Move[PM_LEft]->setFlipX(true);
+    m_Animations[PWT_Pistol].Move[PM_Right] = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/player/MC_rungun_anim.png", 1, 8, ANIM_TIME);
+    m_Animations[PWT_Pistol].Move[PM_Right]->setScale(0.008f);
+
+    m_Animations[PWT_Pistol].Attack[PM_Idle] = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/player/MC_shootguninplace_anim.png", 1, 8, ANIM_TIME);
+    m_Animations[PWT_Pistol].Attack[PM_Idle]->setScale(0.008f);
+    m_Animations[PWT_Pistol].Attack[PM_LEft] = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/player/MC_shootgun_anim.png", 1, 8, ANIM_TIME);
+    m_Animations[PWT_Pistol].Attack[PM_LEft]->setScale(0.008f);
+    m_Animations[PWT_Pistol].Attack[PM_LEft]->setFlipX(true);
+    m_Animations[PWT_Pistol].Attack[PM_Right] = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/player/MC_shootgun_anim.png", 1, 8, ANIM_TIME);
+    m_Animations[PWT_Pistol].Attack[PM_Right]->setScale(0.008f);
+    
+    m_Animations[PWT_Pistol].Damage[PM_Idle] = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/player/MC_hitgun_anim.png", 1, 8, ANIM_TIME);
+    m_Animations[PWT_Pistol].Damage[PM_Idle]->setScale(0.008f);
+    m_Animations[PWT_Pistol].Damage[PM_LEft] = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/player/MC_runhitgun_anim.png", 1, 8, ANIM_TIME);
+    m_Animations[PWT_Pistol].Damage[PM_LEft]->setScale(0.008f);
+    m_Animations[PWT_Pistol].Damage[PM_LEft]->setFlipX(true);
+    m_Animations[PWT_Pistol].Damage[PM_Right] = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/player/MC_runhitgun_anim.png", 1, 8, ANIM_TIME);
+    m_Animations[PWT_Pistol].Damage[PM_Right]->setScale(0.008f);
+    
+    //////////////////// shotgun
+    m_Animations[PWT_Shotgun].Move[PM_Idle] = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/player/MC_idle_shotgun_anim.png", 1, 8, ANIM_TIME);
+    m_Animations[PWT_Shotgun].Move[PM_Idle]->setScale(0.008f);
+    m_Animations[PWT_Shotgun].Move[PM_LEft] = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/player/MC_runshotgun_anim.png", 1, 8, ANIM_TIME);
+    m_Animations[PWT_Shotgun].Move[PM_LEft]->setScale(0.008f);
+    m_Animations[PWT_Shotgun].Move[PM_LEft]->setFlipX(true);
+    m_Animations[PWT_Shotgun].Move[PM_Right] = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/player/MC_runshotgun_anim.png", 1, 8, ANIM_TIME);
+    m_Animations[PWT_Shotgun].Move[PM_Right]->setScale(0.008f);
+    
+    m_Animations[PWT_Shotgun].Attack[PM_Idle] = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/player/MC_shotgun_attack_anim.png", 1, 8, ANIM_TIME);
+    m_Animations[PWT_Shotgun].Attack[PM_Idle]->setScale(0.008f);
+    m_Animations[PWT_Shotgun].Attack[PM_LEft] = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/player/MC_shootshotgunmoving_anim.png", 1, 8, ANIM_TIME);
+    m_Animations[PWT_Shotgun].Attack[PM_LEft]->setScale(0.008f);
+    m_Animations[PWT_Shotgun].Attack[PM_LEft]->setFlipX(true);
+    m_Animations[PWT_Shotgun].Attack[PM_Right] = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/player/MC_shootshotgunmoving_anim.png", 1, 8, ANIM_TIME);
+    m_Animations[PWT_Shotgun].Attack[PM_Right]->setScale(0.008f);
+
+    m_Animations[PWT_Shotgun].Damage[PM_Idle] = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/player/MC_dmg_shotgun_anim.png", 1, 8, ANIM_TIME);
+    m_Animations[PWT_Shotgun].Damage[PM_Idle]->setScale(0.008f);
+    m_Animations[PWT_Shotgun].Damage[PM_LEft] = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/player/MC_runhitshotgun_anim.png", 1, 8, ANIM_TIME);
+    m_Animations[PWT_Shotgun].Damage[PM_LEft]->setScale(0.008f);
+    m_Animations[PWT_Shotgun].Damage[PM_LEft]->setFlipX(true);
+    m_Animations[PWT_Shotgun].Damage[PM_Right] = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/player/MC_runhitshotgun_anim.png", 1, 8, ANIM_TIME);
+    m_Animations[PWT_Shotgun].Damage[PM_Right]->setScale(0.008f);
+
+    //die
+    m_DieAnimation[PM_Idle] = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/player/MC_die_anim.png", 1, 8, ANIM_TIME);
+    m_DieAnimation[PM_Idle]->setScale(0.008f);
+    m_DieAnimation[PM_Idle]->setLoop(false);
+    m_DieAnimation[PM_LEft] = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/player/MC_die_anim.png", 1, 8, ANIM_TIME);
+    m_DieAnimation[PM_LEft]->setScale(0.008f);
+    m_DieAnimation[PM_LEft]->setFlipX(true);
+    m_DieAnimation[PM_LEft]->setLoop(false);
+    m_DieAnimation[PM_Right] = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/player/MC_die_anim.png", 1, 8, ANIM_TIME);
+    m_DieAnimation[PM_Right]->setScale(0.008f);
+    m_DieAnimation[PM_Right]->setLoop(false);
+}
+
+PlayerAnimationsController::~PlayerAnimationsController()
+{
+    
+}
+
+void PlayerAnimationsController::SetWeapon(PlayerWeaponType weapon)
+{
+    if (m_IsDead)
+    {
+        return;
+    }
+
+    if (m_ActiveWeapon == weapon)
+    {
+        return;
+    }
+
+    int currentFrame = StopAll();
+
+    if (m_IsAttacking)
+    {
+        m_Animations[m_ActiveWeapon].Attack[m_ActiveMovement]->startRendering(currentFrame);
+        return;
+    }
+
+    if (m_IsTakingDamage)
+    {
+        m_Animations[m_ActiveWeapon].Damage[m_ActiveMovement]->startRendering(currentFrame);
+        return;
+    }
+
+    m_Animations[m_ActiveWeapon].Move[m_ActiveMovement]->startRendering(currentFrame);
+}
+
+void PlayerAnimationsController::SetMovement(PlayerMovement movement)
+{
+    if (m_IsDead)
+    {
+        return;
+    }
+
+    if (m_ActiveMovement == movement)
+    {
+        return;
+    }
+
+    int currentFrame = StopAll();
+
+    if (m_IsAttacking)
+    {
+        m_Animations[m_ActiveWeapon].Attack[m_ActiveMovement]->startRendering(currentFrame);
+        return;
+    }
+
+    if (m_IsTakingDamage)
+    {
+        m_Animations[m_ActiveWeapon].Damage[m_ActiveMovement]->startRendering(currentFrame);
+        return;
+    }
+
+    m_Animations[m_ActiveWeapon].Move[m_ActiveMovement]->startRendering(currentFrame);
+}
+
+void PlayerAnimationsController::Die()
+{
+    m_IsDead = true;
+
+    StopAll();
+
+    m_DieAnimation[m_ActiveMovement]->startRendering(0);
+}
+
+void PlayerAnimationsController::GetDamage()
+{
+    if (m_IsDead)
+    {
+        return;
+    }
+
+    if (m_IsTakingDamage)
+    {
+        return;
+    }
+
+    m_IsAttacking = false;
+
+    int currentFrame = StopAll();
+
+    m_Animations[m_ActiveWeapon].Damage[m_ActiveMovement]->startRendering(currentFrame);
+
+    m_IsTakingDamage = true;
+
+    m_DamageStartTime = SDL_GetTicks();
+}
+
+void PlayerAnimationsController::Attack(Uint32 attackIndex)
+{
+    if (m_IsDead)
+        return;
+    
+    if (m_IsAttacking)
+        return;
+
+    int currentFrame = StopAll();
+
+    m_Animations[m_ActiveWeapon].Attack[m_ActiveMovement]->startRendering(currentFrame);
+
+    m_AtackStartTime = SDL_GetTicks();
+}
+
+void PlayerAnimationsController::update(const mathgp::vector3& position, const mathgp::vector3& camDir)
+{
+    if (m_IsDead)
+    {
+        if (m_DieAnimation[m_ActiveMovement]->isDone())
+        {
+            m_IsReadyForDiscard = true;
+        }
+        m_DieAnimation[m_ActiveMovement]->update(position, camDir);
+        return;
+    }
+
+    if (m_IsAttacking && (SDL_GetTicks() - m_AtackStartTime) >= ANIM_TIME)
+    {
+        m_IsAttacking = false;
+
+        int currentFrame = StopAll();
+        m_Animations[m_ActiveWeapon].Move[m_ActiveMovement]->startRendering(currentFrame);
+        m_Animations[m_ActiveWeapon].Move[m_ActiveMovement]->update(position, camDir);
+        return;
+    }
+
+    if (m_IsTakingDamage && (SDL_GetTicks() - m_DamageStartTime) >= ANIM_TIME)
+    {
+        m_IsTakingDamage = false;
+
+        int currentFrame = StopAll();
+        m_Animations[m_ActiveWeapon].Move[m_ActiveMovement]->startRendering(currentFrame);
+        m_Animations[m_ActiveWeapon].Move[m_ActiveMovement]->update(position, camDir);
+        return;
+    }
+
+    if (!m_Animations[m_ActiveWeapon].Move[m_ActiveMovement]->isRendering())
+    {
+        int currentFrame = StopAll();
+        m_Animations[m_ActiveWeapon].Move[m_ActiveMovement]->startRendering(currentFrame);
+    }
+
+    m_Animations[m_ActiveWeapon].Move[m_ActiveMovement]->update(position, camDir);
+}
+
+int PlayerAnimationsController::StopAll()
+{
+    int activeFrame = 0;
+    for (int i = 0; i < PWT_Count; ++i)
+    {
+        for (int j = 0; j < PM_Count; ++j)
+        {
+            if(m_Animations[i].Move[j]->isRendering())
+            {
+                activeFrame = m_Animations[i].Move[j]->currentFrame();
+                m_Animations[i].Move[j]->stopRendering();
+            }
+
+            if (m_Animations[i].Attack[j]->isRendering())
+            {
+                activeFrame = m_Animations[i].Attack[j]->currentFrame();
+                m_Animations[i].Attack[j]->stopRendering();
+            }
+
+            if (m_Animations[i].Damage[j]->isRendering())
+            {
+                activeFrame = m_Animations[i].Damage[j]->currentFrame();
+                m_Animations[i].Damage[j]->stopRendering();
+            }
+        }
+    }
+
+    return activeFrame;
+}
+

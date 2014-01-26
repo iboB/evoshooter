@@ -81,3 +81,64 @@ private:
     int m_AtackStartTime;
     bool m_IsReadyForDiscard;
 };
+
+enum PlayerWeaponType
+{
+    PWT_Sword,
+    PWT_Pistol,
+    PWT_Shotgun,
+
+    PWT_Count
+};
+
+enum PlayerMovement
+{
+    PM_Idle,
+    PM_LEft,
+    PM_Right,
+    PM_Count
+};
+
+class PlayerAnimationsController
+{
+public:
+    PlayerAnimationsController();
+    ~PlayerAnimationsController();
+
+    void SetWeapon(PlayerWeaponType weapon);
+    void SetMovement(PlayerMovement movement);
+
+    void Die();
+    void GetDamage();
+    void Attack(Uint32 attackIndex);
+
+    void update(const mathgp::vector3& position, const mathgp::vector3& camDir);
+
+    bool isReadyToDiscard() { return m_IsReadyForDiscard; }
+
+private:
+    
+    int StopAll();
+
+    struct WeaponSet
+    {
+        SpritePtr Move[PM_Count];
+        SpritePtr Attack[PM_Count];
+        SpritePtr Damage[PM_Count];
+    };
+
+    WeaponSet m_Animations[PWT_Count];
+
+    SpritePtr m_DieAnimation[PM_Count];
+
+    PlayerWeaponType m_ActiveWeapon;
+    PlayerMovement m_ActiveMovement;
+
+    bool m_IsTakingDamage;
+    bool m_IsDead;
+    Uint32 m_DamageStartTime;
+
+    bool m_IsAttacking;
+    int m_AtackStartTime;
+    bool m_IsReadyForDiscard;
+};
