@@ -34,6 +34,7 @@ void SpawnManager::update(int dt)
     while (m_costRise > 1)
     {
         m_targetWorldCost += Target_World_Cost_Rise_Per_Second;
+        --m_costRise;
     }
 
     World& w = World::instance();

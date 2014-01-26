@@ -234,6 +234,23 @@ void MonsterCharacter::useDNA(const MonsterDNA& dna)
     default:
         break;
     }
+
+    std::string name;
+    if (m_size < Max_Monster_Size / 3)
+    {
+        name = "eye";
+    }
+    else if (m_size < (2 * Max_Monster_Size) / 3)
+    {
+        name = "jaba_the_slut";
+    }
+    else
+    {
+        name = "pudge";
+    }
+
+    std::vector<AttackData> attacks;
+    init(name, attacks);
 }
 
 MonsterDNA MonsterCharacter::giveOffspring()

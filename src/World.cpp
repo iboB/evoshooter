@@ -16,7 +16,7 @@
 #include "StaticObject.h"
 #include "MainCharacter.h"
 #include "MonsterCharacter.h"
-
+#include "Util.h"
 
 World::World()
     : m_firstFreeId(0)
@@ -59,10 +59,21 @@ unsigned int World::spawnObject(float x, float y, float r)
     return id;
 }
 
+int numspawned;
+
 //unsigned int World::spawnMonster(float x, float y, float r, const std::string& name, const AttacksData& attacks)
 unsigned int World::spawnMonster(const MonsterDNA& dna)
 {
-    float x = 0, y = 0;
+    ++numspawned;
+    std::cout << "spawned " << numspawned << std::endl;
+    for (int i = 0; i < Num_Genes; ++i)
+    {
+        std::cout << dna.m[i].value() << "\n";
+    }
+
+    
+    float x = Util::Rnd01(), y = Util::Rnd01();
+    x *= g_worldSize-1; y *= g_worldSize-1;
     mathgp::vector3 pos = mathgp::v(x, y, 0.0f);
     unsigned int id = m_firstFreeId;
 
