@@ -16,6 +16,7 @@
 #include "Util.h"
 #include "Bullet.h"
 #include "ResourceManager.h"
+#include "SoundManager.h"
 
 std::string PlayerWeapon::m_weaponNames[EWeaponCount] =
 {
@@ -51,7 +52,8 @@ void PlayerWeapon::attack(const mathgp::vector3& worldPoint, Object* objectHit)
     unsigned int now = SDL_GetTicks();
     if (now >= m_lastAttackTimestamp + m_attackDelay)
     {
-        now = SDL_GetTicks();
+        m_lastAttackTimestamp = now;
+        SoundManager::instance().playSound(ESounds_Shoot);
         switch (m_type)
         {
         case EKnife:
@@ -70,7 +72,7 @@ void PlayerWeapon::attack(const mathgp::vector3& worldPoint, Object* objectHit)
             }
             break;
         case EShotgun:
-        {
+        
             {
                 if (objectHit && objectHit->type() != EPlayer_Character)
                 {
@@ -80,8 +82,7 @@ void PlayerWeapon::attack(const mathgp::vector3& worldPoint, Object* objectHit)
                 {
                     rangedShotgunAttack(worldPoint);
                 }
-            }
-        }
+            }        
             break;
         }
     }
@@ -121,12 +122,12 @@ void PlayerWeapon::rangedShotgunAttack(const mathgp::vector3& worldPoint)
 }
 void PlayerWeapon::rangedGunAttack(const mathgp::vector3& worldPoint)
 {
-    SpritePtr projectile = ResourceManager::instance().createSpriteFromSingleFrameTexture("sprites/projectiles/rocket.png");
+    SpritePtr projectile = ResourceManager::instance().createSpriteFromSingleFrameTexture("sprites/projectiles/bullet.png");
     SpritePtr impact = ResourceManager::instance().createSpriteFromSingleAnimationTexture("sprites/projectiles/explosion.png", 1, 4, 400);
     vector3 playerPos = World::instance().mainCharacter()->position();
     vector3 directionOfAttack = normalized(worldPoint - playerPos);
 
-    unsigned int id = World::instance().spawnBullet(playerPos.x() + 0.3f, playerPos.y() + 0.8f, 0.1f, projectile, impact, directionOfAttack, 3.f, 5.f);
+    unsigned int id = World::instance().spawnBullet(playerPos.x() + 0.3f, playerPos.y() + 0.8f, 0.1f, projectile, impact, directionOfAttack, 5.f, 7.f);
     Bullet* bullet = (Bullet*)(World::instance().object(id).get());
     bullet->setDamage(damage());
     bullet->setDamageType(m_damageType);

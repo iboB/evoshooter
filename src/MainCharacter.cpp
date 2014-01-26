@@ -25,11 +25,11 @@
 MainCharacter::MainCharacter(const mathgp::vector3& position, const std::vector<AttackData>& attacks)
 : Character(position, "player", attacks)
 {
-    m_currentWeapon = new PlayerWeapon(EPistol, 1000, mathgp::v((unsigned)Pistol_Damage_Min, (unsigned)Pistol_Damage_Max)); //pistol
+    m_currentWeapon = new PlayerWeapon(EPistol, 50, mathgp::v((unsigned)Pistol_Damage_Min, (unsigned)Pistol_Damage_Max)); //pistol
     m_weapons.push_back(m_currentWeapon);
-    m_currentWeapon = new PlayerWeapon(EKnife, 1000, mathgp::v((unsigned)Knife_Damage_Min, (unsigned)Knife_Damage_Max));
+    m_currentWeapon = new PlayerWeapon(EKnife, 50, mathgp::v((unsigned)Knife_Damage_Min, (unsigned)Knife_Damage_Max));
     m_weapons.push_back(m_currentWeapon);
-    m_currentWeapon = new PlayerWeapon(EShotgun, 1000, mathgp::v((unsigned)Shotgun_Damage_Min, (unsigned)Shotgun_Damage_Max));
+    m_currentWeapon = new PlayerWeapon(EShotgun, 400, mathgp::v((unsigned)Shotgun_Damage_Min, (unsigned)Shotgun_Damage_Max));
     m_weapons.push_back(m_currentWeapon);
 
     m_currentWeaponIndex = 1;
@@ -130,7 +130,7 @@ void MainCharacter::OnHit(EAttackDamageType dmgType, int dmg)
 
 void MainCharacter::useWeapon(const mathgp::vector3& worldPoint, Object* objectHit)
 {
-    SoundManager::instance().playSound(ESounds_Shoot);
+   
     m_currentWeapon->attack(worldPoint, objectHit);
 
     m_PlayerAnimationController.Attack();
