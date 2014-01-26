@@ -30,6 +30,8 @@ public:
 
     int isDead() { return m_hp <= 0; }
 
+    void loseStamina(int n);
+
 private:
     mathgp::vector3 m_MoveDirection;
     
@@ -41,7 +43,7 @@ public:
 
     float calculateFitness() const; // damage * lifetime
 
-    bool hasAggro() { return m_currentAggro != 0; }
+    bool hasAggro() { return m_aggroCooldown != 0; }
 
 private:
     void think(int dt);
@@ -65,11 +67,14 @@ private:
     float m_regularSpeed;
     float m_aggroSpeed;
 
+    float m_randomAttackCooldown;
+    float m_currentDesireToRandomAttack;
+
     float m_size;
 
     float m_chanceToAggroOnSight;
     int m_aggroCooldown;
-    int m_currentAggro;
+    int m_aggroTime;
 
     float m_sightRange;
     float m_hearingRange;

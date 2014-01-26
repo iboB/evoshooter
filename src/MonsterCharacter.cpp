@@ -107,8 +107,8 @@ void MonsterCharacter::useDNA(const MonsterDNA& dna)
     m_neededRestTime = 500 + int(dna(G_Size) * 4000);
 
     m_chanceToAggroOnSight = 0.25f * g_worldSize * dna(G_Aggresiveness);
-    m_aggroCooldown = int(dna(G_Aggresiveness) * 60000); // 1 minute
-    m_currentAggro = 0;
+    m_aggroCooldown = 0;
+    m_aggroTime = int(dna(G_Aggresiveness) * 60000); // 1 minute;
 
     m_sightRange = 0.25f * g_worldSize * dna(G_Sight);
     m_hearingRange = 0.25f * g_worldSize * dna(G_Hearing);
@@ -147,20 +147,20 @@ void MonsterCharacter::useDNA(const MonsterDNA& dna)
     switch (weapon)
     {
     case G_UseSpitter:
-        m_attack = new Spit;
+        //m_attack = new Spit;
         break;
     case G_UseGrapple:
-        m_attack = new Grapple;
+        //m_attack = new Grapple;
         break;
     case G_UseClaws:
-        m_attack = new Claws;
+        //m_attack = new Claws;
         break;
     case G_UseThorns:
-        m_attack = new Thorns;
+        //m_attack = new Thorns;
         break;
     default:
         // no weapon!
-        m_attack = new NoAttack;
+        //m_attack = new NoAttack;
         break;
     }
 
@@ -217,7 +217,7 @@ void MonsterCharacter::think(int dt)
     ////////////////////////////////////////////
     // do cooldowns
     
-    // regen
+    // hp regen
     m_regenPer100ms += float(dt) / 100;
     while (m_regenPer100ms >= 1)
     {
@@ -351,8 +351,18 @@ void MonsterCharacter::think(int dt)
 
 void MonsterCharacter::aggravate()
 {
-    m_currentAggro = m_aggroCooldown;
+    m_aggroCooldown = m_aggroTime;
 
     // remove some meaninless stuff now
     m_hasPointToGoTo = false;
+}
+
+void MonsterCharacter::loseStamina(int n)
+{
+    m_stamina -= n;
+    if (m_stamina <= 0)
+    {
+        m_stamina = 0;
+        m_restCooldown = m_neededRestTime;
+    }
 }
