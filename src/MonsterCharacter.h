@@ -24,6 +24,8 @@ public:
     void SetMoveDirection(const mathgp::vector3& dir);
     void SetTargetPoint(const mathgp::point3& point);
 
+    virtual void GetDamage();
+
     virtual void update(int dt);
 
     const MonsterDNA& dna() const { return m_dna;  }
@@ -76,6 +78,9 @@ private:
     int m_aggroCooldown;
     int m_aggroTime;
 
+    void see();
+    void hear();
+
     float m_sightRange;
     mathgp::point3 randomPointInSight();
     float m_hearingRange;
@@ -89,6 +94,7 @@ private:
     // memory
     bool m_hasLastKnownPlayerPosition;
     mathgp::point3 m_lastKnownPlayerPosition;
+    bool m_playerInSightLastFrame;
 
     bool isLoitering() const { return m_loiterCooldown != 0; };
     int m_loiterCooldown;
@@ -99,4 +105,6 @@ private:
     int m_timeAtLastPosition;
 
     MonsterAttack* m_attack;
+
+    int m_damagePainFrames;
 };

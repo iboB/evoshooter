@@ -17,6 +17,7 @@
 
 #include "World.h"
 #include "MainCharacter.h"
+#include "ColliderGrid.h"
 
 #include "MonsterAttacks.h"
 
@@ -26,6 +27,8 @@ MonsterCharacter::MonsterCharacter(const mathgp::vector3& position, const std::s
 : Character(position, name, attacks)
 , m_MoveDirection()
 , m_attack(nullptr)
+, m_damagePainFrames(0)
+, m_playerInSightLastFrame(false)
 {
     m_MoveDirection = mathgp::vc(0.f, 0.0f, 0.f);
 
@@ -49,6 +52,15 @@ void MonsterCharacter::SetTargetPoint(const point3& point)
 {
     vector3 direction = point - position();
     SetMoveDirection(direction);
+}
+
+void MonsterCharacter::GetDamage()
+{
+    //armor...
+
+    m_damagePainFrames = 2;
+
+    Character::GetDamage();
 }
 
 void MonsterCharacter::update(int dt)
@@ -277,9 +289,16 @@ void MonsterCharacter::think(int dt)
         if (m_loiterCooldown <= 0) m_loiterCooldown = 0;
     }
 
+    if (m_damagePainFrames > 0)
+    {
+        --m_damagePainFrames;
+    }
+
     ////////////////////////////////////////////
     // senses
+    see();
 
+    hear();
 
     ////////////////////////////////////////////
     // behave
@@ -393,5 +412,58 @@ void MonsterCharacter::loseStamina(int n)
     {
         m_stamina = 0;
         m_restCooldown = m_neededRestTime;
+    }
+}
+
+void MonsterCharacter::see()
+{
+    std::vector<std::shared_ptr<Object> > objects = ColliderGrid::instance().collideWithCircle(mathgp::vc(m_pos.x(), m_pos.y()), m_sightRange);
+
+    bool playerNear = false;
+
+    for (auto it = objects.begin(); it != objects.end(); ++it)
+    {
+        if ((*it)->type() == EMonster_Character && (*it).get() != this)
+        {
+            MonsterCharacter* monster = (MonsterCharacter*)((*it).get());
+
+            if (monster->m_damagePainFrames > 0)
+            {
+                aggravate();
+            }
+        }
+        
+        if ((*it)->type() == EPlayer_Character)
+        {
+            playerNear = true;
+            if (!m_playerInSightLastFrame)
+            {
+                aggravate();
+            }
+        }
+    }
+
+    m_playerInSightLastFrame = playerNear;
+}
+
+void MonsterCharacter::hear()
+{
+    std::vector<std::shared_ptr<Object> > objects = ColliderGrid::instance().collideWithCircle(mathgp::vc(m_pos.x(), m_pos.y()), m_hearingRange);
+
+    for (auto it = objects.begin(); it != objects.end(); ++it)
+    {
+        if ((*it)->type() != EMonster_Character || (*it).get() == this)
+        {
+            continue;
+        }
+
+        MonsterCharacter* monster = (MonsterCharacter*)((*it).get());
+
+        if (monster->hasAggro())
+        {
+            aggravate();
+
+            break;
+        }
     }
 }
